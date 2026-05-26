@@ -1,0 +1,2719 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Automatismes 3e — Quiz & Leçons</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+<style>
+:root {
+  --c-bg: #f4f7fb;
+  --c-card: #ffffff;
+  --c-primary: #6366f1;
+  --c-primary-dark: #4f46e5;
+  --c-accent: #f59e0b;
+  --c-success: #10b981;
+  --c-error: #ef4444;
+  --c-text: #1f2937;
+  --c-muted: #6b7280;
+  --c-border: #e5e7eb;
+  --c-cat-nc: #6366f1;
+  --c-cat-geo: #10b981;
+  --c-cat-stat: #f59e0b;
+  --c-cat-prop: #ec4899;
+  --c-cat-algo: #8b5cf6;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--c-bg);
+  color: var(--c-text);
+  line-height: 1.5;
+}
+header {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+  color: white;
+  padding: 24px 20px;
+  box-shadow: 0 4px 20px rgba(99,102,241,0.25);
+}
+header h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
+  font-weight: 800;
+}
+header p {
+  margin: 0;
+  opacity: 0.95;
+  font-size: 15px;
+}
+nav.menu {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  background: white;
+  padding: 12px 20px;
+  border-bottom: 2px solid var(--c-border);
+  position: sticky;
+  top: 50px;
+  z-index: 99;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+nav.menu button {
+  background: var(--c-bg);
+  border: 2px solid transparent;
+  padding: 10px 18px;
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--c-text);
+  transition: all 0.2s;
+}
+nav.menu button:hover { background: #e0e7ff; }
+nav.menu button.active {
+  background: var(--c-primary);
+  color: white;
+  border-color: var(--c-primary-dark);
+}
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 20px 60px;
+}
+.hero {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border-radius: 20px;
+  padding: 30px;
+  margin-bottom: 24px;
+  border: 3px solid #fbbf24;
+}
+.hero h2 { margin-top: 0; font-size: 24px; }
+.hero p { margin: 10px 0; font-size: 16px; }
+.hero .actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+.btn {
+  border: none;
+  padding: 12px 22px;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.2s;
+  font-family: inherit;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(0,0,0,0.12); }
+.btn-primary { background: var(--c-primary); color: white; }
+.btn-accent { background: var(--c-accent); color: white; }
+.btn-success { background: var(--c-success); color: white; }
+.btn-ghost { background: white; color: var(--c-text); border: 2px solid var(--c-border); }
+
+.cat-section { margin-bottom: 32px; }
+.cat-title {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  font-weight: 800;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 10px;
+  display: inline-block;
+  margin-bottom: 16px;
+}
+.cat-nc   { background: var(--c-cat-nc); }
+.cat-geo  { background: var(--c-cat-geo); }
+.cat-stat { background: var(--c-cat-stat); }
+.cat-prop { background: var(--c-cat-prop); }
+.cat-algo { background: var(--c-cat-algo); }
+
+.theme-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
+.theme-card {
+  background: white;
+  border-radius: 16px;
+  padding: 18px;
+  cursor: pointer;
+  border: 2px solid var(--c-border);
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.theme-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.1);
+  border-color: var(--c-primary);
+}
+.theme-card .icon { font-size: 32px; }
+.theme-card .name { font-weight: 700; font-size: 15px; }
+.theme-card .nb { font-size: 12px; color: var(--c-muted); }
+.theme-card .actions { display: flex; gap: 8px; margin-top: 10px; }
+.theme-card .actions button {
+  flex: 1;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+}
+.theme-card .btn-quiz { background: var(--c-primary); color: white; }
+.theme-card .btn-lesson { background: #fef3c7; color: #92400e; }
+
+.card {
+  background: var(--c-card);
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+  margin-bottom: 18px;
+}
+.back-btn {
+  background: none;
+  border: none;
+  color: var(--c-primary);
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 6px 0;
+  margin-bottom: 12px;
+  font-family: inherit;
+}
+.back-btn:hover { text-decoration: underline; }
+
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.quiz-progress {
+  background: var(--c-bg);
+  border-radius: 999px;
+  height: 10px;
+  overflow: hidden;
+  flex: 1;
+  min-width: 150px;
+}
+.quiz-progress > div {
+  height: 100%;
+  background: linear-gradient(90deg, var(--c-primary), var(--c-accent));
+  transition: width 0.3s;
+}
+.quiz-score {
+  font-weight: 800;
+  font-size: 16px;
+  color: var(--c-primary);
+}
+.question-num {
+  font-size: 13px;
+  color: var(--c-muted);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+.question-text {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 20px;
+  line-height: 1.5;
+}
+.choices {
+  display: grid;
+  gap: 10px;
+}
+.choice {
+  background: white;
+  border: 2px solid var(--c-border);
+  padding: 14px 18px;
+  border-radius: 14px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.choice:hover:not(:disabled) {
+  border-color: var(--c-primary);
+  background: #f5f3ff;
+}
+.choice:disabled { cursor: default; }
+.choice.correct {
+  background: #d1fae5;
+  border-color: var(--c-success);
+  color: #064e3b;
+  font-weight: 700;
+}
+.choice.wrong {
+  background: #fee2e2;
+  border-color: var(--c-error);
+  color: #7f1d1d;
+}
+.feedback {
+  margin-top: 20px;
+  padding: 16px 20px;
+  border-radius: 14px;
+  font-size: 15px;
+  line-height: 1.6;
+  border-left: 5px solid var(--c-primary);
+  background: #eef2ff;
+}
+.feedback.ok {
+  background: #ecfdf5;
+  border-left-color: var(--c-success);
+}
+.feedback.ko {
+  background: #fef2f2;
+  border-left-color: var(--c-error);
+}
+.feedback strong { font-weight: 800; }
+.feedback .badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  margin-right: 8px;
+  letter-spacing: 0.5px;
+}
+.feedback.ok .badge { background: var(--c-success); color: white; }
+.feedback.ko .badge { background: var(--c-error); color: white; }
+.next-btn {
+  margin-top: 16px;
+  background: var(--c-primary);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+}
+.next-btn:hover { background: var(--c-primary-dark); }
+
+.lesson h2 { margin-top: 0; color: var(--c-primary-dark); }
+.lesson h3 { color: var(--c-primary); margin-top: 24px; }
+.lesson .method {
+  background: #eef2ff;
+  padding: 16px 20px;
+  border-radius: 12px;
+  border-left: 5px solid var(--c-primary);
+  margin: 14px 0;
+}
+.lesson .example {
+  background: #fef3c7;
+  padding: 14px 18px;
+  border-radius: 12px;
+  border-left: 5px solid var(--c-accent);
+  margin: 12px 0;
+}
+.lesson .tip {
+  background: #ecfdf5;
+  padding: 14px 18px;
+  border-radius: 12px;
+  border-left: 5px solid var(--c-success);
+  margin: 12px 0;
+}
+.lesson table {
+  border-collapse: collapse;
+  margin: 12px 0;
+  width: auto;
+}
+.lesson table th, .lesson table td {
+  border: 1px solid var(--c-border);
+  padding: 6px 12px;
+  text-align: center;
+}
+.lesson table th { background: #eef2ff; }
+
+.result {
+  text-align: center;
+  padding: 30px 20px;
+}
+.result .score-big {
+  font-size: 64px;
+  font-weight: 900;
+  color: var(--c-primary);
+  margin: 10px 0;
+}
+.result .medal { font-size: 80px; margin: 10px 0; }
+.result .msg { font-size: 18px; margin-bottom: 20px; }
+.result .actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+.list-skills {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin: 14px 0;
+}
+.fig-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 16px 0;
+}
+.fig {
+  max-width: 100%;
+  height: auto;
+  background: #fafafa;
+  border: 1px solid var(--c-border);
+  border-radius: 10px;
+  padding: 10px;
+  font-family: "Georgia", serif;
+}
+.fig-q {
+  max-width: 280px;
+  height: auto;
+  display: block;
+  margin: 8px auto 14px;
+  background: #fafafa;
+  border: 1px solid var(--c-border);
+  border-radius: 8px;
+  padding: 6px;
+  font-family: "Georgia", serif;
+}
+.fig text { font-style: italic; }
+.fig .pt { fill: #1f2937; }
+.fig .lbl { fill: #1f2937; font-style: italic; font-weight: bold; }
+.fig .ang-arc { fill: none; stroke: #6366f1; stroke-width: 2; }
+.fig .ang-lbl { fill: #6366f1; font-weight: 600; }
+.fig .seg-lbl { fill: #ef4444; font-weight: 600; font-style: italic; }
+.fig .axis { stroke: #333; stroke-width: 1.5; }
+.fig .grid { stroke: #d1d5db; stroke-width: 0.5; }
+.fig .ref { stroke: #ef4444; stroke-dasharray: 3,3; stroke-width: 1; }
+
+/* ========== Barre LABOMATH (commune à tout le site) ========== */
+.lm-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 18px;
+  background: #1e293b;
+  color: white;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.lm-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-weight: 900;
+  font-size: 19px;
+  letter-spacing: 0.5px;
+  font-family: 'Bowlby One', 'Arial Black', sans-serif;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+.lm-home:hover { background: rgba(255,255,255,0.08); }
+.lm-home .lm-labo { color: #f59e0b; }
+.lm-home .lm-math { color: #ef4444; }
+.lm-home .lm-house { font-size: 18px; }
+.lm-topbar nav {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.lm-topbar nav a {
+  color: white;
+  text-decoration: none;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+.lm-topbar nav a:hover { background: rgba(255,255,255,0.12); }
+.lm-topbar nav a.lm-active {
+  background: rgba(255,255,255,0.18);
+  font-weight: 700;
+}
+@media (max-width: 520px) {
+  .lm-topbar { padding: 8px 12px; gap: 6px; }
+  .lm-home { font-size: 16px; }
+  .lm-topbar nav a { padding: 6px 10px; font-size: 12.5px; }
+}
+.skill-pill {
+  background: white;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 2px solid var(--c-border);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Tablette */
+@media (max-width: 768px) {
+  .theme-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+  header { padding: 20px 16px; }
+  header h1 { font-size: 22px; }
+  .hero { padding: 22px 18px; }
+  .hero h2 { font-size: 20px; }
+}
+
+/* Téléphone */
+@media (max-width: 600px) {
+  header h1 { font-size: 20px; }
+  header p { font-size: 13px; }
+  .hero h2 { font-size: 18px; }
+  .hero p, .hero li { font-size: 14px; }
+  .question-text { font-size: 16px; line-height: 1.4; }
+  main { padding: 14px 10px 40px; }
+  .card { padding: 16px 14px; }
+  nav.menu { padding: 10px 12px; gap: 6px; overflow-x: auto; flex-wrap: nowrap; }
+  nav.menu button { padding: 8px 14px; font-size: 13px; white-space: nowrap; flex-shrink: 0; }
+  .theme-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .theme-card { padding: 12px; gap: 4px; }
+  .theme-card .icon { font-size: 24px; }
+  .theme-card .name { font-size: 13px; line-height: 1.25; }
+  .theme-card .nb { font-size: 11px; }
+  .theme-card .actions button { padding: 6px 4px; font-size: 11px; }
+  .choice { padding: 12px 14px; font-size: 15px; }
+  .btn { padding: 10px 16px; font-size: 14px; }
+  .quiz-header { gap: 6px; }
+  .quiz-score { font-size: 14px; }
+  .feedback { padding: 12px 14px; font-size: 14px; }
+  .cat-title { font-size: 12px; padding: 6px 10px; }
+  .lesson h2 { font-size: 18px; }
+  .lesson h3 { font-size: 15px; }
+  .lesson .method, .lesson .example, .lesson .tip { padding: 12px 14px; font-size: 14px; }
+  .lesson table { font-size: 12px; }
+  .lesson table th, .lesson table td { padding: 4px 8px; }
+  .fig-q { max-width: 220px; }
+  .result .score-big { font-size: 48px; }
+  .result .medal { font-size: 60px; }
+  .result .msg { font-size: 15px; }
+}
+
+/* Très petit écran */
+@media (max-width: 380px) {
+  .theme-grid { grid-template-columns: 1fr; }
+  header h1 { font-size: 18px; }
+  .hero { padding: 18px 14px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ====== Barre LABOMATH ====== -->
+<div class="lm-topbar">
+  <a href="index.html" class="lm-home" title="Retour à l'accueil">
+    <span class="lm-house">🏠</span><span class="lm-labo">LABO</span><span class="lm-math">MATH</span>
+  </a>
+  <nav>
+    <a href="coordinate_quest_ui_final.html">🎮 Jeux</a>
+    <a href="videos-revisions.html">🎬 Vidéos</a>
+    <a href="automatismes-3e.html" class="lm-active">⚡ Automatismes</a>
+  </nav>
+</div>
+
+<header>
+  <h1>📐 Automatismes 3<sup>e</sup> — Quiz & Leçons</h1>
+  <p>Entraîne-toi aux automatismes du DNB : maths, fractions, géométrie, proportionnalité, et plus.</p>
+</header>
+
+<nav class="menu">
+  <button data-view="home" class="active">🏠 Accueil</button>
+  <button data-view="quiz">🎯 Quiz</button>
+  <button data-view="lessons">📘 Leçons</button>
+  <button data-view="random">🎲 Quiz surprise</button>
+</nav>
+
+<main id="app"></main>
+
+<script>
+// ==========================================================================
+//   BANQUE DE THÈMES — leçons et questions
+// ==========================================================================
+const THEMES = {};
+// Les thèmes seront injectés via les blocs ci-dessous (themes-data.js inline)
+</script>
+
+<!-- ====== INJECTION DES THÈMES ====== -->
+<script id="themes-data">
+// ========================================================================
+//  NOMBRES ET CALCULS
+// ========================================================================
+Object.assign(THEMES, {
+
+  fractions_simplifier: {
+    titre: "Simplifier une fraction",
+    categorie: "nc",
+    icone: "➗",
+    lecon: { contenu: `
+      <h3>Méthode</h3>
+      <div class="method">
+        <p><strong>Propriété :</strong> un quotient ne change pas si on multiplie ou divise son numérateur <em>et</em> son dénominateur par un même nombre non nul.</p>
+        <p>Pour <strong>simplifier</strong> une fraction, on divise son numérateur et son dénominateur par un même nombre (autre que 1).</p>
+        <p>Une fraction est <strong>irréductible</strong> quand on ne peut plus la simplifier.</p>
+      </div>
+      <h3>Exemples</h3>
+      <div class="example">
+        $$\\frac{15}{35} = \\frac{15 \\div 5}{35 \\div 5} = \\frac{3}{7}$$
+        Ici, on divise par 5 (diviseur commun à 15 et 35).
+      </div>
+      <div class="example">
+        $$\\frac{48}{60} = \\frac{48 \\div 12}{60 \\div 12} = \\frac{4}{5}$$
+        On peut aussi simplifier en plusieurs étapes : $\\frac{48}{60} = \\frac{24}{30} = \\frac{12}{15} = \\frac{4}{5}$.
+      </div>
+      <div class="tip">💡 <strong>Astuce :</strong> écrire le numérateur et le dénominateur en produits permet de repérer les facteurs communs : $\\frac{15}{35} = \\frac{3 \\times 5}{7 \\times 5} = \\frac{3}{7}$.</div>
+    ` },
+    questions: [
+      { enonce: "Simplifier $\\dfrac{15}{35}$.", choix: ["$\\dfrac{3}{7}$","$\\dfrac{5}{7}$","$\\dfrac{1}{2}$","$\\dfrac{15}{30}$"], bonne: 0,
+        explication: "On divise par 5 : $\\dfrac{15}{35}=\\dfrac{3\\times 5}{7\\times 5}=\\dfrac{3}{7}$." },
+      { enonce: "Simplifier $\\dfrac{24}{36}$.", choix: ["$\\dfrac{2}{3}$","$\\dfrac{3}{4}$","$\\dfrac{1}{2}$","$\\dfrac{4}{6}$"], bonne: 0,
+        explication: "On divise par 12 : $\\dfrac{24}{36}=\\dfrac{2}{3}$." },
+      { enonce: "Simplifier $\\dfrac{42}{56}$.", choix: ["$\\dfrac{6}{8}$","$\\dfrac{3}{4}$","$\\dfrac{7}{8}$","$\\dfrac{2}{3}$"], bonne: 1,
+        explication: "On divise par 14 : $\\dfrac{42}{56}=\\dfrac{3}{4}$." },
+      { enonce: "Forme irréductible de $\\dfrac{18}{27}$ ?", choix: ["$\\dfrac{6}{9}$","$\\dfrac{2}{3}$","$\\dfrac{3}{5}$","$\\dfrac{9}{14}$"], bonne: 1,
+        explication: "$\\dfrac{18}{27}=\\dfrac{2\\times 9}{3\\times 9}=\\dfrac{2}{3}$." },
+      { enonce: "Forme irréductible de $\\dfrac{50}{100}$ ?", choix: ["$\\dfrac{5}{10}$","$\\dfrac{1}{2}$","$\\dfrac{25}{50}$","$\\dfrac{2}{4}$"], bonne: 1,
+        explication: "$\\dfrac{50}{100}=\\dfrac{1}{2}$ (on divise par 50)." },
+      { enonce: "Simplifier $\\dfrac{45}{60}$.", choix: ["$\\dfrac{3}{4}$","$\\dfrac{9}{12}$","$\\dfrac{15}{30}$","$\\dfrac{6}{10}$"], bonne: 0,
+        explication: "$\\dfrac{45}{60}=\\dfrac{45\\div 15}{60\\div 15}=\\dfrac{3}{4}$." },
+      { enonce: "Simplifier $\\dfrac{84}{98}$.", choix: ["$\\dfrac{12}{14}$","$\\dfrac{3}{4}$","$\\dfrac{6}{7}$","$\\dfrac{7}{3}$"], bonne: 2,
+        explication: "$\\dfrac{84}{98}=\\dfrac{84\\div 14}{98\\div 14}=\\dfrac{6}{7}$." },
+      { enonce: "Simplifier $\\dfrac{120}{150}$.", choix: ["$\\dfrac{5}{6}$","$\\dfrac{3}{5}$","$\\dfrac{5}{4}$","$\\dfrac{4}{5}$"], bonne: 3,
+        explication: "$\\dfrac{120}{150}=\\dfrac{120\\div 30}{150\\div 30}=\\dfrac{4}{5}$." },
+      { enonce: "Simplifier $\\dfrac{75}{125}$.", choix: ["$\\dfrac{5}{12}$","$\\dfrac{5}{3}$","$\\dfrac{7}{5}$","$\\dfrac{3}{5}$"], bonne: 3,
+        explication: "$\\dfrac{75}{125}=\\dfrac{75\\div 25}{125\\div 25}=\\dfrac{3}{5}$." },
+      { enonce: "Simplifier $\\dfrac{64}{80}$.", choix: ["$\\dfrac{4}{5}$","$\\dfrac{8}{10}$","$\\dfrac{2}{3}$","$\\dfrac{3}{4}$"], bonne: 0,
+        explication: "$\\dfrac{64}{80}=\\dfrac{64\\div 16}{80\\div 16}=\\dfrac{4}{5}$." },
+      { enonce: "Simplifier $\\dfrac{72}{90}$.", choix: ["$\\dfrac{8}{10}$","$\\dfrac{4}{5}$","$\\dfrac{7}{9}$","$\\dfrac{9}{8}$"], bonne: 1,
+        explication: "$\\dfrac{72}{90}=\\dfrac{72\\div 18}{90\\div 18}=\\dfrac{4}{5}$." },
+      { enonce: "Simplifier $\\dfrac{63}{14}$.", choix: ["$\\dfrac{9}{2}$","$\\dfrac{3}{7}$","$\\dfrac{7}{2}$","$\\dfrac{14}{63}$"], bonne: 0,
+        explication: "$\\dfrac{63}{14}=\\dfrac{63\\div 7}{14\\div 7}=\\dfrac{9}{2}$." },
+      { enonce: "Forme irréductible de $\\dfrac{100}{44}$ ?", choix: ["$\\dfrac{25}{11}$","$\\dfrac{50}{22}$","$\\dfrac{5}{2}$","$\\dfrac{10}{4}$"], bonne: 0,
+        explication: "$\\dfrac{100}{44}=\\dfrac{100\\div 4}{44\\div 4}=\\dfrac{25}{11}$ (irréductible)." },
+      { enonce: "La fraction $\\dfrac{99}{121}$ est-elle simplifiable ?", choix: ["Oui, en $\\dfrac{9}{11}$","Oui, en $\\dfrac{11}{9}$","Non, elle est déjà irréductible","Oui, en $\\dfrac{3}{4}$"], bonne: 0,
+        explication: "$99=9\\times 11$ et $121=11\\times 11$, donc $\\dfrac{99}{121}=\\dfrac{9}{11}$." },
+      { enonce: "Simplifier $\\dfrac{225}{400}$.", choix: ["$\\dfrac{9}{16}$","$\\dfrac{45}{80}$","$\\dfrac{5}{8}$","$\\dfrac{15}{20}$"], bonne: 0,
+        explication: "$\\dfrac{225}{400}=\\dfrac{225\\div 25}{400\\div 25}=\\dfrac{9}{16}$." },
+      { enonce: "Comparer $\\dfrac{2}{3}$ et $\\dfrac{1}{2}$.", choix: ["$\\dfrac{2}{3}<\\dfrac{1}{2}$","$\\dfrac{2}{3}=\\dfrac{1}{2}$","$\\dfrac{2}{3}>\\dfrac{1}{2}$","Impossible"], bonne: 2,
+        explication: "Au même dénominateur 6 : $\\dfrac{2}{3}=\\dfrac{4}{6}$ et $\\dfrac{1}{2}=\\dfrac{3}{6}$. Or $4>3$, donc $\\dfrac{2}{3}>\\dfrac{1}{2}$." },
+      { enonce: "Comparer $\\dfrac{3}{5}$ et $\\dfrac{5}{8}$.", choix: ["$\\dfrac{3}{5}<\\dfrac{5}{8}$","$\\dfrac{3}{5}=\\dfrac{5}{8}$","$\\dfrac{3}{5}>\\dfrac{5}{8}$","On ne peut pas comparer"], bonne: 0,
+        explication: "Au même dénominateur 40 : $\\dfrac{3}{5}=\\dfrac{24}{40}$ et $\\dfrac{5}{8}=\\dfrac{25}{40}$. Donc $\\dfrac{3}{5}<\\dfrac{5}{8}$." }
+    ]
+  },
+
+  fractions_add_sub: {
+    titre: "Additionner et soustraire des fractions",
+    categorie: "nc",
+    icone: "➕",
+    lecon: { contenu: `
+      <h3>Méthode</h3>
+      <div class="method">
+        <p><strong>Même dénominateur :</strong> on additionne (ou soustrait) les numérateurs et on garde le dénominateur.</p>
+        $$\\frac{a}{n}+\\frac{b}{n}=\\frac{a+b}{n}$$
+      </div>
+      <div class="method">
+        <p><strong>Dénominateurs différents :</strong> on commence par mettre les fractions au même dénominateur, en cherchant un dénominateur commun (de préférence le plus petit).</p>
+      </div>
+      <h3>Exemples</h3>
+      <div class="example">
+        $$\\frac{3}{7}+\\frac{2}{7}=\\frac{3+2}{7}=\\frac{5}{7}$$
+      </div>
+      <div class="example">
+        $$\\frac{2}{3}+\\frac{5}{6}=\\frac{2\\times 2}{3\\times 2}+\\frac{5}{6}=\\frac{4}{6}+\\frac{5}{6}=\\frac{9}{6}=\\frac{3}{2}$$
+        (On multiplie haut et bas de $\\frac{2}{3}$ par 2 pour obtenir le dénominateur commun 6.)
+      </div>
+      <div class="example">
+        $$\\frac{7}{12}-\\frac{5}{18}=\\frac{21}{36}-\\frac{10}{36}=\\frac{11}{36}$$
+        Le plus petit multiple commun à 12 et 18 est 36.
+      </div>
+      <div class="tip">💡 Toujours donner le résultat sous forme <strong>irréductible</strong>.</div>
+    ` },
+    questions: [
+      { enonce: "Calculer $\\dfrac{3}{8}+\\dfrac{2}{8}$.", choix: ["$\\dfrac{5}{16}$","$\\dfrac{5}{8}$","$\\dfrac{6}{8}$","$\\dfrac{1}{8}$"], bonne: 1,
+        explication: "Même dénominateur : $\\dfrac{3+2}{8}=\\dfrac{5}{8}$." },
+      { enonce: "Calculer $\\dfrac{2}{3}+\\dfrac{1}{6}$.", choix: ["$\\dfrac{3}{9}$","$\\dfrac{5}{6}$","$\\dfrac{3}{6}$","$\\dfrac{1}{2}$"], bonne: 1,
+        explication: "$\\dfrac{2}{3}=\\dfrac{4}{6}$ donc $\\dfrac{4}{6}+\\dfrac{1}{6}=\\dfrac{5}{6}$." },
+      { enonce: "Calculer $1-\\dfrac{5}{8}$.", choix: ["$\\dfrac{3}{8}$","$\\dfrac{5}{8}$","$-\\dfrac{4}{8}$","$\\dfrac{8}{5}$"], bonne: 0,
+        explication: "$1=\\dfrac{8}{8}$ donc $1-\\dfrac{5}{8}=\\dfrac{8-5}{8}=\\dfrac{3}{8}$." },
+      { enonce: "Calculer $\\dfrac{7}{12}-\\dfrac{5}{12}$.", choix: ["$\\dfrac{2}{12}$","$\\dfrac{1}{6}$","$\\dfrac{12}{12}$","$\\dfrac{1}{2}$"], bonne: 1,
+        explication: "$\\dfrac{7-5}{12}=\\dfrac{2}{12}=\\dfrac{1}{6}$ (forme irréductible)." },
+      { enonce: "Calculer $\\dfrac{3}{4}+\\dfrac{5}{8}$.", choix: ["$\\dfrac{8}{12}$","$\\dfrac{11}{8}$","$\\dfrac{3}{32}$","$\\dfrac{1}{2}$"], bonne: 1,
+        explication: "$\\dfrac{3}{4}=\\dfrac{6}{8}$ donc $\\dfrac{6}{8}+\\dfrac{5}{8}=\\dfrac{11}{8}$." },
+      { enonce: "Calculer $\\dfrac{7}{9}-\\dfrac{2}{3}$.", choix: ["$\\dfrac{1}{9}$","$\\dfrac{5}{9}$","$\\dfrac{7}{6}$","$\\dfrac{11}{9}$"], bonne: 0,
+        explication: "$\\dfrac{2}{3}=\\dfrac{6}{9}$ donc $\\dfrac{7}{9}-\\dfrac{6}{9}=\\dfrac{1}{9}$." },
+      { enonce: "Calculer $1-\\dfrac{7}{12}$.", choix: ["$\\dfrac{5}{12}$","$\\dfrac{7}{5}$","$\\dfrac{17}{12}$","$\\dfrac{12}{7}$"], bonne: 0,
+        explication: "$1=\\dfrac{12}{12}$ donc $\\dfrac{12}{12}-\\dfrac{7}{12}=\\dfrac{5}{12}$." },
+      { enonce: "Calculer $\\dfrac{7}{10}+\\dfrac{3}{5}$.", choix: ["$\\dfrac{13}{10}$","$\\dfrac{1}{2}$","$\\dfrac{17}{20}$","$\\dfrac{4}{15}$"], bonne: 0,
+        explication: "$\\dfrac{3}{5}=\\dfrac{6}{10}$ donc $\\dfrac{7}{10}+\\dfrac{6}{10}=\\dfrac{13}{10}$." },
+      { enonce: "Calculer $\\dfrac{2}{5}+\\dfrac{1}{2}-\\dfrac{3}{10}$.", choix: ["$\\dfrac{3}{5}$","$\\dfrac{2}{10}$","$\\dfrac{1}{2}$","$\\dfrac{1}{5}$"], bonne: 0,
+        explication: "Dénominateur commun 10 : $\\dfrac{4}{10}+\\dfrac{5}{10}-\\dfrac{3}{10}=\\dfrac{6}{10}=\\dfrac{3}{5}$." },
+      { enonce: "Calculer $\\dfrac{5}{9}-\\dfrac{2}{15}$.", choix: ["$\\dfrac{3}{6}$","$\\dfrac{19}{45}$","$\\dfrac{3}{45}$","$\\dfrac{7}{45}$"], bonne: 1,
+        explication: "Dénominateur commun 45 : $\\dfrac{25}{45}-\\dfrac{6}{45}=\\dfrac{19}{45}$." },
+      { enonce: "Calculer $\\dfrac{8}{12}+\\dfrac{5}{3}$.", choix: ["$\\dfrac{13}{15}$","$\\dfrac{7}{3}$","$\\dfrac{13}{12}$","$\\dfrac{28}{12}$"], bonne: 1,
+        explication: "$\\dfrac{8}{12}=\\dfrac{2}{3}$ donc $\\dfrac{2}{3}+\\dfrac{5}{3}=\\dfrac{7}{3}$." },
+      { enonce: "Calculer $\\dfrac{7}{10}+\\dfrac{3}{4}$.", choix: ["$\\dfrac{10}{14}$","$\\dfrac{29}{20}$","$\\dfrac{14}{20}$","$\\dfrac{10}{40}$"], bonne: 1,
+        explication: "Dénominateur commun 20 : $\\dfrac{14}{20}+\\dfrac{15}{20}=\\dfrac{29}{20}$." },
+      { enonce: "Calculer $\\dfrac{2}{3}+\\dfrac{1}{4}-\\dfrac{5}{6}$.", choix: ["$\\dfrac{1}{12}$","$-\\dfrac{1}{12}$","$\\dfrac{1}{6}$","$0$"], bonne: 0,
+        explication: "Dénominateur commun 12 : $\\dfrac{8}{12}+\\dfrac{3}{12}-\\dfrac{10}{12}=\\dfrac{1}{12}$." }
+    ]
+  },
+
+  fractions_mul_div: {
+    titre: "Multiplier et diviser des fractions",
+    categorie: "nc",
+    icone: "✖️",
+    lecon: { contenu: `
+      <h3>Méthode</h3>
+      <div class="method">
+        <p><strong>Multiplication :</strong> on multiplie les numérateurs entre eux et les dénominateurs entre eux.</p>
+        $$\\frac{a}{b}\\times\\frac{c}{d}=\\frac{a\\times c}{b\\times d}$$
+      </div>
+      <div class="method">
+        <p><strong>Division :</strong> diviser par une fraction, c'est multiplier par son <em>inverse</em>.</p>
+        $$\\frac{a}{b}\\div\\frac{c}{d}=\\frac{a}{b}\\times\\frac{d}{c}$$
+      </div>
+      <h3>Exemples</h3>
+      <div class="example">
+        $$\\frac{2}{5}\\times\\frac{3}{7}=\\frac{2\\times 3}{5\\times 7}=\\frac{6}{35}$$
+      </div>
+      <div class="example">
+        $$\\frac{4}{9}\\times\\frac{3}{8}=\\frac{4\\times 3}{9\\times 8}=\\frac{12}{72}=\\frac{1}{6}$$
+      </div>
+      <div class="example">
+        $$\\frac{5}{6}\\div\\frac{2}{3}=\\frac{5}{6}\\times\\frac{3}{2}=\\frac{15}{12}=\\frac{5}{4}$$
+      </div>
+      <div class="tip">💡 Simplifier <em>avant</em> de multiplier facilite les calculs et donne directement une fraction irréductible.</div>
+    ` },
+    questions: [
+      { enonce: "Calculer $\\dfrac{2}{5}\\times\\dfrac{3}{7}$.", choix: ["$\\dfrac{6}{35}$","$\\dfrac{5}{12}$","$\\dfrac{6}{12}$","$\\dfrac{2}{35}$"], bonne: 0,
+        explication: "$\\dfrac{2\\times 3}{5\\times 7}=\\dfrac{6}{35}$." },
+      { enonce: "Calculer $\\dfrac{5}{6}\\times\\dfrac{3}{10}$.", choix: ["$\\dfrac{15}{60}$","$\\dfrac{1}{4}$","$\\dfrac{15}{16}$","$\\dfrac{1}{3}$"], bonne: 1,
+        explication: "$\\dfrac{15}{60}=\\dfrac{1}{4}$." },
+      { enonce: "Calculer $\\dfrac{7}{8}\\times\\dfrac{4}{21}$.", choix: ["$\\dfrac{28}{168}$","$\\dfrac{1}{6}$","$\\dfrac{1}{2}$","$\\dfrac{3}{7}$"], bonne: 1,
+        explication: "$\\dfrac{7\\times 4}{8\\times 21}=\\dfrac{28}{168}=\\dfrac{1}{6}$." },
+      { enonce: "Calculer $\\dfrac{9}{14}\\div\\dfrac{3}{7}$.", choix: ["$\\dfrac{21}{42}$","$\\dfrac{3}{2}$","$\\dfrac{7}{6}$","$\\dfrac{9}{6}$"], bonne: 1,
+        explication: "$\\dfrac{9}{14}\\times\\dfrac{7}{3}=\\dfrac{63}{42}=\\dfrac{3}{2}$." },
+      { enonce: "Calculer $\\dfrac{7}{10}\\div\\dfrac{1}{5}$.", choix: ["$\\dfrac{7}{50}$","$\\dfrac{7}{2}$","$\\dfrac{1}{14}$","$\\dfrac{5}{7}$"], bonne: 1,
+        explication: "$\\dfrac{7}{10}\\times\\dfrac{5}{1}=\\dfrac{35}{10}=\\dfrac{7}{2}$." },
+      { enonce: "Calculer $\\dfrac{5}{12}\\div\\dfrac{5}{18}$.", choix: ["$\\dfrac{5}{30}$","$\\dfrac{18}{12}$","$\\dfrac{3}{2}$","$\\dfrac{12}{18}$"], bonne: 2,
+        explication: "$\\dfrac{5}{12}\\times\\dfrac{18}{5}=\\dfrac{18}{12}=\\dfrac{3}{2}$." },
+      { enonce: "Calculer $\\dfrac{2}{3}\\div\\dfrac{6}{5}$.", choix: ["$\\dfrac{12}{15}$","$\\dfrac{5}{9}$","$\\dfrac{6}{5}$","$\\dfrac{9}{5}$"], bonne: 1,
+        explication: "$\\dfrac{2}{3}\\times\\dfrac{5}{6}=\\dfrac{10}{18}=\\dfrac{5}{9}$." },
+      { enonce: "Calculer $\\dfrac{3}{8}\\div 2$.", choix: ["$\\dfrac{6}{8}$","$\\dfrac{3}{4}$","$\\dfrac{3}{16}$","$\\dfrac{3}{10}$"], bonne: 2,
+        explication: "$\\dfrac{3}{8}\\div 2 = \\dfrac{3}{8}\\times\\dfrac{1}{2}=\\dfrac{3}{16}$." },
+      { enonce: "Calculer $\\dfrac{15}{16}\\times\\dfrac{4}{5}$.", choix: ["$\\dfrac{3}{4}$","$\\dfrac{60}{80}$","$\\dfrac{19}{21}$","$\\dfrac{4}{3}$"], bonne: 0,
+        explication: "$\\dfrac{15\\times 4}{16\\times 5}=\\dfrac{60}{80}=\\dfrac{3}{4}$." },
+      { enonce: "Calculer $\\dfrac{25}{36}\\div\\dfrac{5}{6}$.", choix: ["$\\dfrac{5}{6}$","$\\dfrac{125}{216}$","$\\dfrac{30}{36}$","$\\dfrac{1}{6}$"], bonne: 0,
+        explication: "$\\dfrac{25}{36}\\times\\dfrac{6}{5}=\\dfrac{150}{180}=\\dfrac{5}{6}$." },
+      { enonce: "Calculer $\\dfrac{5}{18}\\times\\dfrac{27}{10}$.", choix: ["$\\dfrac{3}{4}$","$\\dfrac{135}{180}$","$\\dfrac{32}{28}$","$\\dfrac{1}{2}$"], bonne: 0,
+        explication: "$\\dfrac{5\\times 27}{18\\times 10}=\\dfrac{135}{180}=\\dfrac{3}{4}$." },
+      { enonce: "Calculer $\\dfrac{7}{8}\\times\\dfrac{4}{21}$.", choix: ["$\\dfrac{28}{168}$","$\\dfrac{1}{6}$","$\\dfrac{11}{29}$","$\\dfrac{1}{4}$"], bonne: 1,
+        explication: "$\\dfrac{7\\times 4}{8\\times 21}=\\dfrac{28}{168}=\\dfrac{1}{6}$." },
+      { enonce: "Calculer $\\dfrac{2}{3}+\\dfrac{1}{4}\\times\\dfrac{4}{9}$.", choix: ["$\\dfrac{3}{4}$","$\\dfrac{7}{9}$","$\\dfrac{1}{4}$","$\\dfrac{12}{27}$"], bonne: 1,
+        explication: "On commence par la multiplication : $\\dfrac{1}{4}\\times\\dfrac{4}{9}=\\dfrac{4}{36}=\\dfrac{1}{9}$. Puis $\\dfrac{2}{3}+\\dfrac{1}{9}=\\dfrac{6}{9}+\\dfrac{1}{9}=\\dfrac{7}{9}$." }
+    ]
+  },
+
+  fraction_d_un_nombre: {
+    titre: "Prendre une fraction (ou un %) d'un nombre",
+    categorie: "nc",
+    icone: "🍰",
+    lecon: { contenu: `
+      <h3>Méthode</h3>
+      <div class="method">
+        <p>Prendre une fraction d'un nombre, c'est <strong>multiplier</strong> ce nombre par la fraction.</p>
+        <p>Prendre $a\\%$ de $c$, c'est multiplier $c$ par $\\dfrac{a}{100}$.</p>
+      </div>
+      <h3>À retenir</h3>
+      <div class="example">
+        <p><strong>Fractions usuelles</strong> :</p>
+        <ul>
+          <li>La moitié d'un nombre : on divise par 2 (le tiers : on divise par 3, le quart : on divise par 4...).</li>
+          <li>Le tiers de 18 = $18 \\div 3 = 6$.</li>
+          <li>Le quart de 12 = $12 \\div 4 = 3$.</li>
+        </ul>
+      </div>
+      <div class="example">
+        <p><strong>Pourcentages simples :</strong></p>
+        <ul>
+          <li>$100\\%$ de $c$ = $c$ (tout)</li>
+          <li>$50\\%$ de $c$ = $\\dfrac{c}{2}$ (la moitié)</li>
+          <li>$25\\%$ de $c$ = $\\dfrac{c}{4}$ (le quart)</li>
+          <li>$10\\%$ de $c$ = $\\dfrac{c}{10}$ (on divise par 10)</li>
+          <li>$1\\%$ de $c$ = $\\dfrac{c}{100}$</li>
+        </ul>
+      </div>
+      <div class="tip">💡 $20\\%$ = $\\dfrac{1}{5}$ ; $75\\%$ = $\\dfrac{3}{4}$ ; $5\\%$ = la moitié de $10\\%$.</div>
+    ` },
+    questions: [
+      { enonce: "Quel est le tiers de 18 ?", choix: ["3","6","9","18"], bonne: 1, explication: "$18\\div 3=6$." },
+      { enonce: "Quel est le quart de 12 ?", choix: ["2","3","4","6"], bonne: 1, explication: "$12\\div 4=3$." },
+      { enonce: "Quel est la moitié de 50 ?", choix: ["10","25","100","5"], bonne: 1, explication: "$50\\div 2=25$." },
+      { enonce: "Combien font $10\\%$ de 250 ?", choix: ["10","25","2,5","100"], bonne: 1, explication: "$10\\%$ de 250 = $250\\div 10=25$." },
+      { enonce: "Combien font $50\\%$ de 80 ?", choix: ["8","20","40","160"], bonne: 2, explication: "$50\\%$ = la moitié : $80\\div 2=40$." },
+      { enonce: "Combien font $25\\%$ de 200 ?", choix: ["25","40","50","100"], bonne: 2, explication: "$25\\%$ = le quart : $200\\div 4=50$." },
+      { enonce: "Combien font $1\\%$ de 4 500 ?", choix: ["4,5","45","450","0,45"], bonne: 1, explication: "$1\\%$ de 4 500 = $4500\\div 100=45$." },
+      { enonce: "Combien font $\\dfrac{2}{3}$ de 30 ?", choix: ["15","20","22","10"], bonne: 1, explication: "$\\dfrac{2}{3}\\times 30=\\dfrac{60}{3}=20$." },
+      { enonce: "Combien font $\\dfrac{3}{4}$ de 40 ?", choix: ["10","20","30","32"], bonne: 2, explication: "$\\dfrac{3}{4}\\times 40=\\dfrac{120}{4}=30$." },
+      { enonce: "Combien font $100\\%$ de 47 ?", choix: ["0","47","4 700","0,47"], bonne: 1, explication: "$100\\%$ d'un nombre, c'est le nombre lui-même." },
+      { enonce: "Combien font $10\\%$ de 86 ?", choix: ["8,6","860","0,86","16"], bonne: 0, explication: "$86\\div 10=8,6$." },
+      { enonce: "Combien font $50\\%$ de 13 ?", choix: ["13","26","6,5","0,13"], bonne: 2, explication: "$50\\%$ = moitié : $13\\div 2=6,5$." },
+      { enonce: "Combien font $25\\%$ de 64 ?", choix: ["8","16","32","6,4"], bonne: 1, explication: "$25\\%$ = quart : $64\\div 4=16$." },
+      { enonce: "Combien font $\\dfrac{1}{5}$ de 75 ?", choix: ["15","20","25","5"], bonne: 0, explication: "$75\\div 5=15$." }
+    ]
+  },
+
+  ecritures_nombre: {
+    titre: "Différentes écritures d'un nombre",
+    categorie: "nc",
+    icone: "🔁",
+    lecon: { contenu: `
+      <h3>Méthode</h3>
+      <div class="method">
+        <p>Un même nombre peut s'écrire de plusieurs façons : fraction, décimal, pourcentage, somme...</p>
+      </div>
+      <h3>Exemples à connaître</h3>
+      <div class="example">
+        <p>$\\dfrac{1}{2}=0,5=50\\%=\\dfrac{50}{100}$</p>
+        <p>$\\dfrac{1}{4}=0,25=25\\%=\\dfrac{25}{100}$</p>
+        <p>$\\dfrac{3}{4}=0,75=75\\%$</p>
+        <p>$\\dfrac{1}{10}=0,1=10\\%$</p>
+      </div>
+      <div class="example">
+        <p>$1,2 = \\dfrac{12}{10}=\\dfrac{6}{5}=1+\\dfrac{1}{5}=120\\%=\\dfrac{120}{100}$</p>
+      </div>
+      <div class="tip">💡 Pour passer de la fraction à la décimale, on peut effectuer la division (ou utiliser les valeurs à connaître par cœur).</div>
+    ` },
+    questions: [
+      { enonce: "$\\dfrac{1}{2}$ est égal à :", choix: ["$0,2$","$0,5$","$0,12$","$2$"], bonne: 1, explication: "$1\\div 2 = 0{,}5$." },
+      { enonce: "$\\dfrac{3}{4}$ est égal à :", choix: ["$0,34$","$0,75$","$1,33$","$3,4$"], bonne: 1, explication: "$3\\div 4=0{,}75$." },
+      { enonce: "$0,1$ est égal à :", choix: ["$\\dfrac{1}{10}$","$\\dfrac{1}{100}$","$10\\%$ et $\\dfrac{1}{10}$","$\\dfrac{10}{1}$"], bonne: 2, explication: "$0{,}1 = \\dfrac{1}{10}=10\\%$." },
+      { enonce: "$50\\%$ est égal à :", choix: ["$5$","$\\dfrac{1}{2}$","$\\dfrac{1}{50}$","$50$"], bonne: 1, explication: "$50\\%=\\dfrac{50}{100}=\\dfrac{1}{2}=0{,}5$." },
+      { enonce: "$\\dfrac{1}{4}$ est égal à :", choix: ["$0,4$","$0,25$","$25\\%$ et $0,25$","$0,14$"], bonne: 2, explication: "$\\dfrac{1}{4}=0{,}25=25\\%$." },
+      { enonce: "$1,5$ peut s'écrire :", choix: ["$\\dfrac{15}{10}$","$\\dfrac{3}{2}$","$150\\%$","Toutes ces réponses"], bonne: 3, explication: "Les trois écritures sont équivalentes." },
+      { enonce: "$\\dfrac{5}{2}$ est égal à :", choix: ["$2,5$","$0,52$","$5,2$","$0,25$"], bonne: 0, explication: "$5\\div 2=2{,}5$." },
+      { enonce: "$\\dfrac{100}{100}$ est égal à :", choix: ["$10$","$1$","$0,1$","$100$"], bonne: 1, explication: "$\\dfrac{100}{100}=1$." },
+      { enonce: "$\\dfrac{7}{1}$ est égal à :", choix: ["$0,7$","$7$","$1,7$","$\\dfrac{1}{7}$"], bonne: 1, explication: "$\\dfrac{7}{1}=7$ : diviser par 1 ne change rien." },
+      { enonce: "$0,75$ est égal à :", choix: ["$\\dfrac{3}{4}$ et $75\\%$","$\\dfrac{75}{10}$","$\\dfrac{7}{5}$","$0,034$"], bonne: 0, explication: "$0{,}75=\\dfrac{75}{100}=\\dfrac{3}{4}=75\\%$." },
+      { enonce: "$\\dfrac{4}{2}$ est égal à :", choix: ["$0,42$","$4$","$2$","$\\dfrac{1}{2}$"], bonne: 2, explication: "$\\dfrac{4}{2}=2$." },
+      { enonce: "Quelle écriture est égale à $20\\%$ ?", choix: ["$\\dfrac{1}{5}$","$0,2$","$\\dfrac{20}{100}$","Toutes ces réponses"], bonne: 3, explication: "Les trois écritures représentent $20\\%$." }
+    ]
+  },
+
+  decimaux_calculs: {
+    titre: "Comparer et calculer avec les nombres décimaux",
+    categorie: "nc",
+    icone: "📏",
+    lecon: { contenu: `
+      <h3>Méthode</h3>
+      <div class="method">
+        <p><strong>Comparer des décimaux :</strong> on compare d'abord les parties entières. Si elles sont égales, on compare les chiffres après la virgule, rang par rang.</p>
+        <p><strong>Avec des nombres négatifs :</strong> attention, le plus "grand en valeur absolue" n'est pas forcément le plus grand. Exemple : $-7 < -3$ car $-7$ est plus à gauche sur la droite graduée.</p>
+      </div>
+      <h3>Exemples</h3>
+      <div class="example">
+        <p>Comparer $3,4$ et $3,38$.</p>
+        Parties entières égales. Premier chiffre après virgule : $4 > 3$, donc $3,4 > 3,38$.
+      </div>
+      <div class="example">
+        <p>Comparer $-5,2$ et $-5,8$.</p>
+        $5,2 < 5,8$ donc $-5,2 > -5,8$ (le signe inverse l'ordre).
+      </div>
+      <div class="tip">💡 Quand on additionne ou soustrait, on aligne les virgules.</div>
+    ` },
+    questions: [
+      { enonce: "Comparer : $3,4$ ?? $3,38$", choix: ["$3,4 < 3,38$","$3,4 = 3,38$","$3,4 > 3,38$","Impossible"], bonne: 2, explication: "$3,4=3,40$ et $3,40 > 3,38$." },
+      { enonce: "Quel est le plus grand ? $-2,5$ ou $-2,9$ ?", choix: ["$-2,5$","$-2,9$","Ils sont égaux","On ne peut pas comparer"], bonne: 0, explication: "$-2,5$ est plus à droite sur la droite graduée que $-2,9$, donc $-2,5>-2,9$." },
+      { enonce: "Calculer $4,5 + 3,75$.", choix: ["$7,25$","$8,25$","$7,75$","$8,75$"], bonne: 1, explication: "$4{,}50+3{,}75=8{,}25$." },
+      { enonce: "Calculer $10 - 2,7$.", choix: ["$7,3$","$8,3$","$7,7$","$8,7$"], bonne: 0, explication: "$10{,}0-2{,}7=7{,}3$." },
+      { enonce: "Calculer $-3 + 7$.", choix: ["$-10$","$10$","$4$","$-4$"], bonne: 2, explication: "$-3+7=4$." },
+      { enonce: "Calculer $-5 - 3$.", choix: ["$-2$","$-8$","$2$","$8$"], bonne: 1, explication: "$-5-3=-8$." },
+      { enonce: "Calculer $2,5 \\times 4$.", choix: ["$8$","$10$","$6,5$","$12,5$"], bonne: 1, explication: "$2{,}5\\times 4=10$." },
+      { enonce: "Calculer $-4 \\times 3$.", choix: ["$12$","$-12$","$-1$","$1$"], bonne: 1, explication: "Un négatif × un positif = négatif : $-12$." },
+      { enonce: "Calculer $(-6)\\times(-2)$.", choix: ["$-12$","$12$","$-8$","$4$"], bonne: 1, explication: "Deux négatifs : le résultat est positif. $(-6)\\times(-2)=12$." },
+      { enonce: "Calculer $7 - (-3)$.", choix: ["$4$","$10$","$-10$","$-4$"], bonne: 1, explication: "Soustraire un négatif, c'est ajouter : $7+3=10$." },
+      { enonce: "Quel est le plus petit ? $0,07$ ou $0,1$ ?", choix: ["$0,07$","$0,1$","Égaux","On ne peut pas savoir"], bonne: 0, explication: "$0{,}07=0{,}07$ et $0{,}1=0{,}10$, donc $0{,}07<0{,}10$." },
+      { enonce: "Calculer $0,3 \\times 0,2$.", choix: ["$0,06$","$0,6$","$0,5$","$0,006$"], bonne: 0, explication: "$3\\times 2=6$ et on place 2 chiffres après la virgule : $0{,}06$." }
+    ]
+  },
+
+  puissances_10: {
+    titre: "Puissances de 10",
+    categorie: "nc",
+    icone: "🔟",
+    lecon: { contenu: `
+      <h3>Méthode</h3>
+      <div class="method">
+        <p><strong>Puissances positives :</strong> $10^n$ est suivi de $n$ zéros.</p>
+        <ul>
+          <li>$10^0 = 1$</li>
+          <li>$10^1 = 10$</li>
+          <li>$10^2 = 100$</li>
+          <li>$10^3 = 1\\,000$</li>
+          <li>$10^6 = 1\\,000\\,000$</li>
+        </ul>
+        <p><strong>Puissances négatives :</strong> $10^{-n}=\\dfrac{1}{10^n}$.</p>
+        <ul>
+          <li>$10^{-1}=0,1$</li>
+          <li>$10^{-2}=0,01$</li>
+          <li>$10^{-3}=0,001$</li>
+        </ul>
+      </div>
+      <h3>Opérations</h3>
+      <div class="method">
+        <p>$10^a \\times 10^b = 10^{a+b}$ ; $\\dfrac{10^a}{10^b}=10^{a-b}$ ; $(10^a)^b = 10^{a\\times b}$.</p>
+      </div>
+      <div class="example">
+        $4,52 \\times 10^2 = 452$ ; $4,52 \\times 10^{-2} = 0,0452$.
+      </div>
+      <div class="example">
+        $10^5 \\times 10^3 = 10^{8}$ ; $\\dfrac{10^7}{10^2}=10^5$ ; $10^3 \\times 10^{-5}=10^{-2}$.
+      </div>
+    ` },
+    questions: [
+      { enonce: "$10^{-3}$ vaut :", choix: ["$1\\,000$","$0,001$","$-0,001$","$0,01$"], bonne: 1, explication: "$10^{-3}=\\dfrac{1}{1\\,000}=0{,}001$." },
+      { enonce: "$100\\,000$ s'écrit :", choix: ["$10^4$","$10^5$","$10^6$","$10^{-4}$"], bonne: 1, explication: "$100\\,000$ a 5 zéros, donc $10^5$." },
+      { enonce: "Calculer $4,8 \\times 10^{-2}$.", choix: ["$480$","$0,048$","$0,48$","$0,0048$"], bonne: 1, explication: "On déplace la virgule de 2 rangs vers la gauche : $4{,}8\\to 0{,}048$." },
+      { enonce: "$10^{-1}$ vaut :", choix: ["$10$","$0,01$","$-10$","$\\dfrac{1}{10}$"], bonne: 3, explication: "$10^{-1}=\\dfrac{1}{10}=0{,}1$." },
+      { enonce: "Écrire $0,007$ avec une puissance de 10.", choix: ["$7\\times 10^{-2}$","$0,7\\times 10^{-2}$","$7\\times 10^{-3}$","$7\\times 10^3$"], bonne: 2, explication: "$0{,}007=\\dfrac{7}{1\\,000}=7\\times 10^{-3}$." },
+      { enonce: "Calculer $10^3 \\times 10^4$.", choix: ["$10^7$","$10^{12}$","$10^1$","$10^{-1}$"], bonne: 0, explication: "On ajoute les exposants : $10^{3+4}=10^7$." },
+      { enonce: "Calculer $\\dfrac{10^6}{10^2}$.", choix: ["$10^8$","$10^{-4}$","$10^3$","$10^4$"], bonne: 3, explication: "On retranche les exposants : $10^{6-2}=10^4$." },
+      { enonce: "Calculer $10^5 \\times 10^{-3}$.", choix: ["$10^{-15}$","$10^2$","$10^{15}$","$10^{-2}$"], bonne: 1, explication: "$10^{5+(-3)}=10^2$." },
+      { enonce: "Calculer $\\dfrac{10^{-2}}{10^3}$.", choix: ["$10^5$","$10^{-5}$","$10^{-1}$","$10^6$"], bonne: 1, explication: "$10^{-2-3}=10^{-5}$." },
+      { enonce: "Calculer $10^2 \\times \\dfrac{10^4}{10^3}$.", choix: ["$10^1$","$10^3$","$10^2$","$10^4$"], bonne: 1, explication: "$\\dfrac{10^4}{10^3}=10^1$, puis $10^2\\times 10^1=10^3$." },
+      { enonce: "Écrire $1\\,000\\,000$ comme puissance de 10.", choix: ["$10^5$","$10^6$","$10^7$","$10^4$"], bonne: 1, explication: "$1\\,000\\,000$ a 6 zéros : $10^6$." },
+      { enonce: "Calculer $4{,}52\\times 10^2$.", choix: ["$45,2$","$452$","$4520$","$0,0452$"], bonne: 1, explication: "On déplace la virgule de 2 rangs vers la droite." },
+      { enonce: "Calculer $\\dfrac{10^7\\times 10^2}{10^5}$.", choix: ["$10^4$","$10^{-4}$","$10^{14}$","$10^9$"], bonne: 0, explication: "$10^{7+2-5}=10^4$." }
+    ]
+  },
+
+  notation_scientifique: {
+    titre: "Notation scientifique",
+    categorie: "nc",
+    icone: "🔬",
+    lecon: { contenu: `
+      <h3>Méthode</h3>
+      <div class="method">
+        <p>La <strong>notation scientifique</strong> d'un nombre est de la forme $a \\times 10^n$ avec :</p>
+        <ul>
+          <li>$a$ un nombre décimal tel que $1 \\le a < 10$ (un seul chiffre non nul avant la virgule) ;</li>
+          <li>$n$ un entier relatif (positif, nul ou négatif).</li>
+        </ul>
+      </div>
+      <h3>Exemples</h3>
+      <div class="example">
+        <p>$327\\,000$ → le premier chiffre non nul est 3, donc $a=3{,}27$.</p>
+        Pour passer de $3{,}27$ à $327\\,000$, on décale de 5 rangs vers la gauche, donc $n=5$.
+        $$327\\,000 = 3{,}27 \\times 10^{5}$$
+      </div>
+      <div class="example">
+        <p>$0{,}0045$ → le premier chiffre non nul est 4, donc $a=4{,}5$.</p>
+        Pour passer de $4{,}5$ à $0{,}0045$, on décale de 3 rangs vers la droite, donc $n=-3$.
+        $$0{,}0045 = 4{,}5\\times 10^{-3}$$
+      </div>
+      <div class="tip">💡 $0,85\\times 10^5$ n'est <em>pas</em> une notation scientifique : il faudrait avoir $8,5\\times 10^4$.</div>
+    ` },
+    questions: [
+      { enonce: "Notation scientifique de $4\\,500$ ?", choix: ["$4,5\\times 10^3$","$45\\times 10^2$","$0,45\\times 10^4$","$4,5\\times 10^{-3}$"], bonne: 0, explication: "$a=4{,}5$ et on décale de 3 rangs : $4{,}5\\times 10^3$." },
+      { enonce: "Notation scientifique de $0{,}006$ ?", choix: ["$6\\times 10^3$","$6\\times 10^{-3}$","$0,6\\times 10^{-2}$","$6\\times 10^{-2}$"], bonne: 1, explication: "$a=6$ et on décale de 3 rangs vers la droite : $6\\times 10^{-3}$." },
+      { enonce: "Notation scientifique de $72\\,000\\,000$ ?", choix: ["$72\\times 10^6$","$7,2\\times 10^7$","$7,2\\times 10^8$","$0,72\\times 10^8$"], bonne: 1, explication: "$a=7{,}2$ et on décale de 7 rangs : $7{,}2\\times 10^7$." },
+      { enonce: "Notation scientifique de $0{,}000032$ ?", choix: ["$3,2\\times 10^{-5}$","$32\\times 10^{-6}$","$3,2\\times 10^{-4}$","$3,2\\times 10^{-6}$"], bonne: 0, explication: "$a=3{,}2$ ; pour passer à $0{,}000032$ on décale de 5 rangs : $3{,}2\\times 10^{-5}$." },
+      { enonce: "$0{,}00072$ = ?", choix: ["$72\\times 10^{-5}$","$7,2\\times 10^4$","$0,72\\times 10^{-3}$","$7,2\\times 10^{-4}$"], bonne: 3, explication: "$a=7{,}2$ et 4 décalages : $7{,}2\\times 10^{-4}$." },
+      { enonce: "$4{,}5\\times 10^6$ s'écrit :", choix: ["$4\\,500\\,000$","$450\\,000$","$45\\,000\\,000$","$4\\,500$"], bonne: 0, explication: "$4{,}5\\times 10^6 = 4\\,500\\,000$." },
+      { enonce: "$3{,}6\\times 10^{-3}$ s'écrit :", choix: ["$0,036$","$0,0036$","$0,00036$","$36$"], bonne: 1, explication: "On décale la virgule de 3 rangs vers la gauche : $0{,}0036$." },
+      { enonce: "Parmi ces écritures, laquelle est une notation scientifique correcte ?", choix: ["$0,85\\times 10^5$","$8,5\\times 10^4$","$85\\times 10^3$","$850\\times 10^2$"], bonne: 1, explication: "Il faut $1\\le a<10$, donc $8{,}5\\times 10^4$." },
+      { enonce: "Écriture décimale de $3{,}5\\times 10^4$ ?", choix: ["$3\\,500$","$35\\,000$","$0,00035$","$350\\,000$"], bonne: 1, explication: "$3{,}5\\times 10^4=35\\,000$." },
+      { enonce: "Écriture décimale de $6{,}2\\times 10^{-3}$ ?", choix: ["$0,062$","$0,0062$","$0,00062$","$6\\,200$"], bonne: 1, explication: "$6{,}2$ avec 3 rangs à droite : $0{,}0062$." },
+      { enonce: "Ordre croissant : $3{,}4\\times 10^3 \\;;\\; 6{,}1\\times 10^5 \\;;\\; 9{,}2\\times 10^{-2}$.", choix: [
+          "$9,2\\times 10^{-2} ; 3,4\\times 10^3 ; 6,1\\times 10^5$",
+          "$3,4\\times 10^3 ; 6,1\\times 10^5 ; 9,2\\times 10^{-2}$",
+          "$6,1\\times 10^5 ; 3,4\\times 10^3 ; 9,2\\times 10^{-2}$",
+          "$9,2\\times 10^{-2} ; 6,1\\times 10^5 ; 3,4\\times 10^3$"
+        ], bonne: 0, explication: "On compare les exposants : $-2 < 3 < 5$, donc $9,2\\times 10^{-2} < 3,4\\times 10^3 < 6,1\\times 10^5$." }
+    ]
+  },
+
+  prefixes_unites: {
+    titre: "Préfixes (nano à giga)",
+    categorie: "nc",
+    icone: "📐",
+    lecon: { contenu: `
+      <h3>Méthode</h3>
+      <div class="method">
+        <p>Les <strong>préfixes</strong> placés devant une unité correspondent à des puissances de 10.</p>
+      </div>
+      <table>
+        <tr><th>Préfixe</th><th>Symbole</th><th>Puissance</th><th>Exemple</th></tr>
+        <tr><td>nano-</td><td>n</td><td>$10^{-9}$</td><td>1 ng = 0,000 000 001 g</td></tr>
+        <tr><td>micro-</td><td>µ</td><td>$10^{-6}$</td><td>1 µm = 0,000 001 m</td></tr>
+        <tr><td>milli-</td><td>m</td><td>$10^{-3}$</td><td>1 mL = 0,001 L</td></tr>
+        <tr><td>centi-</td><td>c</td><td>$10^{-2}$</td><td>1 cL = 0,01 L</td></tr>
+        <tr><td>déci-</td><td>d</td><td>$10^{-1}$</td><td>1 dm = 0,1 m</td></tr>
+        <tr><td>(unité)</td><td>–</td><td>$10^{0}$</td><td>1 g</td></tr>
+        <tr><td>déca-</td><td>da</td><td>$10^{1}$</td><td>1 dam = 10 m</td></tr>
+        <tr><td>hecto-</td><td>h</td><td>$10^{2}$</td><td>1 hg = 100 g</td></tr>
+        <tr><td>kilo-</td><td>k</td><td>$10^{3}$</td><td>1 km = 1 000 m</td></tr>
+        <tr><td>méga-</td><td>M</td><td>$10^{6}$</td><td>1 Mo ≈ 1 000 000 octets</td></tr>
+        <tr><td>giga-</td><td>G</td><td>$10^{9}$</td><td>1 Go ≈ 1 000 000 000 octets</td></tr>
+      </table>
+      <div class="example">
+        $3\\text{ mg}=3\\times 10^{-3}\\text{ g}$ ; $2\\text{ Go}=2\\times 10^9\\text{ octets}$.
+      </div>
+    ` },
+    questions: [
+      { enonce: "$1\\text{ km}$ vaut combien de m ?", choix: ["$10^2$ m","$10^3$ m","$10^4$ m","$10^6$ m"], bonne: 1, explication: "kilo = $10^3$, donc 1 km = $10^3$ m = 1 000 m." },
+      { enonce: "$5\\,\\mu\\text{m}$ vaut :", choix: ["$5\\times 10^{-2}$ m","$5\\times 10^{-6}$ m","$5\\times 10^{-3}$ m","$5\\times 10^{-9}$ m"], bonne: 1, explication: "micro = $10^{-6}$." },
+      { enonce: "$200\\text{ cg}$ vaut :", choix: ["$2\\times 10^{-6}$ g","$2\\times 10^{0}$ g","$200\\times 10^{-2}$ g et $2$ g","$20\\times 10^0$ g"], bonne: 2, explication: "centi = $10^{-2}$ donc $200\\,\\text{cg}=200\\times 10^{-2}\\,\\text{g}=2\\,\\text{g}$." },
+      { enonce: "$800\\text{ Go}$ vaut combien d'octets ?", choix: ["$8\\times 10^9$","$8\\times 10^{10}$","$8\\times 10^{11}$","$8\\times 10^{12}$"], bonne: 2, explication: "giga = $10^9$ ; $800\\times 10^9=8\\times 10^{11}$." },
+      { enonce: "$0{,}2\\text{ MJ}$ vaut :", choix: ["$200\\,000$ J","$2\\,000$ kJ","$2\\,000\\,000$ J","$20$ kJ"], bonne: 0, explication: "méga = $10^6$ donc $0{,}2\\,\\text{MJ}=0{,}2\\times 10^6\\,\\text{J}=200\\,000\\,\\text{J}$." },
+      { enonce: "$4\\text{ km}$ = ? m", choix: ["$40$","$400$","$4\\,000$","$40\\,000$"], bonne: 2, explication: "$1\\,\\text{km}=10^3\\,\\text{m}$ donc $4\\,\\text{km}=4\\,000\\,\\text{m}$." },
+      { enonce: "$250\\text{ cL}$ = ? L", choix: ["$0,25$","$2,5$","$25$","$250$"], bonne: 1, explication: "centi = $10^{-2}$ : $250\\times 10^{-2}=2{,}5$ L." },
+      { enonce: "$7\\text{ mV}$ = ? V", choix: ["$0,07$","$0,007$","$7\\,000$","$70$"], bonne: 1, explication: "milli = $10^{-3}$ : $7\\times 10^{-3}=0{,}007$ V." },
+      { enonce: "$3\\,200\\text{ Mo}$ = ? octets", choix: ["$3,2\\times 10^9$","$3,2\\times 10^6$","$3,2\\times 10^{12}$","$3,2\\times 10^3$"], bonne: 0, explication: "$3\\,200\\,\\text{Mo}=3\\,200\\times 10^6=3{,}2\\times 10^9$ o." },
+      { enonce: "$5{,}6\\text{ kg}$ = ? g", choix: ["$56$","$560$","$5\\,600$","$56\\,000$"], bonne: 2, explication: "$1\\,\\text{kg}=10^3\\,\\text{g}$ : $5{,}6\\times 10^3=5\\,600$ g." },
+      { enonce: "$2{,}4\\text{ mg}$ = ? g", choix: ["$0,024$","$0,0024$","$0,24$","$2\\,400$"], bonne: 1, explication: "milli = $10^{-3}$ : $2{,}4\\times 10^{-3}=0{,}0024$ g." },
+      { enonce: "$35\\text{ nA}$ = ? A", choix: ["$3,5\\times 10^{-7}$","$3,5\\times 10^{-8}$","$35\\times 10^{-9}$ et $3,5\\times 10^{-8}$","$3,5\\times 10^{-9}$"], bonne: 2, explication: "nano = $10^{-9}$ : $35\\times 10^{-9}=3{,}5\\times 10^{-8}$ A." }
+    ]
+  },
+
+  carres_racines: {
+    titre: "Carrés et racines carrées (de 1 à 12)",
+    categorie: "nc",
+    icone: "²",
+    lecon: { contenu: `
+      <h3>Méthode</h3>
+      <div class="method">
+        <p>Si $a$ est un nombre positif, il existe un unique nombre positif dont le carré est $a$ ; on le note $\\sqrt{a}$.</p>
+        <p>Il faut connaître par cœur les <strong>carrés des entiers de 1 à 12</strong>.</p>
+      </div>
+      <table>
+        <tr><th>$n$</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th></tr>
+        <tr><th>$n^2$</th><td>1</td><td>4</td><td>9</td><td>16</td><td>25</td><td>36</td><td>49</td><td>64</td><td>81</td><td>100</td><td>121</td><td>144</td></tr>
+      </table>
+      <h3>Exemples</h3>
+      <div class="example">
+        L'aire d'un carré est de 81 cm². Quel est le côté ? Réponse : $\\sqrt{81}=9$ cm.
+      </div>
+      <div class="example">
+        Quel nombre multiplié par lui-même donne 49 ? Réponse : $\\sqrt{49}=7$.
+      </div>
+    ` },
+    questions: [
+      { enonce: "$\\sqrt{4}=$ ?", choix: ["2","4","8","16"], bonne: 0, explication: "$2\\times 2=4$ donc $\\sqrt{4}=2$." },
+      { enonce: "$\\sqrt{121}=$ ?", choix: ["9","10","11","12"], bonne: 2, explication: "$11^2=121$." },
+      { enonce: "$\\sqrt{16}=$ ?", choix: ["2","4","8","256"], bonne: 1, explication: "$4^2=16$." },
+      { enonce: "$\\sqrt{64}=$ ?", choix: ["6","7","8","9"], bonne: 2, explication: "$8^2=64$." },
+      { enonce: "$\\sqrt{144}=$ ?", choix: ["10","11","12","14"], bonne: 2, explication: "$12^2=144$." },
+      { enonce: "$\\sqrt{36}=$ ?", choix: ["5","6","7","18"], bonne: 1, explication: "$6^2=36$." },
+      { enonce: "$\\sqrt{25}=$ ?", choix: ["4","5","6","12,5"], bonne: 1, explication: "$5^2=25$." },
+      { enonce: "Combien fait $9^2$ ?", choix: ["18","72","81","99"], bonne: 2, explication: "$9\\times 9=81$." },
+      { enonce: "Combien fait $7^2$ ?", choix: ["14","42","49","56"], bonne: 2, explication: "$7\\times 7=49$." },
+      { enonce: "Combien fait $11^2$ ?", choix: ["22","112","121","144"], bonne: 2, explication: "$11\\times 11=121$." },
+      { enonce: "L'aire d'un carré est 81 cm². Quelle est la longueur d'un côté ?", choix: ["8 cm","9 cm","10 cm","81 cm"], bonne: 1, explication: "$\\sqrt{81}=9$, donc côté = 9 cm." },
+      { enonce: "L'aire d'un carré est 144 cm². Côté = ?", choix: ["11 cm","12 cm","14 cm","72 cm"], bonne: 1, explication: "$\\sqrt{144}=12$ cm." },
+      { enonce: "$\\sqrt{100}=$ ?", choix: ["1","10","100","50"], bonne: 1, explication: "$10^2=100$." },
+      { enonce: "Combien fait $12^2$ ?", choix: ["122","124","144","148"], bonne: 2, explication: "$12\\times 12=144$." }
+    ]
+  },
+
+  divisibilite: {
+    titre: "Critères de divisibilité (2, 3, 5, 9)",
+    categorie: "nc",
+    icone: "🧮",
+    lecon: { contenu: `
+      <h3>Critères à retenir</h3>
+      <div class="method">
+        <ul>
+          <li><strong>Divisible par 2</strong> : le nombre se termine par 0, 2, 4, 6 ou 8 (chiffre des unités pair).</li>
+          <li><strong>Divisible par 5</strong> : le nombre se termine par 0 ou 5.</li>
+          <li><strong>Divisible par 10</strong> : le nombre se termine par 0.</li>
+          <li><strong>Divisible par 3</strong> : la somme des chiffres est un multiple de 3.</li>
+          <li><strong>Divisible par 9</strong> : la somme des chiffres est un multiple de 9.</li>
+        </ul>
+      </div>
+      <h3>Exemples</h3>
+      <div class="example">
+        <p>$372$ : termine par 2 → divisible par 2. Somme des chiffres : $3+7+2=12$, multiple de 3 → divisible par 3. $12$ n'est pas multiple de 9 → pas divisible par 9.</p>
+      </div>
+      <div class="example">
+        <p>$135$ : termine par 5 → divisible par 5. Somme : $1+3+5=9$ → divisible par 9 (et donc par 3).</p>
+      </div>
+    ` },
+    questions: [
+      { enonce: "456 est divisible par :", choix: ["2 et 5","2 et 3","3 et 5","9"], bonne: 1, explication: "456 termine par 6 (divisible par 2). $4+5+6=15$ (multiple de 3)." },
+      { enonce: "315 est divisible par :", choix: ["2","3 et 5","2 et 5","9 seulement"], bonne: 1, explication: "Termine par 5 (÷5). $3+1+5=9$ (÷3 et ÷9). N'est pas pair." },
+      { enonce: "522 est-il divisible par 9 ?", choix: ["Oui","Non","Impossible à savoir","Seulement par 3"], bonne: 0, explication: "$5+2+2=9$, multiple de 9 → divisible par 9." },
+      { enonce: "Le nombre 1 248 est divisible par :", choix: ["3 et 5","2 et 3","9 et 5","Aucun"], bonne: 1, explication: "Termine par 8 (÷2). $1+2+4+8=15$ (÷3 mais pas ÷9)." },
+      { enonce: "Lequel est divisible par 5 ?", choix: ["123","256","345","482"], bonne: 2, explication: "345 termine par 5." },
+      { enonce: "Lequel est divisible par 9 ?", choix: ["134","243","356","467"], bonne: 1, explication: "$2+4+3=9$ : multiple de 9." },
+      { enonce: "Lequel est divisible par 2 ?", choix: ["247","357","468","521"], bonne: 2, explication: "468 est pair." },
+      { enonce: "Le nombre 720 est divisible par :", choix: ["2, 3, 5 et 9","2 et 5 seulement","3 et 9 seulement","2 et 3 seulement"], bonne: 0, explication: "Termine par 0 (÷2, ÷5). $7+2+0=9$ (÷3 et ÷9)." },
+      { enonce: "1 003 est-il divisible par 3 ?", choix: ["Oui","Non","Oui, par 3 et par 9","Seulement par 9"], bonne: 1, explication: "$1+0+0+3=4$, pas multiple de 3." },
+      { enonce: "Parmi ces nombres, lequel est divisible par 3 mais pas par 9 ?", choix: ["54","135","123","81"], bonne: 2, explication: "$1+2+3=6$ : ÷3 mais pas ÷9." },
+      { enonce: "Pour qu'un nombre soit divisible par 9, il faut :", choix: ["Qu'il se termine par 9","Que la somme des chiffres soit divisible par 9","Qu'il soit pair","Qu'il se termine par 0 ou 5"], bonne: 1, explication: "C'est le critère de divisibilité par 9." }
+    ]
+  },
+
+  expressions_pour_n: {
+    titre: "Double, triple, moitié, prédécesseur, carré...",
+    categorie: "nc",
+    icone: "🔢",
+    lecon: { contenu: `
+      <h3>Méthode</h3>
+      <div class="method">
+        <p>Pour un nombre $n$ :</p>
+        <ul>
+          <li>Double : $2n$</li>
+          <li>Triple : $3n$</li>
+          <li>Moitié : $\\dfrac{n}{2}$</li>
+          <li>Tiers : $\\dfrac{n}{3}$</li>
+          <li>Quart : $\\dfrac{n}{4}$</li>
+          <li>Prédécesseur (le nombre juste avant) : $n-1$</li>
+          <li>Successeur (le nombre juste après) : $n+1$</li>
+          <li>Carré : $n^2$</li>
+          <li>Opposé : $-n$</li>
+          <li>Inverse : $\\dfrac{1}{n}$ (si $n\\ne 0$)</li>
+        </ul>
+      </div>
+      <h3>Exemples</h3>
+      <div class="example">
+        Pour $n=7$ : double = 14 ; moitié = 3,5 ; successeur = 8 ; prédécesseur = 6 ; carré = 49.
+      </div>
+    ` },
+    questions: [
+      { enonce: "Pour $n$, le double s'écrit :", choix: ["$n+2$","$2n$","$n^2$","$\\dfrac{n}{2}$"], bonne: 1, explication: "Le double de $n$ est $2\\times n=2n$." },
+      { enonce: "Pour $n$, la moitié s'écrit :", choix: ["$2n$","$n-2$","$\\dfrac{n}{2}$","$\\dfrac{1}{n}$"], bonne: 2, explication: "La moitié de $n$ est $\\dfrac{n}{2}$." },
+      { enonce: "Le successeur de 99 est :", choix: ["98","100","9","999"], bonne: 1, explication: "Successeur = nombre juste après = 99 + 1 = 100." },
+      { enonce: "Le prédécesseur de 10 est :", choix: ["9","11","20","5"], bonne: 0, explication: "Prédécesseur = 10 - 1 = 9." },
+      { enonce: "Le triple de 8 est :", choix: ["11","16","24","83"], bonne: 2, explication: "$3\\times 8=24$." },
+      { enonce: "Le carré de 6 est :", choix: ["12","36","26","62"], bonne: 1, explication: "$6^2=6\\times 6=36$." },
+      { enonce: "Pour $n$, le carré est :", choix: ["$2n$","$n^2$","$\\sqrt{n}$","$n+n$"], bonne: 1, explication: "$n^2=n\\times n$." },
+      { enonce: "Le triple de $n$ s'écrit :", choix: ["$3n$","$n+3$","$n^3$","$n/3$"], bonne: 0, explication: "Triple = $3\\times n=3n$." },
+      { enonce: "L'opposé de $n$ est :", choix: ["$n^2$","$\\dfrac{1}{n}$","$-n$","$2n$"], bonne: 2, explication: "L'opposé de $n$ est $-n$." },
+      { enonce: "L'inverse de $n$ ($n\\ne 0$) est :", choix: ["$-n$","$\\dfrac{1}{n}$","$n^2$","$\\sqrt{n}$"], bonne: 1, explication: "L'inverse de $n$ est $\\dfrac{1}{n}$." },
+      { enonce: "Si $n=12$, son tiers vaut :", choix: ["3","4","6","36"], bonne: 1, explication: "$12\\div 3=4$." },
+      { enonce: "Le carré du successeur de 4 :", choix: ["16","20","25","9"], bonne: 2, explication: "Successeur de 4 = 5 ; $5^2=25$." }
+    ]
+  },
+
+  calcul_litteral: {
+    titre: "Calcul littéral (simplifier, développer, factoriser)",
+    categorie: "nc",
+    icone: "🆎",
+    lecon: { contenu: `
+      <h3>Simplifier</h3>
+      <div class="method">
+        <p>On regroupe les termes "de même nature" (ceux qui se ressemblent : par exemple les "$x$" entre eux, les nombres entre eux).</p>
+      </div>
+      <div class="example">
+        $3x + 5 + 2x - 1 = (3x+2x) + (5-1) = 5x + 4$
+      </div>
+      <h3>Développer</h3>
+      <div class="method">
+        <p>$k(a+b) = ka + kb$ (on distribue).</p>
+      </div>
+      <div class="example">
+        $3(x+5) = 3x + 15$ ; $-2(x-4) = -2x + 8$.
+      </div>
+      <h3>Factoriser</h3>
+      <div class="method">
+        <p>On met en facteur le facteur commun.</p>
+      </div>
+      <div class="example">
+        $3x + 6 = 3(x+2)$ (facteur commun 3) ;
+        $5x + 10x = 15x$ ou aussi $5x(1+2)=15x$.
+      </div>
+      <h3>Calculer la valeur</h3>
+      <div class="method">
+        <p>On remplace la lettre par sa valeur et on calcule (attention aux priorités).</p>
+      </div>
+      <div class="example">
+        Si $x=3$, $2x+5 = 2\\times 3+5 = 11$.
+      </div>
+    ` },
+    questions: [
+      { enonce: "Simplifier $3x+5+2x-1$.", choix: ["$5x+4$","$10x$","$5x+6$","$6x$"], bonne: 0, explication: "On regroupe : $(3x+2x)+(5-1)=5x+4$." },
+      { enonce: "Simplifier $7x-3x+2$.", choix: ["$4x+2$","$10x+2$","$6x$","$4x-2$"], bonne: 0, explication: "$7x-3x=4x$, donc $4x+2$." },
+      { enonce: "Développer $3(x+5)$.", choix: ["$3x+5$","$x+15$","$3x+15$","$3+5x$"], bonne: 2, explication: "$3\\times x+3\\times 5=3x+15$." },
+      { enonce: "Développer $-2(x-4)$.", choix: ["$-2x-8$","$-2x+8$","$-2x-4$","$2x-8$"], bonne: 1, explication: "$-2\\times x + (-2)\\times(-4) = -2x+8$." },
+      { enonce: "Développer $5(2x-3)$.", choix: ["$10x-3$","$10x-15$","$7x-15$","$10x+15$"], bonne: 1, explication: "$5\\times 2x - 5\\times 3 = 10x-15$." },
+      { enonce: "Factoriser $4x+12$.", choix: ["$4(x+3)$","$4x(1+3)$","$x(4+12)$","$2(2x+6)$"], bonne: 0, explication: "Facteur commun 4 : $4(x+3)$." },
+      { enonce: "Factoriser $5x-10$.", choix: ["$5(x-2)$","$5(x-10)$","$x(5-10)$","$5x(1-2)$"], bonne: 0, explication: "Facteur commun 5 : $5(x-2)$." },
+      { enonce: "Factoriser $6a + 9b$.", choix: ["$3(2a+3b)$","$3(6a+9b)$","$6(a+9b)$","$15(a+b)$"], bonne: 0, explication: "Facteur commun 3 : $3(2a+3b)$." },
+      { enonce: "Pour $x=4$, $2x+3$ vaut :", choix: ["$11$","$10$","$14$","$24$"], bonne: 0, explication: "$2\\times 4+3=8+3=11$." },
+      { enonce: "Pour $x=-2$, $3x+5$ vaut :", choix: ["$11$","$-1$","$-11$","$1$"], bonne: 1, explication: "$3\\times(-2)+5=-6+5=-1$." },
+      { enonce: "Pour $x=5$, $x^2-3$ vaut :", choix: ["$25$","$28$","$22$","$7$"], bonne: 2, explication: "$5^2-3=25-3=22$." },
+      { enonce: "Développer $x(x+2)$.", choix: ["$x^2+2$","$x^2+2x$","$2x+2$","$x+2x$"], bonne: 1, explication: "$x\\times x + x\\times 2 = x^2+2x$." },
+      { enonce: "Simplifier $4x+3-2x+1$.", choix: ["$2x+4$","$6x+4$","$2x-4$","$x+4$"], bonne: 0, explication: "$(4x-2x)+(3+1)=2x+4$." }
+    ]
+  },
+
+  equations: {
+    titre: "Résoudre une équation simple",
+    categorie: "nc",
+    icone: "⚖️",
+    lecon: { contenu: `
+      <h3>Méthode</h3>
+      <div class="method">
+        <p><strong>Équations de la forme $x+b=c$ :</strong> on soustrait $b$ aux deux membres.</p>
+        <p><strong>Équations de la forme $ax=c$ :</strong> on divise les deux membres par $a$.</p>
+        <p><strong>Équations de la forme $ax+b=c$ :</strong> on commence par soustraire $b$, puis on divise par $a$.</p>
+        <p>Une équation est comme une balance : ce qu'on fait d'un côté, on le fait de l'autre.</p>
+      </div>
+      <h3>Exemples</h3>
+      <div class="example">
+        $x+7=12 \\implies x=12-7=5$
+      </div>
+      <div class="example">
+        $3x=21 \\implies x=\\dfrac{21}{3}=7$
+      </div>
+      <div class="example">
+        $2x+5=17 \\implies 2x=17-5=12 \\implies x=\\dfrac{12}{2}=6$
+      </div>
+    ` },
+    questions: [
+      { enonce: "Résoudre $x+5=12$.", choix: ["$x=7$","$x=17$","$x=-7$","$x=5$"], bonne: 0, explication: "$x=12-5=7$." },
+      { enonce: "Résoudre $x-3=8$.", choix: ["$x=5$","$x=11$","$x=-11$","$x=24$"], bonne: 1, explication: "$x=8+3=11$." },
+      { enonce: "Résoudre $4x=20$.", choix: ["$x=4$","$x=5$","$x=16$","$x=80$"], bonne: 1, explication: "$x=\\dfrac{20}{4}=5$." },
+      { enonce: "Résoudre $5x=-15$.", choix: ["$x=3$","$x=-3$","$x=-20$","$x=20$"], bonne: 1, explication: "$x=\\dfrac{-15}{5}=-3$." },
+      { enonce: "Résoudre $2x+1=9$.", choix: ["$x=4$","$x=5$","$x=8$","$x=10$"], bonne: 0, explication: "$2x=9-1=8$ donc $x=4$." },
+      { enonce: "Résoudre $3x-5=7$.", choix: ["$x=4$","$x=2$","$x=12$","$x=-4$"], bonne: 0, explication: "$3x=7+5=12$ donc $x=4$." },
+      { enonce: "Résoudre $5x+2=17$.", choix: ["$x=3$","$x=4$","$x=15$","$x=-3$"], bonne: 0, explication: "$5x=15$ donc $x=3$." },
+      { enonce: "Résoudre $x+11=4$.", choix: ["$x=7$","$x=-7$","$x=15$","$x=-15$"], bonne: 1, explication: "$x=4-11=-7$." },
+      { enonce: "Résoudre $7x=0$.", choix: ["$x=7$","$x=0$","$x=1$","Pas de solution"], bonne: 1, explication: "Un produit est nul si l'un de ses facteurs est nul. Ici $7\\ne 0$, donc $x=0$." },
+      { enonce: "Résoudre $-2x=8$.", choix: ["$x=4$","$x=-4$","$x=-16$","$x=16$"], bonne: 1, explication: "$x=\\dfrac{8}{-2}=-4$." },
+      { enonce: "Résoudre $2x+3=0$.", choix: ["$x=-\\dfrac{3}{2}$","$x=\\dfrac{3}{2}$","$x=-3$","$x=3$"], bonne: 0, explication: "$2x=-3$ donc $x=-\\dfrac{3}{2}$." },
+      { enonce: "Résoudre $\\dfrac{x}{3}=4$.", choix: ["$x=\\dfrac{4}{3}$","$x=12$","$x=7$","$x=1$"], bonne: 1, explication: "On multiplie par 3 : $x=12$." },
+      { enonce: "Léa pense à un nombre. Elle lui ajoute 8 et trouve 23. Quel nombre a-t-elle choisi ?", choix: ["12","15","19","31"], bonne: 1, explication: "On résout $x+8=23$ : $x=23-8=15$." },
+      { enonce: "Une équation du type $a+x=b$ se résout en :", choix: ["Multipliant par $a$","Soustrayant $a$ aux deux membres","Divisant par $b$","Élevant au carré"], bonne: 1, explication: "On isole $x$ en retranchant $a$ des deux côtés." }
+    ]
+  },
+
+  droite_graduee: {
+    titre: "Droite graduée et repère",
+    categorie: "nc",
+    icone: "📊",
+    lecon: { contenu: `
+      <h3>Droite graduée</h3>
+      <div class="fig-wrap">
+        <svg class="fig" viewBox="0 0 440 90" xmlns="http://www.w3.org/2000/svg">
+          <line x1="20" y1="50" x2="420" y2="50" stroke="#333" stroke-width="1.5" marker-end="url(#arrx)"/>
+          <defs>
+            <marker id="arrx" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+              <path d="M0,0 L8,3 L0,6" fill="#333"/>
+            </marker>
+          </defs>
+          <!-- graduations -->
+          ${[-3,-2,-1,0,1,2,3,4].map((v,i)=>{const x=60+i*45;return `<line x1="${x}" y1="46" x2="${x}" y2="54" stroke="#333" stroke-width="1.2"/><text x="${x-5}" y="72" font-size="12">${v}</text>`;}).join('')}
+          <!-- Points -->
+          <circle cx="195" cy="50" r="4" fill="#10b981"/>
+          <text x="180" y="35" class="lbl" font-size="13" fill="#10b981">A</text>
+          <circle cx="307" cy="50" r="4" fill="#ef4444"/>
+          <text x="303" y="35" class="lbl" font-size="13" fill="#ef4444">B</text>
+          <text x="425" y="55" font-size="12">x</text>
+        </svg>
+        <div style="font-size:11px;color:#555;text-align:center;margin-top:-8px">A a pour abscisse 0 ; B a pour abscisse 2,5</div>
+      </div>
+      <div class="method">
+        <p>Sur une droite graduée, chaque point a une <strong>abscisse</strong> (un nombre).</p>
+        <p>Le <strong>0</strong> est l'origine. Les nombres positifs sont à droite du 0, les négatifs à gauche.</p>
+      </div>
+      <h3>Repère orthogonal</h3>
+      <div class="fig-wrap">
+        <svg class="fig" viewBox="0 0 260 240" xmlns="http://www.w3.org/2000/svg">
+          <!-- grille -->
+          <g class="grid">
+            ${[1,2,3,4,5].flatMap(i=>[
+              `<line x1="${30+i*36}" y1="20" x2="${30+i*36}" y2="220"/>`,
+              `<line x1="30" y1="${220-i*36}" x2="246" y2="${220-i*36}"/>`
+            ]).join('')}
+          </g>
+          <!-- axes -->
+          <line x1="20" y1="220" x2="246" y2="220" class="axis" marker-end="url(#arr1)"/>
+          <line x1="30" y1="230" x2="30" y2="10" class="axis" marker-end="url(#arr1)"/>
+          <defs>
+            <marker id="arr1" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+              <path d="M0,0 L8,3 L0,6" fill="#333"/>
+            </marker>
+          </defs>
+          <!-- graduations axe x -->
+          ${[1,2,3,4,5].map(i=>`<text x="${24+i*36}" y="236" font-size="11">${i}</text>`).join('')}
+          ${[1,2,3,4,5].map(i=>`<text x="12" y="${224-i*36}" font-size="11">${i}</text>`).join('')}
+          <text x="15" y="232" font-size="11">O</text>
+          <text x="248" y="225" font-size="11">x</text>
+          <text x="35" y="15" font-size="11">y</text>
+          <!-- Point A(3;2) -->
+          <line x1="30" y1="148" x2="138" y2="148" class="ref"/>
+          <line x1="138" y1="220" x2="138" y2="148" class="ref"/>
+          <circle cx="138" cy="148" r="4" fill="#ef4444"/>
+          <text x="145" y="143" class="lbl" font-size="13" fill="#ef4444">A(3;2)</text>
+        </svg>
+      </div>
+      <div class="method">
+        <p>Dans un repère, chaque point a deux <strong>coordonnées</strong> : $(x \\,;\\, y)$.</p>
+        <ul>
+          <li>$x$ est l'<strong>abscisse</strong> (axe horizontal).</li>
+          <li>$y$ est l'<strong>ordonnée</strong> (axe vertical).</li>
+        </ul>
+        <p>Le point $O(0;0)$ est l'origine du repère.</p>
+      </div>
+      <h3>Exemples</h3>
+      <div class="example">
+        Le point $A(3 \\,;\\, -2)$ est à 3 unités à droite, 2 unités en bas par rapport à l'origine.
+      </div>
+      <div class="example">
+        Sur une droite graduée, le point d'abscisse $-1{,}5$ est entre $-2$ et $-1$, au milieu.
+      </div>
+    ` },
+    questions: [
+      { enonce: "Dans un repère, le point $A(2\\,;\\,5)$ a pour abscisse :",
+        fig: `<svg class="fig-q" viewBox="0 0 220 200"><g stroke="#d1d5db" stroke-width="0.5">${[1,2,3,4,5].flatMap(i=>[`<line x1="${20+i*30}" y1="20" x2="${20+i*30}" y2="180"/>`,`<line x1="20" y1="${180-i*30}" x2="200" y2="${180-i*30}"/>`]).join('')}</g><line x1="10" y1="180" x2="210" y2="180" stroke="#333" stroke-width="1.5"/><line x1="20" y1="190" x2="20" y2="10" stroke="#333" stroke-width="1.5"/>${[1,2,3,4,5].map(i=>`<text x="${15+i*30}" y="196" font-size="10">${i}</text>`).join('')}${[1,2,3,4,5].map(i=>`<text x="5" y="${184-i*30}" font-size="10">${i}</text>`).join('')}<text x="6" y="196" font-size="10">O</text><circle cx="80" cy="30" r="4" fill="#ef4444"/><line x1="20" y1="30" x2="80" y2="30" stroke="#ef4444" stroke-dasharray="2,2"/><line x1="80" y1="180" x2="80" y2="30" stroke="#ef4444" stroke-dasharray="2,2"/><text x="86" y="27" font-size="12" fill="#ef4444" font-style="italic">A</text></svg>`,
+        choix: ["2","5","-2","-5"], bonne: 0, explication: "L'abscisse, c'est le premier nombre (axe horizontal) : 2." },
+      { enonce: "Dans un repère, le point $B(-3\\,;\\,4)$ a pour ordonnée :", choix: ["-3","3","4","-4"], bonne: 2, explication: "L'ordonnée, c'est le deuxième nombre (axe vertical) : 4." },
+      { enonce: "Sur une droite graduée, où se trouve le point d'abscisse $-2$ ?", choix: ["À droite du 0","À gauche du 0, à 2 unités","Au-dessus du 0","Sur le 0"], bonne: 1, explication: "Les négatifs sont à gauche de l'origine, à 2 unités." },
+      { enonce: "L'origine d'un repère a pour coordonnées :", choix: ["(1 ; 1)","(0 ; 0)","(0 ; 1)","(1 ; 0)"], bonne: 1, explication: "L'origine est en (0 ; 0)." },
+      { enonce: "Le point $C(0\\,;\\,4)$ se trouve :", choix: ["Sur l'axe des abscisses","Sur l'axe des ordonnées","Sur l'origine","En dehors du repère"], bonne: 1, explication: "Abscisse = 0 → sur l'axe vertical (des ordonnées)." },
+      { enonce: "Le point $D(-5\\,;\\,0)$ se trouve :", choix: ["Sur l'axe des abscisses","Sur l'axe des ordonnées","Au-dessus de l'axe","Impossible"], bonne: 0, explication: "Ordonnée = 0 → sur l'axe horizontal (des abscisses)." },
+      { enonce: "Entre $-3$ et $-2$ sur la droite graduée, on trouve :", choix: ["$-1$","$-2,5$","$3$","$0$"], bonne: 1, explication: "$-2{,}5$ est compris entre $-3$ et $-2$." },
+      { enonce: "Lequel est le plus grand ? $-1$ ou $-4$ ?", choix: ["$-1$","$-4$","Ils sont égaux","On ne peut pas dire"], bonne: 0, explication: "$-1$ est plus à droite sur la droite graduée." },
+      { enonce: "Le point $E(3\\,;\\,-2)$ se trouve :", choix: ["En haut à droite","En haut à gauche","En bas à droite","En bas à gauche"], bonne: 2, explication: "Abscisse positive (à droite), ordonnée négative (en bas)." },
+      { enonce: "Quel point est sur l'axe des abscisses ?", choix: ["$(0\\,;\\,5)$","$(2\\,;\\,0)$","$(3\\,;\\,3)$","$(-1\\,;\\,2)$"], bonne: 1, explication: "Sur l'axe des abscisses, l'ordonnée vaut 0." }
+    ]
+  }
+
+});
+
+// ========================================================================
+//  ESPACE ET GÉOMÉTRIE
+// ========================================================================
+Object.assign(THEMES, {
+
+  angles: {
+    titre: "Angles et triangle",
+    categorie: "geo",
+    icone: "📐",
+    lecon: { contenu: `
+      <h3>Vocabulaire des angles</h3>
+      <div class="fig-wrap">
+        <svg class="fig" viewBox="0 0 520 150" xmlns="http://www.w3.org/2000/svg">
+          <!-- Angle aigu -->
+          <g transform="translate(10,10)">
+            <line x1="10" y1="110" x2="110" y2="110" stroke="#333" stroke-width="2"/>
+            <line x1="10" y1="110" x2="100" y2="40" stroke="#333" stroke-width="2"/>
+            <path d="M 40 110 A 30 30 0 0 0 33 87" class="ang-arc"/>
+            <text x="45" y="100" class="ang-lbl" font-size="13">aigu</text>
+            <circle cx="10" cy="110" r="3" class="pt"/>
+            <text x="55" y="135" font-size="11" fill="#555">< 90°</text>
+          </g>
+          <!-- Angle droit -->
+          <g transform="translate(140,10)">
+            <line x1="10" y1="110" x2="110" y2="110" stroke="#333" stroke-width="2"/>
+            <line x1="10" y1="110" x2="10" y2="20" stroke="#333" stroke-width="2"/>
+            <rect x="10" y="98" width="12" height="12" fill="none" stroke="#6366f1" stroke-width="2"/>
+            <text x="30" y="92" class="ang-lbl" font-size="13">droit</text>
+            <circle cx="10" cy="110" r="3" class="pt"/>
+            <text x="55" y="135" font-size="11" fill="#555">= 90°</text>
+          </g>
+          <!-- Angle obtus -->
+          <g transform="translate(270,10)">
+            <line x1="10" y1="110" x2="110" y2="110" stroke="#333" stroke-width="2"/>
+            <line x1="10" y1="110" x2="-50" y2="40" stroke="#333" stroke-width="2"/>
+            <path d="M 40 110 A 30 30 0 0 0 -8 88" class="ang-arc"/>
+            <text x="15" y="95" class="ang-lbl" font-size="13">obtus</text>
+            <circle cx="10" cy="110" r="3" class="pt"/>
+            <text x="40" y="135" font-size="11" fill="#555">entre 90° et 180°</text>
+          </g>
+          <!-- Angle plat -->
+          <g transform="translate(400,10)">
+            <line x1="0" y1="110" x2="115" y2="110" stroke="#333" stroke-width="2"/>
+            <path d="M 25 110 A 15 15 0 0 0 -5 110" class="ang-arc"/>
+            <text x="20" y="95" class="ang-lbl" font-size="13">plat</text>
+            <circle cx="55" cy="110" r="3" class="pt"/>
+            <text x="55" y="135" font-size="11" fill="#555">= 180°</text>
+          </g>
+        </svg>
+      </div>
+      <div class="method">
+        <ul>
+          <li><strong>Angle nul</strong> : $0°$</li>
+          <li><strong>Angle aigu</strong> : entre $0°$ et $90°$</li>
+          <li><strong>Angle droit</strong> : $90°$ (codé par un petit carré)</li>
+          <li><strong>Angle obtus</strong> : entre $90°$ et $180°$</li>
+          <li><strong>Angle plat</strong> : $180°$</li>
+        </ul>
+        <p><strong>Angles supplémentaires</strong> : leur somme fait $180°$.</p>
+        <p><strong>Angles complémentaires</strong> : leur somme fait $90°$.</p>
+        <p><strong>Angles opposés par le sommet</strong> : ils ont la même mesure.</p>
+      </div>
+      <h3>Triangle</h3>
+      <div class="fig-wrap">
+        <svg class="fig" viewBox="0 0 260 180" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="40,150 220,150 100,30" fill="#eef2ff" stroke="#333" stroke-width="2"/>
+          <!-- Angles arcs -->
+          <path d="M 60 150 A 20 20 0 0 0 53 137" class="ang-arc"/>
+          <path d="M 200 150 A 20 20 0 0 0 207 137" class="ang-arc"/>
+          <path d="M 110 45 A 18 18 0 0 1 116 60" class="ang-arc"/>
+          <!-- Labels -->
+          <circle cx="40" cy="150" r="3" class="pt"/>
+          <circle cx="220" cy="150" r="3" class="pt"/>
+          <circle cx="100" cy="30" r="3" class="pt"/>
+          <text x="22" y="165" class="lbl" font-size="14">A</text>
+          <text x="228" y="165" class="lbl" font-size="14">B</text>
+          <text x="95" y="22" class="lbl" font-size="14">C</text>
+          <text x="65" y="142" class="ang-lbl" font-size="12">α</text>
+          <text x="185" y="142" class="ang-lbl" font-size="12">β</text>
+          <text x="103" y="60" class="ang-lbl" font-size="12">γ</text>
+        </svg>
+      </div>
+      <div class="method">
+        <p>La <strong>somme des angles d'un triangle</strong> est toujours $180°$ :</p>
+        $$\\widehat{A}+\\widehat{B}+\\widehat{C}=180°$$
+        <p>Pour calculer le troisième angle, on fait : $180° - (\\text{angle}_1+\\text{angle}_2)$.</p>
+      </div>
+      <h3>Exemple</h3>
+      <div class="example">
+        Dans un triangle, deux angles mesurent $40°$ et $75°$. Le troisième mesure $180-(40+75)=180-115=65°$.
+      </div>
+    ` },
+    questions: [
+      { enonce: "Un angle droit mesure :", choix: ["$45°$","$90°$","$180°$","$360°$"], bonne: 1, explication: "Un angle droit mesure $90°$." },
+      { enonce: "Un angle plat mesure :", choix: ["$90°$","$180°$","$360°$","$0°$"], bonne: 1, explication: "Un angle plat mesure $180°$." },
+      { enonce: "Un angle aigu est un angle qui mesure :", choix: ["plus de $90°$","exactement $90°$","entre $0°$ et $90°$","$180°$"], bonne: 2, explication: "Un angle aigu mesure entre $0°$ et $90°$." },
+      { enonce: "Un angle obtus mesure :", choix: ["moins de $90°$","entre $90°$ et $180°$","exactement $180°$","exactement $90°$"], bonne: 1, explication: "Un angle obtus mesure entre $90°$ et $180°$." },
+      { enonce: "La somme des angles d'un triangle est :", choix: ["$90°$","$180°$","$360°$","Cela dépend du triangle"], bonne: 1, explication: "C'est toujours $180°$." },
+      { enonce: "Dans le triangle ci-dessous, deux angles mesurent $50°$ et $70°$. Le troisième mesure :",
+        fig: `<svg class="fig-q" viewBox="0 0 220 170"><polygon points="30,140 200,140 100,30" fill="#eef2ff" stroke="#333" stroke-width="2"/><circle cx="30" cy="140" r="3"/><circle cx="200" cy="140" r="3"/><circle cx="100" cy="30" r="3"/><text x="38" y="132" font-size="11" fill="#6366f1">50°</text><text x="178" y="132" font-size="11" fill="#6366f1">70°</text><text x="93" y="55" font-size="11" fill="#ef4444">?</text></svg>`,
+        choix: ["$50°$","$60°$","$70°$","$80°$"], bonne: 1, explication: "Somme des angles = $180°$ : $180-(50+70)=180-120=60°$." },
+      { enonce: "Dans un triangle, deux angles mesurent $30°$ et $90°$. Le troisième mesure :",
+        fig: `<svg class="fig-q" viewBox="0 0 220 170"><polygon points="30,140 200,140 30,40" fill="#eef2ff" stroke="#333" stroke-width="2"/><rect x="30" y="128" width="12" height="12" fill="none" stroke="#333"/><text x="170" y="132" font-size="11" fill="#6366f1">30°</text><text x="40" y="55" font-size="11" fill="#ef4444">?</text></svg>`,
+        choix: ["$30°$","$60°$","$90°$","$120°$"], bonne: 1, explication: "$180-(30+90)=60°$." },
+      { enonce: "Dans un triangle équilatéral, chaque angle mesure :", choix: ["$30°$","$45°$","$60°$","$90°$"], bonne: 2, explication: "$180°\\div 3=60°$." },
+      { enonce: "Dans un triangle rectangle, les deux angles aigus ont pour somme :", choix: ["$45°$","$90°$","$180°$","Cela dépend"], bonne: 1, explication: "Total $=180°$ moins l'angle droit $90°$ = $90°$." },
+      { enonce: "Deux angles supplémentaires ont une somme égale à :", choix: ["$90°$","$180°$","$360°$","$45°$"], bonne: 1, explication: "Supplémentaires : leur somme vaut $180°$." },
+      { enonce: "Deux angles opposés par le sommet :", choix: ["Sont supplémentaires","Sont complémentaires","Ont la même mesure","Sont droits"], bonne: 2, explication: "Ils ont la même mesure." },
+      { enonce: "Dans un triangle isocèle, les deux angles à la base mesurent $50°$. Le troisième mesure :", choix: ["$50°$","$80°$","$100°$","$130°$"], bonne: 1, explication: "$180-(50+50)=80°$." }
+    ]
+  },
+
+  conversions: {
+    titre: "Conversions d'unités",
+    categorie: "geo",
+    icone: "🔄",
+    lecon: { contenu: `
+      <h3>Longueurs</h3>
+      <div class="method">
+        <p>km, hm, dam, m, dm, cm, mm — chaque colonne représente un facteur 10.</p>
+        <p>Exemple : $1\\,\\text{m}=10\\,\\text{dm}=100\\,\\text{cm}=1\\,000\\,\\text{mm}$ ; $1\\,\\text{km}=1\\,000\\,\\text{m}$.</p>
+      </div>
+      <h3>Aires</h3>
+      <div class="method">
+        <p>$1\\,\\text{m}^2=100\\,\\text{dm}^2=10\\,000\\,\\text{cm}^2$. Chaque colonne représente un facteur <strong>100</strong>.</p>
+      </div>
+      <h3>Volumes et contenances</h3>
+      <div class="method">
+        <p>Chaque colonne représente un facteur <strong>1 000</strong>.</p>
+        <p>$1\\,\\text{dm}^3 = 1\\,\\text{L}$ ; $1\\,\\text{m}^3 = 1\\,000\\,\\text{L}$ ; $1\\,\\text{cL}=10\\,\\text{mL}$.</p>
+      </div>
+      <h3>Masses et temps</h3>
+      <div class="method">
+        <p>$1\\,\\text{kg}=1\\,000\\,\\text{g}$ ; $1\\,\\text{h}=60\\,\\text{min}=3\\,600\\,\\text{s}$ ; $1\\,\\text{jour}=24\\,\\text{h}$.</p>
+      </div>
+    ` },
+    questions: [
+      { enonce: "$3\\,\\text{m}$ = ? cm", choix: ["30","300","3 000","0,03"], bonne: 1, explication: "$1\\,\\text{m}=100\\,\\text{cm}$ donc $3\\,\\text{m}=300\\,\\text{cm}$." },
+      { enonce: "$2\\,500\\,\\text{m}$ = ? km", choix: ["0,25","2,5","25","250"], bonne: 1, explication: "$1\\,\\text{km}=1\\,000\\,\\text{m}$ donc $2\\,500\\,\\text{m}=2{,}5\\,\\text{km}$." },
+      { enonce: "$45\\,\\text{mm}$ = ? cm", choix: ["0,45","4,5","450","45"], bonne: 1, explication: "$1\\,\\text{cm}=10\\,\\text{mm}$ donc $45\\,\\text{mm}=4{,}5\\,\\text{cm}$." },
+      { enonce: "$1\\,\\text{m}^2$ = ? cm²", choix: ["100","1 000","10 000","100 000"], bonne: 2, explication: "$1\\,\\text{m}^2=10\\,000\\,\\text{cm}^2$." },
+      { enonce: "$2\\,\\text{dm}^3$ = ? L", choix: ["0,2","2","20","200"], bonne: 1, explication: "$1\\,\\text{dm}^3=1\\,\\text{L}$ donc $2\\,\\text{dm}^3=2\\,\\text{L}$." },
+      { enonce: "$1\\,500\\,\\text{mL}$ = ? L", choix: ["0,15","1,5","15","150"], bonne: 1, explication: "$1\\,\\text{L}=1\\,000\\,\\text{mL}$ donc $1\\,500\\,\\text{mL}=1{,}5\\,\\text{L}$." },
+      { enonce: "$3\\,\\text{kg}$ = ? g", choix: ["30","300","3 000","30 000"], bonne: 2, explication: "$1\\,\\text{kg}=1\\,000\\,\\text{g}$." },
+      { enonce: "$1\\,\\text{h}\\,30$ = ? min", choix: ["60","90","130","150"], bonne: 1, explication: "$1\\,\\text{h}=60\\,\\text{min}$ donc $1\\,\\text{h}\\,30=90\\,\\text{min}$." },
+      { enonce: "$120\\,\\text{s}$ = ? min", choix: ["1","2","12","120"], bonne: 1, explication: "$1\\,\\text{min}=60\\,\\text{s}$ donc $120\\,\\text{s}=2\\,\\text{min}$." },
+      { enonce: "$2\\,\\text{m}^3$ = ? L", choix: ["2","20","200","2 000"], bonne: 3, explication: "$1\\,\\text{m}^3=1\\,000\\,\\text{L}$ donc $2\\,\\text{m}^3=2\\,000\\,\\text{L}$." },
+      { enonce: "$25\\,\\text{cL}$ = ? mL", choix: ["2,5","25","250","2 500"], bonne: 2, explication: "$1\\,\\text{cL}=10\\,\\text{mL}$." },
+      { enonce: "$1\\,500\\,\\text{g}$ = ? kg", choix: ["0,15","1,5","15","150"], bonne: 1, explication: "$1\\,500\\,\\text{g}=1{,}5\\,\\text{kg}$." }
+    ]
+  },
+
+  solides: {
+    titre: "Reconnaître les solides",
+    categorie: "geo",
+    icone: "🧊",
+    lecon: { contenu: `
+      <h3>Les solides usuels</h3>
+      <div class="fig-wrap">
+        <svg class="fig" viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
+          <!-- Cube -->
+          <g transform="translate(10,20)">
+            <polygon points="10,60 70,60 70,120 10,120" fill="#eef2ff" stroke="#333" stroke-width="1.5"/>
+            <polygon points="10,60 35,40 95,40 70,60" fill="#dbeafe" stroke="#333" stroke-width="1.5"/>
+            <polygon points="70,60 95,40 95,100 70,120" fill="#bfdbfe" stroke="#333" stroke-width="1.5"/>
+            <text x="25" y="155" font-size="13" class="lbl">Cube</text>
+          </g>
+          <!-- Pavé droit -->
+          <g transform="translate(110,20)">
+            <polygon points="10,70 80,70 80,120 10,120" fill="#eef2ff" stroke="#333" stroke-width="1.5"/>
+            <polygon points="10,70 30,45 100,45 80,70" fill="#dbeafe" stroke="#333" stroke-width="1.5"/>
+            <polygon points="80,70 100,45 100,95 80,120" fill="#bfdbfe" stroke="#333" stroke-width="1.5"/>
+            <text x="15" y="155" font-size="13" class="lbl">Pavé droit</text>
+          </g>
+          <!-- Cylindre -->
+          <g transform="translate(225,20)">
+            <ellipse cx="40" cy="50" rx="30" ry="10" fill="#dbeafe" stroke="#333" stroke-width="1.5"/>
+            <line x1="10" y1="50" x2="10" y2="115" stroke="#333" stroke-width="1.5"/>
+            <line x1="70" y1="50" x2="70" y2="115" stroke="#333" stroke-width="1.5"/>
+            <ellipse cx="40" cy="115" rx="30" ry="10" fill="#eef2ff" stroke="#333" stroke-width="1.5"/>
+            <path d="M 10 115 A 30 10 0 0 0 70 115" fill="none" stroke="#333" stroke-width="1.5"/>
+            <text x="20" y="155" font-size="13" class="lbl">Cylindre</text>
+          </g>
+          <!-- Cône -->
+          <g transform="translate(325,20)">
+            <line x1="10" y1="115" x2="50" y2="40" stroke="#333" stroke-width="1.5"/>
+            <line x1="90" y1="115" x2="50" y2="40" stroke="#333" stroke-width="1.5"/>
+            <ellipse cx="50" cy="115" rx="40" ry="10" fill="#eef2ff" stroke="#333" stroke-width="1.5"/>
+            <circle cx="50" cy="40" r="2" class="pt"/>
+            <text x="35" y="155" font-size="13" class="lbl">Cône</text>
+          </g>
+          <!-- Pyramide -->
+          <g transform="translate(425,20)">
+            <polygon points="10,115 90,115 70,125 30,125" fill="#dbeafe" stroke="#333" stroke-width="1.5"/>
+            <line x1="10" y1="115" x2="45" y2="40" stroke="#333" stroke-width="1.5"/>
+            <line x1="90" y1="115" x2="45" y2="40" stroke="#333" stroke-width="1.5"/>
+            <line x1="30" y1="125" x2="45" y2="40" stroke="#333" stroke-width="1.5" stroke-dasharray="3,3"/>
+            <line x1="70" y1="125" x2="45" y2="40" stroke="#333" stroke-width="1.5"/>
+            <text x="20" y="155" font-size="13" class="lbl">Pyramide</text>
+          </g>
+          <!-- Sphère -->
+          <g transform="translate(525,20)">
+            <circle cx="40" cy="80" r="38" fill="#dbeafe" stroke="#333" stroke-width="1.5"/>
+            <ellipse cx="40" cy="80" rx="38" ry="10" fill="none" stroke="#333" stroke-width="1" stroke-dasharray="3,2"/>
+            <text x="15" y="155" font-size="13" class="lbl">Sphère / Boule</text>
+          </g>
+        </svg>
+      </div>
+      <div class="method">
+        <ul>
+          <li><strong>Cube</strong> : 6 faces carrées identiques, 8 sommets, 12 arêtes.</li>
+          <li><strong>Pavé droit</strong> (ou parallélépipède rectangle) : 6 faces rectangulaires, 8 sommets, 12 arêtes.</li>
+          <li><strong>Prisme droit</strong> : 2 faces parallèles identiques (les bases) et des faces latérales rectangulaires.</li>
+          <li><strong>Cylindre</strong> : 2 disques parallèles et une face latérale qui, dépliée, est un rectangle.</li>
+          <li><strong>Pyramide</strong> : une base polygonale, des faces latérales triangulaires se rejoignant en un sommet.</li>
+          <li><strong>Cône</strong> : un disque (base) et un sommet, surface latérale courbe.</li>
+          <li><strong>Sphère / boule</strong> : la sphère est la surface, la boule l'intérieur. Aucune arête, aucun sommet.</li>
+        </ul>
+      </div>
+    ` },
+    questions: [
+      { enonce: "Combien de faces a un cube ?", choix: ["4","6","8","12"], bonne: 1, explication: "Un cube a 6 faces carrées." },
+      { enonce: "Combien d'arêtes a un cube ?", choix: ["6","8","10","12"], bonne: 3, explication: "Un cube a 12 arêtes." },
+      { enonce: "Combien de sommets a un cube ?", choix: ["4","6","8","12"], bonne: 2, explication: "Un cube a 8 sommets." },
+      { enonce: "Un solide qui a un sommet et un disque comme base s'appelle :", choix: ["Cylindre","Pyramide","Cône","Sphère"], bonne: 2, explication: "C'est un cône." },
+      { enonce: "Un solide à 2 bases disques et une face latérale courbe s'appelle :", choix: ["Sphère","Cône","Cylindre","Prisme droit"], bonne: 2, explication: "C'est un cylindre." },
+      { enonce: "La base d'une pyramide à base carrée est :", choix: ["Un cercle","Un carré","Un triangle","Un hexagone"], bonne: 1, explication: "C'est un carré (cela donne son nom)." },
+      { enonce: "Un pavé droit a :", choix: ["4 faces","6 faces","8 faces","10 faces"], bonne: 1, explication: "Un pavé droit a 6 faces rectangulaires." },
+      { enonce: "Quel solide n'a aucun sommet et aucune arête ?", choix: ["Cube","Cône","Cylindre","Sphère"], bonne: 3, explication: "La sphère est une surface courbe sans sommet ni arête." },
+      { enonce: "Un prisme droit à base triangulaire a combien de faces ?", choix: ["3","4","5","6"], bonne: 2, explication: "2 triangles + 3 rectangles = 5 faces." },
+      { enonce: "Un cône a combien de sommets ?", choix: ["0","1","2","3"], bonne: 1, explication: "Il a un seul sommet (la pointe)." }
+    ]
+  },
+
+  perimetre: {
+    titre: "Périmètres",
+    categorie: "geo",
+    icone: "📏",
+    lecon: { contenu: `
+      <h3>Formules à connaître</h3>
+      <div class="fig-wrap">
+        <svg class="fig" viewBox="0 0 520 160" xmlns="http://www.w3.org/2000/svg">
+          <!-- Carré -->
+          <g transform="translate(10,10)">
+            <rect x="10" y="25" width="80" height="80" fill="#eef2ff" stroke="#333" stroke-width="2"/>
+            <text x="40" y="125" class="seg-lbl" font-size="12">c</text>
+            <text x="20" y="145" font-size="12" class="lbl">Carré : P = 4 × c</text>
+          </g>
+          <!-- Rectangle -->
+          <g transform="translate(150,10)">
+            <rect x="10" y="35" width="120" height="60" fill="#eef2ff" stroke="#333" stroke-width="2"/>
+            <text x="65" y="110" class="seg-lbl" font-size="12">L</text>
+            <text x="-5" y="68" class="seg-lbl" font-size="12">ℓ</text>
+            <text x="0" y="145" font-size="12" class="lbl">Rectangle : P = 2 × (L + ℓ)</text>
+          </g>
+          <!-- Disque -->
+          <g transform="translate(330,10)">
+            <circle cx="60" cy="65" r="40" fill="#eef2ff" stroke="#333" stroke-width="2"/>
+            <line x1="60" y1="65" x2="100" y2="65" stroke="#ef4444" stroke-width="1.5"/>
+            <circle cx="60" cy="65" r="2" class="pt"/>
+            <text x="75" y="60" class="seg-lbl" font-size="12">r</text>
+            <text x="20" y="145" font-size="12" class="lbl">Disque : P = 2πr</text>
+          </g>
+        </svg>
+      </div>
+      <div class="method">
+        <ul>
+          <li><strong>Carré</strong> : $P = 4\\times c$ (c = côté)</li>
+          <li><strong>Rectangle</strong> : $P = 2\\times(L+\\ell)$ (L = longueur, $\\ell$ = largeur)</li>
+          <li><strong>Triangle</strong> : $P = a+b+c$ (somme des 3 côtés)</li>
+          <li><strong>Cercle / disque</strong> : $P = 2\\pi r = \\pi \\times d$ (r = rayon, d = diamètre)</li>
+        </ul>
+        <p>Pour un <strong>polygone quelconque</strong> : on additionne les longueurs de tous les côtés.</p>
+      </div>
+      <h3>Exemple</h3>
+      <div class="example">
+        Un rectangle de longueur $8\\,\\text{cm}$ et largeur $3\\,\\text{cm}$ a pour périmètre $2\\times(8+3)=22\\,\\text{cm}$.
+      </div>
+    ` },
+    questions: [
+      { enonce: "Périmètre d'un carré de côté 5 cm ?", choix: ["10 cm","15 cm","20 cm","25 cm"], bonne: 2, explication: "$P=4\\times 5=20$ cm." },
+      { enonce: "Périmètre d'un rectangle de longueur 7 cm et largeur 3 cm ?", choix: ["10 cm","14 cm","20 cm","21 cm"], bonne: 2, explication: "$P=2\\times(7+3)=20$ cm." },
+      { enonce: "Périmètre d'un triangle de côtés 4, 5 et 6 cm ?", choix: ["12 cm","15 cm","20 cm","30 cm"], bonne: 1, explication: "$4+5+6=15$ cm." },
+      { enonce: "Périmètre d'un cercle de rayon 3 cm (donner en fonction de $\\pi$) ?", choix: ["$3\\pi$","$6\\pi$","$9\\pi$","$12\\pi$"], bonne: 1, explication: "$P=2\\pi r=2\\pi\\times 3=6\\pi$." },
+      { enonce: "Périmètre d'un cercle de diamètre 10 cm (en fonction de $\\pi$) ?", choix: ["$5\\pi$","$10\\pi$","$20\\pi$","$100\\pi$"], bonne: 1, explication: "$P=\\pi\\times d=10\\pi$ cm." },
+      { enonce: "Quelle formule donne le périmètre d'un carré ?", choix: ["$c^2$","$4c$","$2c$","$c+c$"], bonne: 1, explication: "$P=4\\times c$." },
+      { enonce: "Quelle formule donne le périmètre d'un cercle ?", choix: ["$\\pi r^2$","$2\\pi r$","$\\pi d^2$","$\\pi r$"], bonne: 1, explication: "$P=2\\pi r$." },
+      { enonce: "Un carré a pour périmètre 32 cm. Son côté mesure :", choix: ["4 cm","8 cm","16 cm","128 cm"], bonne: 1, explication: "$c=32\\div 4=8$ cm." },
+      { enonce: "Périmètre d'un rectangle de longueur 10 m et largeur 6 m ?", choix: ["16 m","30 m","32 m","60 m"], bonne: 2, explication: "$2\\times(10+6)=32$ m." },
+      { enonce: "Le périmètre d'un triangle équilatéral de côté 7 cm vaut :", choix: ["14 cm","21 cm","28 cm","49 cm"], bonne: 1, explication: "Triangle équilatéral : 3 côtés égaux, $P=3\\times 7=21$ cm." }
+    ]
+  },
+
+  aires: {
+    titre: "Aires (triangle, rectangle, disque)",
+    categorie: "geo",
+    icone: "🟦",
+    lecon: { contenu: `
+      <h3>Formules à connaître</h3>
+      <div class="fig-wrap">
+        <svg class="fig" viewBox="0 0 540 180" xmlns="http://www.w3.org/2000/svg">
+          <!-- Rectangle -->
+          <g transform="translate(10,10)">
+            <rect x="10" y="40" width="120" height="70" fill="#eef2ff" stroke="#333" stroke-width="2"/>
+            <text x="65" y="125" class="seg-lbl" font-size="12">L</text>
+            <text x="-5" y="80" class="seg-lbl" font-size="12">ℓ</text>
+            <text x="0" y="155" font-size="12" class="lbl">A = L × ℓ</text>
+          </g>
+          <!-- Triangle -->
+          <g transform="translate(170,10)">
+            <polygon points="20,110 130,110 80,30" fill="#eef2ff" stroke="#333" stroke-width="2"/>
+            <line x1="80" y1="30" x2="80" y2="110" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <rect x="75" y="100" width="10" height="10" fill="none" stroke="#ef4444" stroke-width="1"/>
+            <text x="65" y="128" class="seg-lbl" font-size="12">b</text>
+            <text x="85" y="75" class="seg-lbl" font-size="12">h</text>
+            <text x="30" y="155" font-size="12" class="lbl">A = (b × h) / 2</text>
+          </g>
+          <!-- Disque -->
+          <g transform="translate(360,10)">
+            <circle cx="70" cy="75" r="45" fill="#eef2ff" stroke="#333" stroke-width="2"/>
+            <line x1="70" y1="75" x2="115" y2="75" stroke="#ef4444" stroke-width="1.5"/>
+            <circle cx="70" cy="75" r="2" class="pt"/>
+            <text x="85" y="70" class="seg-lbl" font-size="12">r</text>
+            <text x="35" y="155" font-size="12" class="lbl">A = π × r²</text>
+          </g>
+        </svg>
+      </div>
+      <div class="method">
+        <ul>
+          <li><strong>Carré</strong> : $A = c^2$ (c = côté)</li>
+          <li><strong>Rectangle</strong> : $A = L \\times \\ell$</li>
+          <li><strong>Triangle</strong> : $A = \\dfrac{b\\times h}{2}$ (b = base, h = hauteur correspondante)</li>
+          <li><strong>Disque</strong> : $A = \\pi \\times r^2$</li>
+          <li><strong>Parallélogramme</strong> : $A = b\\times h$</li>
+        </ul>
+        <p>⚠️ L'aire s'exprime toujours dans une <strong>unité au carré</strong> (cm², m², …).</p>
+      </div>
+      <h3>Exemples</h3>
+      <div class="example">
+        Rectangle $L=8\\,\\text{cm}$, $\\ell=5\\,\\text{cm}$ : $A=8\\times 5=40\\,\\text{cm}^2$.
+      </div>
+      <div class="example">
+        Triangle base 6, hauteur 4 : $A=\\dfrac{6\\times 4}{2}=12\\,\\text{cm}^2$.
+      </div>
+      <div class="example">
+        Disque rayon 5 : $A=\\pi\\times 5^2=25\\pi\\,\\text{cm}^2$.
+      </div>
+    ` },
+    questions: [
+      { enonce: "Aire d'un carré de côté 6 cm ?", choix: ["12 cm²","24 cm²","36 cm²","12 cm"], bonne: 2, explication: "$A=6^2=36$ cm²." },
+      { enonce: "Aire de ce rectangle de 8 m sur 5 m ?",
+        fig: `<svg class="fig-q" viewBox="0 0 220 130"><rect x="20" y="20" width="160" height="80" fill="#eef2ff" stroke="#333" stroke-width="2"/><text x="90" y="118" font-size="12" fill="#ef4444">8 m</text><text x="-5" y="65" font-size="12" fill="#ef4444">5 m</text></svg>`,
+        choix: ["13 m²","26 m²","30 m²","40 m²"], bonne: 3, explication: "$A=L\\times \\ell=8\\times 5=40$ m²." },
+      { enonce: "Aire de ce triangle de base 10 cm et hauteur 6 cm ?",
+        fig: `<svg class="fig-q" viewBox="0 0 240 150"><polygon points="20,120 220,120 130,30" fill="#eef2ff" stroke="#333" stroke-width="2"/><line x1="130" y1="30" x2="130" y2="120" stroke="#ef4444" stroke-dasharray="3,2"/><rect x="125" y="110" width="10" height="10" fill="none" stroke="#ef4444"/><text x="105" y="138" font-size="12" fill="#ef4444">10 cm</text><text x="138" y="75" font-size="12" fill="#ef4444">6 cm</text></svg>`,
+        choix: ["16 cm²","30 cm²","60 cm²","16 cm"], bonne: 1, explication: "$A=\\dfrac{b\\times h}{2}=\\dfrac{10\\times 6}{2}=30$ cm²." },
+      { enonce: "Aire d'un disque de rayon 4 cm (en fonction de $\\pi$) ?", choix: ["$8\\pi$","$16\\pi$","$4\\pi$","$32\\pi$"], bonne: 1, explication: "$A=\\pi\\times 4^2=16\\pi$ cm²." },
+      { enonce: "Formule de l'aire d'un triangle :", choix: ["$b\\times h$","$\\dfrac{b\\times h}{2}$","$b+h$","$\\dfrac{b+h}{2}$"], bonne: 1, explication: "$A=\\dfrac{b\\times h}{2}$." },
+      { enonce: "Formule de l'aire d'un disque :", choix: ["$2\\pi r$","$\\pi r^2$","$\\pi d$","$\\pi r$"], bonne: 1, explication: "$A=\\pi r^2$." },
+      { enonce: "Un carré a pour aire 49 cm². Son côté vaut :", choix: ["6 cm","7 cm","8 cm","49 cm"], bonne: 1, explication: "$c=\\sqrt{49}=7$ cm." },
+      { enonce: "Aire d'un rectangle de 12 cm sur 4 cm ?", choix: ["16 cm²","32 cm²","48 cm²","48 cm"], bonne: 2, explication: "$12\\times 4=48$ cm²." },
+      { enonce: "Aire d'un triangle de base 8 m et hauteur 5 m ?", choix: ["13 m²","20 m²","40 m²","40 m"], bonne: 1, explication: "$\\dfrac{8\\times 5}{2}=20$ m²." },
+      { enonce: "Aire d'un disque de diamètre 10 cm (en fonction de $\\pi$) ?", choix: ["$10\\pi$","$25\\pi$","$100\\pi$","$5\\pi$"], bonne: 1, explication: "rayon = 5, donc $A=\\pi\\times 5^2=25\\pi$ cm²." },
+      { enonce: "L'unité de l'aire est :", choix: ["m","m²","m³","L"], bonne: 1, explication: "L'aire s'exprime en unité au carré (m², cm²...)." },
+      { enonce: "Aire d'un carré de côté 1,5 cm ?", choix: ["3 cm²","2,25 cm²","6 cm²","1,5 cm²"], bonne: 1, explication: "$1{,}5^2=2{,}25$ cm²." }
+    ]
+  },
+
+  volumes: {
+    titre: "Volumes (cube, pavé, prisme, cylindre)",
+    categorie: "geo",
+    icone: "📦",
+    lecon: { contenu: `
+      <h3>Formules à connaître</h3>
+      <div class="fig-wrap">
+        <svg class="fig" viewBox="0 0 540 200" xmlns="http://www.w3.org/2000/svg">
+          <!-- Cube -->
+          <g transform="translate(10,10)">
+            <polygon points="20,80 80,80 80,140 20,140" fill="#eef2ff" stroke="#333" stroke-width="1.5"/>
+            <polygon points="20,80 45,55 105,55 80,80" fill="#dbeafe" stroke="#333" stroke-width="1.5"/>
+            <polygon points="80,80 105,55 105,115 80,140" fill="#bfdbfe" stroke="#333" stroke-width="1.5"/>
+            <text x="40" y="155" class="seg-lbl" font-size="12">c</text>
+            <text x="-5" y="115" class="seg-lbl" font-size="12">c</text>
+            <text x="0" y="180" font-size="12" class="lbl">Cube : V = c³</text>
+          </g>
+          <!-- Pavé droit -->
+          <g transform="translate(140,10)">
+            <polygon points="20,90 110,90 110,140 20,140" fill="#eef2ff" stroke="#333" stroke-width="1.5"/>
+            <polygon points="20,90 50,65 140,65 110,90" fill="#dbeafe" stroke="#333" stroke-width="1.5"/>
+            <polygon points="110,90 140,65 140,115 110,140" fill="#bfdbfe" stroke="#333" stroke-width="1.5"/>
+            <text x="55" y="155" class="seg-lbl" font-size="12">L</text>
+            <text x="-5" y="115" class="seg-lbl" font-size="12">h</text>
+            <text x="125" y="80" class="seg-lbl" font-size="12">ℓ</text>
+            <text x="0" y="180" font-size="12" class="lbl">Pavé : V = L × ℓ × h</text>
+          </g>
+          <!-- Cylindre -->
+          <g transform="translate(310,10)">
+            <ellipse cx="50" cy="65" rx="35" ry="10" fill="#dbeafe" stroke="#333" stroke-width="1.5"/>
+            <line x1="15" y1="65" x2="15" y2="140" stroke="#333" stroke-width="1.5"/>
+            <line x1="85" y1="65" x2="85" y2="140" stroke="#333" stroke-width="1.5"/>
+            <ellipse cx="50" cy="140" rx="35" ry="10" fill="#eef2ff" stroke="#333" stroke-width="1.5"/>
+            <path d="M 15 140 A 35 10 0 0 0 85 140" fill="none" stroke="#333" stroke-width="1.5"/>
+            <line x1="50" y1="65" x2="85" y2="65" stroke="#ef4444" stroke-dasharray="3,2"/>
+            <text x="65" y="60" class="seg-lbl" font-size="12">r</text>
+            <text x="95" y="105" class="seg-lbl" font-size="12">h</text>
+            <text x="0" y="180" font-size="12" class="lbl">Cylindre : V = π × r² × h</text>
+          </g>
+        </svg>
+      </div>
+      <div class="method">
+        <ul>
+          <li><strong>Cube</strong> : $V = c^3$</li>
+          <li><strong>Pavé droit</strong> : $V = L \\times \\ell \\times h$</li>
+          <li><strong>Prisme droit</strong> : $V = \\text{aire de la base}\\times h$</li>
+          <li><strong>Cylindre</strong> : $V = \\pi r^2 \\times h$</li>
+        </ul>
+        <p>Le volume s'exprime en unités cubes (cm³, m³...). Pour les contenances, on utilise les litres : $1\\,\\text{dm}^3=1\\,\\text{L}$.</p>
+      </div>
+      <h3>Exemples</h3>
+      <div class="example">
+        Cube de côté 5 cm : $V=5^3=125\\,\\text{cm}^3$.
+      </div>
+      <div class="example">
+        Pavé $4\\times 3\\times 2$ cm : $V=4\\times 3\\times 2=24\\,\\text{cm}^3$.
+      </div>
+      <div class="example">
+        Cylindre rayon 3 cm, hauteur 10 cm : $V=\\pi\\times 3^2\\times 10=90\\pi\\,\\text{cm}^3$.
+      </div>
+    ` },
+    questions: [
+      { enonce: "Volume d'un cube d'arête 4 cm ?", choix: ["12 cm³","16 cm³","48 cm³","64 cm³"], bonne: 3, explication: "$V=4^3=64$ cm³." },
+      { enonce: "Volume d'un pavé droit $5\\times 3\\times 2$ cm ?", choix: ["10 cm³","15 cm³","30 cm³","60 cm³"], bonne: 2, explication: "$5\\times 3\\times 2=30$ cm³." },
+      { enonce: "Volume d'un cylindre rayon 2 cm et hauteur 5 cm (en fonction de $\\pi$) ?", choix: ["$10\\pi$","$20\\pi$","$40\\pi$","$25\\pi$"], bonne: 1, explication: "$V=\\pi\\times 2^2\\times 5=20\\pi$ cm³." },
+      { enonce: "Formule du volume d'un cube de côté $c$ :", choix: ["$c^2$","$3c$","$c^3$","$6c$"], bonne: 2, explication: "$V=c\\times c\\times c=c^3$." },
+      { enonce: "Formule du volume d'un cylindre :", choix: ["$\\pi r h$","$\\pi r^2 h$","$2\\pi r h$","$\\pi r^2$"], bonne: 1, explication: "$V=\\pi r^2\\times h$." },
+      { enonce: "Volume d'un prisme dont l'aire de la base est 12 cm² et la hauteur 5 cm ?", choix: ["17 cm³","60 cm³","30 cm³","72 cm³"], bonne: 1, explication: "$V=12\\times 5=60$ cm³." },
+      { enonce: "Le volume d'un cube d'arête 1 m est :", choix: ["1 cm³","1 m³","1 dm³","1 L"], bonne: 1, explication: "$V=1^3=1$ m³." },
+      { enonce: "Une bouteille de 1 L contient combien de cm³ ?", choix: ["10","100","1 000","10 000"], bonne: 2, explication: "$1\\,\\text{L}=1\\,\\text{dm}^3=1\\,000\\,\\text{cm}^3$." },
+      { enonce: "Volume d'un cube de côté 10 cm ?", choix: ["100 cm³","300 cm³","1 000 cm³","100 dm³"], bonne: 2, explication: "$10^3=1\\,000$ cm³ (soit 1 L)." },
+      { enonce: "Volume d'un pavé droit $6\\times 4\\times 3$ m ?", choix: ["13 m³","36 m³","72 m³","144 m³"], bonne: 2, explication: "$6\\times 4\\times 3=72$ m³." }
+    ]
+  },
+
+  pythagore: {
+    titre: "Théorème de Pythagore",
+    categorie: "geo",
+    icone: "📐",
+    lecon: { contenu: `
+      <h3>Configuration</h3>
+      <div class="fig-wrap">
+        <svg class="fig" viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="40,170 230,170 40,40" fill="#eef2ff" stroke="#333" stroke-width="2"/>
+          <rect x="40" y="158" width="14" height="14" fill="none" stroke="#333" stroke-width="1.5"/>
+          <circle cx="40" cy="170" r="3" class="pt"/>
+          <circle cx="230" cy="170" r="3" class="pt"/>
+          <circle cx="40" cy="40" r="3" class="pt"/>
+          <text x="22" y="185" class="lbl" font-size="15">A</text>
+          <text x="235" y="185" class="lbl" font-size="15">B</text>
+          <text x="22" y="35" class="lbl" font-size="15">C</text>
+          <text x="15" y="110" class="seg-lbl" font-size="13">AC</text>
+          <text x="125" y="190" class="seg-lbl" font-size="13">AB</text>
+          <text x="135" y="100" class="seg-lbl" font-size="13" font-weight="bold">BC (hypoténuse)</text>
+        </svg>
+      </div>
+      <h3>Énoncé</h3>
+      <div class="method">
+        <p>Si le triangle $ABC$ est rectangle en $A$, alors :</p>
+        $$BC^2 = AB^2 + AC^2$$
+        <p>(Le carré de l'<strong>hypoténuse</strong> = somme des carrés des deux autres côtés.)</p>
+        <p>L'hypoténuse est le côté opposé à l'angle droit (c'est le plus long).</p>
+      </div>
+      <h3>Calculer l'hypoténuse</h3>
+      <div class="example">
+        Triangle rectangle en $A$ avec $AB=3\\,\\text{cm}$ et $AC=4\\,\\text{cm}$.<br>
+        $BC^2 = 3^2+4^2 = 9+16 = 25$, donc $BC=\\sqrt{25}=5\\,\\text{cm}$.
+      </div>
+      <h3>Calculer un autre côté</h3>
+      <div class="example">
+        Triangle rectangle en $A$, $BC=13$ (hypoténuse), $AB=5$. Trouver $AC$.<br>
+        $BC^2=AB^2+AC^2$ → $169=25+AC^2$ → $AC^2=169-25=144$ → $AC=\\sqrt{144}=12$.
+      </div>
+      <h3>Réciproque</h3>
+      <div class="tip">💡 Si dans un triangle on a $BC^2 = AB^2+AC^2$, alors le triangle est rectangle en $A$. C'est pratique pour démontrer qu'un triangle est rectangle.</div>
+    ` },
+    questions: [
+      { enonce: "Dans un triangle ABC rectangle en A : l'hypoténuse est :", choix: ["AB","AC","BC","Aucun"], bonne: 2, explication: "L'hypoténuse est le côté opposé à l'angle droit, ici BC." },
+      { enonce: "Énoncé de Pythagore (rect. en A) :", choix: ["$BC=AB+AC$","$BC^2=AB^2+AC^2$","$AB^2=BC^2+AC^2$","$BC^2=AB^2-AC^2$"], bonne: 1, explication: "$BC^2=AB^2+AC^2$." },
+      { enonce: "Triangle ABC rectangle en A, $AB=3$ et $AC=4$. Calculer $BC$.",
+        fig: `<svg class="fig-q" viewBox="0 0 220 170"><polygon points="40,140 200,140 40,30" fill="#eef2ff" stroke="#333" stroke-width="2"/><rect x="40" y="128" width="12" height="12" fill="none" stroke="#333"/><circle cx="40" cy="140" r="3"/><circle cx="200" cy="140" r="3"/><circle cx="40" cy="30" r="3"/><text x="22" y="155" font-size="13" font-style="italic">A</text><text x="205" y="155" font-size="13" font-style="italic">B</text><text x="22" y="25" font-size="13" font-style="italic">C</text><text x="100" y="158" font-size="12" fill="#ef4444">3</text><text x="20" y="90" font-size="12" fill="#ef4444">4</text><text x="125" y="80" font-size="12" fill="#ef4444">?</text></svg>`,
+        choix: ["5","7","12","25"], bonne: 0, explication: "$BC^2 = AB^2+AC^2 = 3^2+4^2 = 9+16 = 25$, donc $BC=\\sqrt{25}=5$." },
+      { enonce: "Triangle rectangle, côtés de l'angle droit 6 et 8. L'hypoténuse vaut :",
+        fig: `<svg class="fig-q" viewBox="0 0 220 170"><polygon points="40,140 200,140 40,30" fill="#eef2ff" stroke="#333" stroke-width="2"/><rect x="40" y="128" width="12" height="12" fill="none" stroke="#333"/><text x="100" y="158" font-size="12" fill="#ef4444">6</text><text x="20" y="90" font-size="12" fill="#ef4444">8</text><text x="125" y="80" font-size="12" fill="#ef4444">?</text></svg>`,
+        choix: ["10","14","48","100"], bonne: 0, explication: "$6^2+8^2=36+64=100$, donc hypoténuse $=\\sqrt{100}=10$." },
+      { enonce: "Triangle ABC rectangle en A, $BC=13$ (hypoténuse), $AB=5$. Calculer $AC$.",
+        fig: `<svg class="fig-q" viewBox="0 0 220 170"><polygon points="40,140 200,140 40,30" fill="#eef2ff" stroke="#333" stroke-width="2"/><rect x="40" y="128" width="12" height="12" fill="none" stroke="#333"/><circle cx="40" cy="140" r="3"/><circle cx="200" cy="140" r="3"/><circle cx="40" cy="30" r="3"/><text x="22" y="155" font-size="13" font-style="italic">A</text><text x="205" y="155" font-size="13" font-style="italic">B</text><text x="22" y="25" font-size="13" font-style="italic">C</text><text x="100" y="158" font-size="12" fill="#ef4444">5</text><text x="20" y="90" font-size="12" fill="#ef4444">?</text><text x="125" y="80" font-size="12" fill="#ef4444">13</text></svg>`,
+        choix: ["8","10","12","18"], bonne: 2, explication: "$BC^2=AB^2+AC^2$ → $13^2-5^2=169-25=144$ donc $AC=\\sqrt{144}=12$." },
+      { enonce: "Triangle rectangle, hypoténuse 10, un côté 6. L'autre côté :", choix: ["4","8","16","100"], bonne: 1, explication: "$10^2-6^2=100-36=64$ → $\\sqrt{64}=8$." },
+      { enonce: "Si dans un triangle $BC^2 = AB^2+AC^2$, alors :", choix: ["Triangle isocèle","Triangle équilatéral","Triangle rectangle en A","Triangle quelconque"], bonne: 2, explication: "C'est la réciproque du théorème : triangle rectangle en A." },
+      { enonce: "Pour un triangle de côtés 5, 12 et 13 : est-il rectangle ?", choix: ["Oui","Non","On ne peut pas savoir","Cela dépend"], bonne: 0, explication: "$13^2=169$ et $5^2+12^2=25+144=169$ : Pythagore est vérifié, le triangle est rectangle." },
+      { enonce: "Pour un triangle de côtés 4, 5 et 6 : est-il rectangle ?", choix: ["Oui","Non","On ne peut pas savoir","Cela dépend"], bonne: 1, explication: "$6^2=36$ et $4^2+5^2=16+25=41\\ne 36$ : non rectangle." },
+      { enonce: "Triangle rectangle, côtés de l'angle droit 1 et 1. Hypoténuse vaut :", choix: ["1","2","$\\sqrt{2}$","$\\sqrt{3}$"], bonne: 2, explication: "$1^2+1^2=2$ donc hypoténuse $=\\sqrt{2}$." }
+    ]
+  },
+
+  thales: {
+    titre: "Théorème de Thalès",
+    categorie: "geo",
+    icone: "🔺",
+    lecon: { contenu: `
+      <h3>Configuration "triangles emboîtés"</h3>
+      <div class="fig-wrap">
+        <svg class="fig" viewBox="0 0 280 220" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="140,20 30,200 250,200" fill="#eef2ff" stroke="#333" stroke-width="2"/>
+          <line x1="85" y1="110" x2="195" y2="110" stroke="#10b981" stroke-width="2.5"/>
+          <!-- petites flèches pour parallèle -->
+          <polygon points="125,108 132,110 125,112" fill="#10b981"/>
+          <polygon points="125,198 132,200 125,202" fill="#10b981"/>
+          <circle cx="140" cy="20" r="3" class="pt"/>
+          <circle cx="30" cy="200" r="3" class="pt"/>
+          <circle cx="250" cy="200" r="3" class="pt"/>
+          <circle cx="85" cy="110" r="3" fill="#10b981"/>
+          <circle cx="195" cy="110" r="3" fill="#10b981"/>
+          <text x="135" y="15" class="lbl" font-size="15">A</text>
+          <text x="13" y="215" class="lbl" font-size="15">B</text>
+          <text x="255" y="215" class="lbl" font-size="15">C</text>
+          <text x="68" y="108" class="lbl" font-size="15" fill="#10b981">M</text>
+          <text x="200" y="108" class="lbl" font-size="15" fill="#10b981">N</text>
+        </svg>
+      </div>
+      <div class="method">
+        <p>Si dans le triangle $ABC$, une droite parallèle à $(BC)$ coupe $(AB)$ en $M$ et $(AC)$ en $N$, alors :</p>
+        $$\\frac{AM}{AB}=\\frac{AN}{AC}=\\frac{MN}{BC}$$
+        <p>Ces 3 rapports sont égaux : ce sont des rapports de longueurs <strong>"correspondantes"</strong>.</p>
+      </div>
+      <h3>Exemple</h3>
+      <div class="example">
+        Si $AM=3$, $AB=5$, $AC=10$, on cherche $AN$ :<br>
+        $\\dfrac{AM}{AB}=\\dfrac{AN}{AC}$ donc $\\dfrac{3}{5}=\\dfrac{AN}{10}$ → $AN=\\dfrac{3\\times 10}{5}=6$.
+      </div>
+      <div class="tip">💡 Bien <strong>identifier les sommets correspondants</strong> : $A$ correspond à $A$, $M$ correspond à $B$, $N$ correspond à $C$. Les rapports se lisent dans le même sens : « petit triangle / grand triangle ».</div>
+    ` },
+    questions: [
+      { enonce: "Théorème de Thalès — configuration des triangles :", choix: ["Quelconques","Emboîtés avec une parallèle","Rectangles","Équilatéraux"], bonne: 1, explication: "Configuration des triangles emboîtés avec deux droites parallèles." },
+      { enonce: "Si $(MN)\\parallel(BC)$ dans le triangle $ABC$, alors :", choix: ["$\\dfrac{AM}{AB}=\\dfrac{AN}{AC}$","$AM=AN$","$MN=BC$","$AB=AC$"], bonne: 0, explication: "C'est l'égalité des rapports du théorème de Thalès." },
+      { enonce: "Dans la configuration ci-dessous, $(MN)\\parallel(BC)$ avec $AM=4$, $AB=10$, $AC=15$. Calculer $AN$.",
+        fig: `<svg class="fig-q" viewBox="0 0 260 200"><polygon points="130,20 30,180 230,180" fill="#eef2ff" stroke="#333" stroke-width="2"/><line x1="80" y1="100" x2="180" y2="100" stroke="#10b981" stroke-width="2.5"/><circle cx="130" cy="20" r="3"/><circle cx="30" cy="180" r="3"/><circle cx="230" cy="180" r="3"/><circle cx="80" cy="100" r="3" fill="#10b981"/><circle cx="180" cy="100" r="3" fill="#10b981"/><text x="125" y="15" font-size="13" font-style="italic">A</text><text x="14" y="195" font-size="13" font-style="italic">B</text><text x="235" y="195" font-size="13" font-style="italic">C</text><text x="62" y="98" font-size="13" font-style="italic" fill="#10b981">M</text><text x="185" y="98" font-size="13" font-style="italic" fill="#10b981">N</text></svg>`,
+        choix: ["6","8","10","12"], bonne: 0, explication: "Avec Thalès : $\\dfrac{AM}{AB}=\\dfrac{AN}{AC}$ donne $\\dfrac{4}{10}=\\dfrac{AN}{15}$ → $AN=\\dfrac{4\\times 15}{10}=6$." },
+      { enonce: "$(MN)\\parallel(BC)$ avec $AM=3$, $AB=12$, $BC=20$. Calculer $MN$.",
+        fig: `<svg class="fig-q" viewBox="0 0 260 200"><polygon points="130,20 30,180 230,180" fill="#eef2ff" stroke="#333" stroke-width="2"/><line x1="105" y1="60" x2="155" y2="60" stroke="#10b981" stroke-width="2.5"/><circle cx="130" cy="20" r="3"/><circle cx="30" cy="180" r="3"/><circle cx="230" cy="180" r="3"/><circle cx="105" cy="60" r="3" fill="#10b981"/><circle cx="155" cy="60" r="3" fill="#10b981"/><text x="125" y="15" font-size="13" font-style="italic">A</text><text x="14" y="195" font-size="13" font-style="italic">B</text><text x="235" y="195" font-size="13" font-style="italic">C</text><text x="88" y="58" font-size="13" font-style="italic" fill="#10b981">M</text><text x="160" y="58" font-size="13" font-style="italic" fill="#10b981">N</text></svg>`,
+        choix: ["3","5","7","10"], bonne: 1, explication: "$\\dfrac{AM}{AB}=\\dfrac{MN}{BC}$ → $\\dfrac{3}{12}=\\dfrac{MN}{20}$ → $MN=\\dfrac{3\\times 20}{12}=5$." },
+      { enonce: "Si $AM=5$, $MB=3$ alors $AB$ vaut :", choix: ["3","5","8","15"], bonne: 2, explication: "$AB=AM+MB=5+3=8$." },
+      { enonce: "Que faut-il vérifier avant d'appliquer Thalès ?", choix: ["Les triangles sont rectangles","Les droites sont parallèles","Les côtés sont égaux","Les angles sont droits"], bonne: 1, explication: "Il faut que les deux droites soient parallèles." },
+      { enonce: "$AM=2$, $AB=5$, $AC=10$. $AN=$ ?", choix: ["3","4","5","6"], bonne: 1, explication: "$\\dfrac{2}{5}=\\dfrac{AN}{10}$ → $AN=4$." },
+      { enonce: "Dans Thalès, les trois rapports égaux sont :", choix: ["$\\dfrac{AM}{AB}$ ; $\\dfrac{AN}{AC}$ ; $\\dfrac{MN}{BC}$","$\\dfrac{AM}{MN}$ ; $\\dfrac{AN}{BC}$ ; $\\dfrac{AB}{AC}$","$\\dfrac{AB}{AN}$ ; $\\dfrac{AC}{AM}$ ; $\\dfrac{BC}{MN}$","$AM\\times AB$ ; $AN\\times AC$ ; $MN\\times BC$"], bonne: 0, explication: "Les rapports portent sur les longueurs correspondantes." },
+      { enonce: "$\\dfrac{AM}{AB}=\\dfrac{6}{10}$ se simplifie en :", choix: ["$\\dfrac{3}{5}$","$\\dfrac{1}{2}$","$\\dfrac{2}{3}$","$\\dfrac{6}{10}$ (déjà irréductible)"], bonne: 0, explication: "$\\dfrac{6}{10}=\\dfrac{3}{5}$." },
+      { enonce: "$AM=8$, $AB=12$, $MN=10$. Calculer $BC$.", choix: ["10","12","15","20"], bonne: 2, explication: "$\\dfrac{8}{12}=\\dfrac{10}{BC}$ → $BC=\\dfrac{10\\times 12}{8}=15$." }
+    ]
+  },
+
+  cosinus: {
+    titre: "Cosinus dans un triangle rectangle",
+    categorie: "geo",
+    icone: "📐",
+    lecon: { contenu: `
+      <h3>Configuration</h3>
+      <div class="fig-wrap">
+        <svg class="fig" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="40,160 260,160 40,40" fill="#eef2ff" stroke="#333" stroke-width="2"/>
+          <rect x="40" y="148" width="14" height="14" fill="none" stroke="#333" stroke-width="1.5"/>
+          <!-- Marque de l'angle B -->
+          <path d="M 240 160 A 22 22 0 0 0 247 142" class="ang-arc"/>
+          <circle cx="40" cy="160" r="3" class="pt"/>
+          <circle cx="260" cy="160" r="3" class="pt"/>
+          <circle cx="40" cy="40" r="3" class="pt"/>
+          <text x="22" y="175" class="lbl" font-size="15">A</text>
+          <text x="265" y="175" class="lbl" font-size="15">B</text>
+          <text x="22" y="35" class="lbl" font-size="15">C</text>
+          <text x="222" y="150" class="ang-lbl" font-size="13">B̂</text>
+          <text x="125" y="180" class="seg-lbl" font-size="12">adjacent à B̂ : AB</text>
+          <text x="135" y="100" class="seg-lbl" font-size="12">hypoténuse : BC</text>
+          <text x="-3" y="105" class="seg-lbl" font-size="12">opposé : AC</text>
+        </svg>
+      </div>
+      <h3>Définition</h3>
+      <div class="method">
+        <p>Dans un triangle rectangle, pour un angle aigu :</p>
+        $$\\cos(\\text{angle}) = \\frac{\\text{côté adjacent}}{\\text{hypoténuse}}$$
+        <p>L'<strong>hypoténuse</strong> est le côté opposé à l'angle droit.</p>
+        <p>Le <strong>côté adjacent</strong> à un angle est celui qui forme cet angle avec l'hypoténuse (l'autre étant l'opposé).</p>
+      </div>
+      <h3>Exemple : calculer un angle</h3>
+      <div class="example">
+        Triangle $ABC$ rectangle en $A$. Pour l'angle $\\widehat{B}$ : adjacent = $AB$, hypoténuse = $BC$.<br>
+        $\\cos(\\widehat{B}) = \\dfrac{AB}{BC}$.<br>
+        Si $AB=4$ et $BC=8$, $\\cos(\\widehat{B})=\\dfrac{4}{8}=0{,}5$, donc $\\widehat{B}=60°$ (avec la touche $\\cos^{-1}$ de la calculatrice).
+      </div>
+      <h3>Calculer un côté</h3>
+      <div class="example">
+        Si $\\cos(\\widehat{B})=0{,}8$ et $BC=10$, alors $AB=BC\\times\\cos(\\widehat{B})=10\\times 0{,}8=8$.
+      </div>
+    ` },
+    questions: [
+      { enonce: "Définition du cosinus d'un angle aigu :", choix: ["$\\dfrac{\\text{opposé}}{\\text{hypoténuse}}$","$\\dfrac{\\text{adjacent}}{\\text{hypoténuse}}$","$\\dfrac{\\text{opposé}}{\\text{adjacent}}$","$\\dfrac{\\text{adjacent}}{\\text{opposé}}$"], bonne: 1, explication: "$\\cos = \\dfrac{\\text{adjacent}}{\\text{hypoténuse}}$." },
+      { enonce: "Triangle rectangle en A. $\\cos(\\widehat{B})$ = ?", choix: ["$\\dfrac{AC}{BC}$","$\\dfrac{AB}{BC}$","$\\dfrac{AB}{AC}$","$\\dfrac{BC}{AB}$"], bonne: 1, explication: "Pour $\\widehat{B}$, le côté adjacent est $AB$ et l'hypoténuse est $BC$." },
+      { enonce: "Dans un triangle rectangle en A, où se trouve l'hypoténuse ?", choix: ["AB","AC","BC","Cela dépend"], bonne: 2, explication: "L'hypoténuse est opposée à l'angle droit, donc BC." },
+      { enonce: "Si $\\cos(\\widehat{B})=0{,}5$, l'angle vaut :", choix: ["$30°$","$45°$","$60°$","$90°$"], bonne: 2, explication: "$\\cos(60°)=0{,}5$." },
+      { enonce: "$\\cos(0°)$ vaut :", choix: ["0","1","-1","Indéfini"], bonne: 1, explication: "$\\cos(0°)=1$." },
+      { enonce: "$\\cos(90°)$ vaut :", choix: ["0","1","-1","0,5"], bonne: 0, explication: "$\\cos(90°)=0$." },
+      { enonce: "Triangle rectangle, hypoténuse = 10, côté adjacent à l'angle = 6. Cosinus de l'angle ?", choix: ["$0,6$","$0,8$","$10$","$60$"], bonne: 0, explication: "$\\cos=\\dfrac{6}{10}=0{,}6$." },
+      { enonce: "Si $\\cos(\\widehat{x})=0{,}8$ et hypoténuse = 5, le côté adjacent vaut :", choix: ["$0,16$","$4$","$5$","$8$"], bonne: 1, explication: "Côté adjacent $= 5\\times 0{,}8=4$." },
+      { enonce: "Le cosinus d'un angle aigu est toujours :", choix: ["Compris entre 0 et 1","Toujours négatif","Supérieur à 1","Égal à l'angle"], bonne: 0, explication: "Pour un angle aigu (entre 0 et 90°), le cosinus est entre 0 et 1." },
+      { enonce: "On utilise le cosinus dans :", choix: ["N'importe quel triangle","Un triangle rectangle","Un triangle équilatéral","Aucun triangle"], bonne: 1, explication: "Le cosinus est utilisé dans un triangle rectangle pour les angles aigus." }
+    ]
+  },
+
+  transformations: {
+    titre: "Symétries et translation",
+    categorie: "geo",
+    icone: "🔁",
+    lecon: { contenu: `
+      <h3>Symétrie axiale (par rapport à une droite)</h3>
+      <div class="fig-wrap">
+        <svg class="fig" viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg">
+          <line x1="150" y1="10" x2="150" y2="170" stroke="#6366f1" stroke-width="2"/>
+          <text x="155" y="20" class="ang-lbl" font-size="12">(d) axe</text>
+          <polygon points="40,40 100,40 70,110" fill="#eef2ff" stroke="#333" stroke-width="2"/>
+          <polygon points="260,40 200,40 230,110" fill="#fef3c7" stroke="#333" stroke-width="2" stroke-dasharray="0"/>
+          <circle cx="40" cy="40" r="3" class="pt"/>
+          <circle cx="100" cy="40" r="3" class="pt"/>
+          <circle cx="70" cy="110" r="3" class="pt"/>
+          <circle cx="260" cy="40" r="3" class="pt"/>
+          <circle cx="200" cy="40" r="3" class="pt"/>
+          <circle cx="230" cy="110" r="3" class="pt"/>
+          <text x="30" y="35" class="lbl" font-size="13">A</text>
+          <text x="105" y="35" class="lbl" font-size="13">B</text>
+          <text x="60" y="125" class="lbl" font-size="13">C</text>
+          <text x="265" y="35" class="lbl" font-size="13">A'</text>
+          <text x="185" y="35" class="lbl" font-size="13">B'</text>
+          <text x="232" y="125" class="lbl" font-size="13">C'</text>
+        </svg>
+      </div>
+      <div class="method">
+        <p>L'image d'un point par symétrie axiale "se reflète" comme dans un miroir par rapport à l'axe.</p>
+        <p>L'axe est la <strong>médiatrice</strong> du segment qui joint un point à son image.</p>
+      </div>
+      <h3>Symétrie centrale (par rapport à un point)</h3>
+      <div class="fig-wrap">
+        <svg class="fig" viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="40,30 100,40 60,80" fill="#eef2ff" stroke="#333" stroke-width="2"/>
+          <polygon points="260,150 200,140 240,100" fill="#fef3c7" stroke="#333" stroke-width="2"/>
+          <circle cx="150" cy="90" r="3" fill="#ef4444"/>
+          <text x="155" y="85" class="lbl" font-size="13" fill="#ef4444">O</text>
+          <line x1="40" y1="30" x2="260" y2="150" stroke="#999" stroke-dasharray="2,2"/>
+          <line x1="100" y1="40" x2="200" y2="140" stroke="#999" stroke-dasharray="2,2"/>
+          <line x1="60" y1="80" x2="240" y2="100" stroke="#999" stroke-dasharray="2,2"/>
+          <circle cx="40" cy="30" r="3" class="pt"/>
+          <circle cx="100" cy="40" r="3" class="pt"/>
+          <circle cx="60" cy="80" r="3" class="pt"/>
+          <circle cx="260" cy="150" r="3" class="pt"/>
+          <circle cx="200" cy="140" r="3" class="pt"/>
+          <circle cx="240" cy="100" r="3" class="pt"/>
+          <text x="28" y="25" class="lbl" font-size="13">A</text>
+          <text x="265" y="160" class="lbl" font-size="13">A'</text>
+        </svg>
+      </div>
+      <div class="method">
+        <p>L'image d'un point $A$ par symétrie de centre $O$ est le point $A'$ tel que $O$ est le <strong>milieu</strong> de $[AA']$.</p>
+        <p>La symétrie centrale est aussi une rotation de $180°$ autour de $O$.</p>
+      </div>
+      <h3>Translation</h3>
+      <div class="fig-wrap">
+        <svg class="fig" viewBox="0 0 320 160" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="30,90 80,90 55,40" fill="#eef2ff" stroke="#333" stroke-width="2"/>
+          <polygon points="190,90 240,90 215,40" fill="#fef3c7" stroke="#333" stroke-width="2"/>
+          <line x1="90" y1="60" x2="180" y2="60" stroke="#ef4444" stroke-width="2" marker-end="url(#arrt)"/>
+          <defs>
+            <marker id="arrt" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+              <path d="M0,0 L9,3 L0,6 z" fill="#ef4444"/>
+            </marker>
+          </defs>
+          <text x="115" y="55" class="seg-lbl" font-size="12">translation</text>
+          <circle cx="30" cy="90" r="3" class="pt"/>
+          <circle cx="55" cy="40" r="3" class="pt"/>
+          <circle cx="190" cy="90" r="3" class="pt"/>
+          <circle cx="215" cy="40" r="3" class="pt"/>
+        </svg>
+      </div>
+      <div class="method">
+        <p>Une translation déplace tous les points d'une même distance, dans la même direction et le même sens (donné par un vecteur).</p>
+      </div>
+      <h3>Propriétés conservées</h3>
+      <div class="tip">💡 Ces 3 transformations conservent les <strong>longueurs</strong>, les <strong>angles</strong>, les <strong>aires</strong> et le <strong>parallélisme</strong>. La figure image est superposable à la figure de départ.</div>
+    ` },
+    questions: [
+      { enonce: "Une symétrie axiale conserve :", choix: ["Seulement les longueurs","Les longueurs et les angles","Rien","Seulement les aires"], bonne: 1, explication: "Toutes ces transformations conservent longueurs, angles et aires." },
+      { enonce: "Dans une symétrie centrale de centre O, O est le... du segment [AA'].", choix: ["Sommet","Milieu","Tiers","Extrémité"], bonne: 1, explication: "O est le milieu du segment qui joint un point et son image." },
+      { enonce: "L'axe de la symétrie axiale est la ... du segment joignant un point à son image.", choix: ["Médiane","Médiatrice","Bissectrice","Hauteur"], bonne: 1, explication: "C'est la médiatrice : perpendiculaire passant par le milieu." },
+      { enonce: "Une translation déplace tous les points :", choix: ["Vers le même point","Aléatoirement","D'une même distance, dans la même direction","Différemment"], bonne: 2, explication: "Tous les points subissent le même déplacement." },
+      { enonce: "Combien d'axes de symétrie a un carré ?", choix: ["0","2","4","8"], bonne: 2, explication: "Un carré a 4 axes de symétrie (les 2 diagonales et les 2 médianes)." },
+      { enonce: "Combien d'axes de symétrie a un rectangle (non carré) ?", choix: ["0","2","4","6"], bonne: 1, explication: "Les 2 médianes des côtés. Les diagonales ne sont pas des axes de symétrie." },
+      { enonce: "Combien d'axes de symétrie a un triangle équilatéral ?", choix: ["1","2","3","4"], bonne: 2, explication: "3 axes (les hauteurs, qui sont aussi médianes et médiatrices)." },
+      { enonce: "Une symétrie centrale est aussi une rotation d'angle :", choix: ["90°","120°","180°","360°"], bonne: 2, explication: "Symétrie centrale = rotation de 180° autour du centre." },
+      { enonce: "Un cercle a combien d'axes de symétrie ?", choix: ["0","1","4","Une infinité"], bonne: 3, explication: "Toute droite passant par le centre est un axe de symétrie." },
+      { enonce: "Si on translate un triangle, son aire :", choix: ["Augmente","Diminue","Reste la même","Devient nulle"], bonne: 2, explication: "Une translation conserve l'aire." }
+    ]
+  },
+
+  codage_figure: {
+    titre: "Codage d'une figure",
+    categorie: "geo",
+    icone: "✒️",
+    lecon: { contenu: `
+      <h3>Conventions de codage</h3>
+      <div class="fig-wrap">
+        <svg class="fig" viewBox="0 0 540 180" xmlns="http://www.w3.org/2000/svg">
+          <!-- Triangle isocèle avec 2 côtés codés -->
+          <g transform="translate(10,10)">
+            <polygon points="60,140 10,40 110,40" fill="#eef2ff" stroke="#333" stroke-width="2"/>
+            <line x1="30" y1="92" x2="40" y2="86" stroke="#ef4444" stroke-width="1.5"/>
+            <line x1="80" y1="92" x2="90" y2="86" stroke="#ef4444" stroke-width="1.5"/>
+            <circle cx="60" cy="140" r="3" class="pt"/>
+            <circle cx="10" cy="40" r="3" class="pt"/>
+            <circle cx="110" cy="40" r="3" class="pt"/>
+            <text x="0" y="170" font-size="11" class="lbl">Triangle isocèle</text>
+          </g>
+          <!-- Triangle rectangle -->
+          <g transform="translate(150,10)">
+            <polygon points="10,140 100,140 10,40" fill="#eef2ff" stroke="#333" stroke-width="2"/>
+            <rect x="10" y="128" width="12" height="12" fill="none" stroke="#333" stroke-width="1.5"/>
+            <circle cx="10" cy="140" r="3" class="pt"/>
+            <circle cx="100" cy="140" r="3" class="pt"/>
+            <circle cx="10" cy="40" r="3" class="pt"/>
+            <text x="0" y="170" font-size="11" class="lbl">Triangle rectangle</text>
+          </g>
+          <!-- Parallélogramme : flèches de parallélisme -->
+          <g transform="translate(290,10)">
+            <polygon points="10,120 100,120 130,40 40,40" fill="#eef2ff" stroke="#333" stroke-width="2"/>
+            <!-- flèches parallélisme côtés horizontaux -->
+            <polygon points="50,118 56,120 50,122" fill="#10b981"/>
+            <polygon points="80,38 86,40 80,42" fill="#10b981"/>
+            <!-- flèches parallélisme côtés obliques (double) -->
+            <line x1="22" y1="78" x2="28" y2="78" stroke="#6366f1" stroke-width="1.5"/>
+            <line x1="22" y1="82" x2="28" y2="82" stroke="#6366f1" stroke-width="1.5"/>
+            <line x1="112" y1="78" x2="118" y2="78" stroke="#6366f1" stroke-width="1.5"/>
+            <line x1="112" y1="82" x2="118" y2="82" stroke="#6366f1" stroke-width="1.5"/>
+            <text x="-5" y="170" font-size="11" class="lbl">Parallélogramme</text>
+          </g>
+          <!-- Médiatrice -->
+          <g transform="translate(420,10)">
+            <line x1="10" y1="100" x2="110" y2="100" stroke="#333" stroke-width="2"/>
+            <line x1="60" y1="40" x2="60" y2="160" stroke="#6366f1" stroke-width="2"/>
+            <rect x="54" y="100" width="12" height="-12" fill="none" stroke="#6366f1" stroke-width="1.5" transform="translate(0,12)"/>
+            <line x1="35" y1="96" x2="35" y2="104" stroke="#ef4444" stroke-width="1.5"/>
+            <line x1="85" y1="96" x2="85" y2="104" stroke="#ef4444" stroke-width="1.5"/>
+            <circle cx="10" cy="100" r="3" class="pt"/>
+            <circle cx="110" cy="100" r="3" class="pt"/>
+            <text x="0" y="95" class="lbl" font-size="13">A</text>
+            <text x="113" y="95" class="lbl" font-size="13">B</text>
+            <text x="2" y="170" font-size="11" class="lbl">Médiatrice</text>
+          </g>
+        </svg>
+      </div>
+      <div class="method">
+        <ul>
+          <li><strong>Petits traits identiques</strong> sur des segments : les segments ont la <strong>même longueur</strong>.</li>
+          <li><strong>Petits arcs identiques</strong> dans des angles : les angles ont la même mesure.</li>
+          <li><strong>Petit carré</strong> dans un angle : c'est un <strong>angle droit</strong> (90°).</li>
+          <li><strong>Codage de parallélisme</strong> : flèches identiques sur deux droites parallèles.</li>
+        </ul>
+      </div>
+      <h3>Quadrilatères particuliers</h3>
+      <div class="method">
+        <ul>
+          <li><strong>Parallélogramme</strong> : côtés opposés parallèles et de même longueur.</li>
+          <li><strong>Rectangle</strong> : parallélogramme avec 4 angles droits.</li>
+          <li><strong>Losange</strong> : parallélogramme avec 4 côtés égaux.</li>
+          <li><strong>Carré</strong> : rectangle ET losange (4 côtés égaux et 4 angles droits).</li>
+        </ul>
+      </div>
+      <h3>Médiatrice</h3>
+      <div class="tip">💡 La médiatrice d'un segment est la droite <strong>perpendiculaire</strong> à ce segment passant par son <strong>milieu</strong>.</div>
+    ` },
+    questions: [
+      { enonce: "Un petit carré dans un angle signifie :", choix: ["Angle aigu","Angle droit","Angle obtus","Angle plat"], bonne: 1, explication: "Le petit carré code l'angle droit." },
+      { enonce: "Deux traits identiques sur des segments signifient :", choix: ["Segments parallèles","Segments de même longueur","Segments perpendiculaires","Cela ne signifie rien"], bonne: 1, explication: "Mêmes traits = mêmes longueurs." },
+      { enonce: "Un quadrilatère avec 4 côtés égaux et 4 angles droits est :", choix: ["Un rectangle","Un losange","Un carré","Un parallélogramme"], bonne: 2, explication: "C'est un carré." },
+      { enonce: "Un parallélogramme avec 4 côtés égaux est :", choix: ["Un carré","Un rectangle","Un losange","Un trapèze"], bonne: 2, explication: "C'est un losange." },
+      { enonce: "Un parallélogramme avec 4 angles droits est :", choix: ["Un losange","Un rectangle","Un carré","Un triangle"], bonne: 1, explication: "C'est un rectangle." },
+      { enonce: "Combien de côtés a un quadrilatère ?", choix: ["3","4","5","6"], bonne: 1, explication: "Quadri = 4." },
+      { enonce: "La médiatrice d'un segment est :", choix: ["La droite parallèle au segment","La droite perpendiculaire passant par son milieu","La diagonale","Une bissectrice"], bonne: 1, explication: "Perpendiculaire au segment et passant par son milieu." },
+      { enonce: "Dans un losange, les diagonales sont :", choix: ["Égales","Parallèles","Perpendiculaires","Sans relation"], bonne: 2, explication: "Les diagonales d'un losange se coupent à angle droit." },
+      { enonce: "Dans un rectangle, les diagonales sont :", choix: ["Toujours perpendiculaires","De même longueur","Inégales","Parallèles"], bonne: 1, explication: "Les diagonales d'un rectangle ont la même longueur." },
+      { enonce: "Un triangle isocèle a :", choix: ["3 côtés égaux","2 côtés égaux","Aucun côté égal","Un angle droit obligatoire"], bonne: 1, explication: "Isocèle = 2 côtés égaux." }
+    ]
+  }
+
+});
+
+// ========================================================================
+//  ORGANISATION ET GESTION DE DONNÉES & PROBABILITÉS
+// ========================================================================
+Object.assign(THEMES, {
+
+  probabilites: {
+    titre: "Probabilités (équiprobabilité)",
+    categorie: "stat",
+    icone: "🎲",
+    lecon: { contenu: `
+      <h3>Méthode</h3>
+      <div class="method">
+        <p>Quand on a une situation d'<strong>équiprobabilité</strong> (toutes les issues ont la même chance d'apparaître), la probabilité d'un événement vaut :</p>
+        $$P(\\text{événement}) = \\frac{\\text{nombre de cas favorables}}{\\text{nombre de cas possibles}}$$
+        <p>Une probabilité est toujours un nombre entre 0 et 1.</p>
+        <p>$P=0$ : impossible. $P=1$ : certain.</p>
+      </div>
+      <h3>Exemples</h3>
+      <div class="example">
+        On lance un dé à 6 faces. La probabilité d'obtenir 4 est $\\dfrac{1}{6}$.
+      </div>
+      <div class="example">
+        Dans un sac, 3 boules rouges et 5 bleues (8 boules au total). $P(\\text{rouge})=\\dfrac{3}{8}$.
+      </div>
+      <div class="example">
+        On tire une carte d'un jeu de 32. $P(\\text{rouge})=\\dfrac{16}{32}=\\dfrac{1}{2}$ (16 cartes rouges).
+      </div>
+    ` },
+    questions: [
+      { enonce: "On lance un dé à 6 faces. Probabilité d'obtenir 3 ?", choix: ["$\\dfrac{1}{3}$","$\\dfrac{1}{6}$","$\\dfrac{3}{6}$","$\\dfrac{1}{2}$"], bonne: 1, explication: "1 cas favorable sur 6 possibles : $\\dfrac{1}{6}$." },
+      { enonce: "On lance un dé à 6 faces. Probabilité d'obtenir un nombre pair ?", choix: ["$\\dfrac{1}{6}$","$\\dfrac{2}{6}$","$\\dfrac{1}{2}$","$\\dfrac{1}{3}$"], bonne: 2, explication: "3 nombres pairs (2, 4, 6) sur 6 : $\\dfrac{3}{6}=\\dfrac{1}{2}$." },
+      { enonce: "Un sac contient 4 boules rouges, 6 boules bleues. P(rouge) ?", choix: ["$\\dfrac{4}{6}$","$\\dfrac{4}{10}$","$\\dfrac{6}{10}$","$\\dfrac{1}{4}$"], bonne: 1, explication: "Total 10 boules, 4 rouges : $\\dfrac{4}{10}=\\dfrac{2}{5}$." },
+      { enonce: "On tire une carte dans un jeu de 32 cartes. P(cœur) ?", choix: ["$\\dfrac{1}{32}$","$\\dfrac{8}{32}$","$\\dfrac{1}{2}$","$\\dfrac{1}{8}$"], bonne: 1, explication: "8 cœurs : $\\dfrac{8}{32}=\\dfrac{1}{4}$." },
+      { enonce: "Une probabilité est toujours :", choix: ["Un entier","Entre 0 et 1","Supérieure à 1","Négative"], bonne: 1, explication: "Une probabilité est entre 0 et 1." },
+      { enonce: "P = 0 signifie :", choix: ["Événement certain","Événement impossible","Probable","Aucune information"], bonne: 1, explication: "Probabilité nulle = événement impossible." },
+      { enonce: "P = 1 signifie :", choix: ["Impossible","Très peu probable","Certain","Aucune information"], bonne: 2, explication: "Probabilité 1 = événement certain." },
+      { enonce: "On lance une pièce. P(pile) ?", choix: ["$\\dfrac{1}{4}$","$\\dfrac{1}{2}$","$1$","$0$"], bonne: 1, explication: "2 issues équiprobables : $\\dfrac{1}{2}$." },
+      { enonce: "Un sac : 5 jaunes, 3 vertes, 2 rouges. P(jaune) ?", choix: ["$\\dfrac{5}{10}=\\dfrac{1}{2}$","$\\dfrac{5}{3}$","$\\dfrac{2}{5}$","$\\dfrac{1}{5}$"], bonne: 0, explication: "Total 10 boules ; jaunes : 5 ; donc $\\dfrac{5}{10}=\\dfrac{1}{2}$." },
+      { enonce: "Dé à 6 faces. P(obtenir un 7) ?", choix: ["$1$","$\\dfrac{1}{6}$","$\\dfrac{1}{7}$","$0$"], bonne: 3, explication: "Impossible : $P=0$." },
+      { enonce: "Dé à 6 faces. P(obtenir un nombre entre 1 et 6) ?", choix: ["$0$","$\\dfrac{1}{6}$","$1$","$\\dfrac{1}{2}$"], bonne: 2, explication: "Certain : $P=1$." }
+    ]
+  },
+
+  statistiques: {
+    titre: "Statistiques (moyenne, médiane, fréquence)",
+    categorie: "stat",
+    icone: "📊",
+    lecon: { contenu: `
+      <h3>Moyenne</h3>
+      <div class="method">
+        $$\\text{Moyenne}=\\frac{\\text{somme des valeurs}}{\\text{nombre de valeurs}}$$
+      </div>
+      <div class="example">
+        Notes 12, 14, 8, 16, 10 : moyenne = $\\dfrac{12+14+8+16+10}{5}=\\dfrac{60}{5}=12$.
+      </div>
+      <h3>Médiane</h3>
+      <div class="method">
+        <p>On <strong>range</strong> les valeurs dans l'ordre croissant. La médiane est la valeur du milieu.</p>
+        <ul>
+          <li>Si le nombre de valeurs est <strong>impair</strong> : la médiane est la valeur centrale.</li>
+          <li>Si <strong>pair</strong> : la médiane est la moyenne des deux valeurs centrales.</li>
+        </ul>
+      </div>
+      <div class="example">
+        Série rangée : 4 ; 7 ; 9 ; 12 ; 18 (5 valeurs). Médiane = 9 (3<sup>e</sup> valeur).
+      </div>
+      <h3>Fréquence</h3>
+      <div class="method">
+        $$\\text{Fréquence}=\\frac{\\text{effectif}}{\\text{effectif total}}$$
+        <p>Souvent exprimée en pourcentage.</p>
+      </div>
+      <div class="example">
+        Sur 25 élèves, 10 sont des filles : fréquence des filles $=\\dfrac{10}{25}=0{,}4=40\\%$.
+      </div>
+    ` },
+    questions: [
+      { enonce: "Moyenne de 10, 12, 14 ?", choix: ["10","12","14","36"], bonne: 1, explication: "$(10+12+14)\\div 3=36\\div 3=12$." },
+      { enonce: "Moyenne de 4, 6, 8, 10 ?", choix: ["6","7","8","28"], bonne: 1, explication: "$(4+6+8+10)\\div 4=28\\div 4=7$." },
+      { enonce: "Médiane de 3 ; 5 ; 8 ; 11 ; 15 ?", choix: ["3","5","8","11"], bonne: 2, explication: "Série rangée, 5 valeurs : la 3e est 8." },
+      { enonce: "Médiane de 2 ; 4 ; 6 ; 10 ?", choix: ["4","5","6","8"], bonne: 1, explication: "4 valeurs (pair) : moyenne des 2 du milieu = $(4+6)\\div 2=5$." },
+      { enonce: "Sur 20 élèves, 12 ont eu plus de 10. Fréquence des élèves ayant eu plus de 10 ?", choix: ["12","$\\dfrac{12}{20}=60\\%$","$\\dfrac{20}{12}$","$8\\%$"], bonne: 1, explication: "$\\dfrac{12}{20}=0{,}6=60\\%$." },
+      { enonce: "Moyenne de 0, 0, 10, 20, 20 ?", choix: ["10","12","8","20"], bonne: 0, explication: "$(0+0+10+20+20)\\div 5=50\\div 5=10$." },
+      { enonce: "La médiane sépare la série en :", choix: ["1 partie","2 parties égales","3 parties","Cela dépend"], bonne: 1, explication: "La médiane partage en deux moitiés." },
+      { enonce: "La fréquence d'un événement est toujours :", choix: ["Entre 0 et 1","Un entier","Supérieure à 100","Négative"], bonne: 0, explication: "Comme la probabilité, entre 0 et 1 (ou 0% et 100%)." },
+      { enonce: "Si la fréquence est $\\dfrac{1}{4}$, en pourcentage cela fait :", choix: ["10%","25%","40%","75%"], bonne: 1, explication: "$\\dfrac{1}{4}=0{,}25=25\\%$." },
+      { enonce: "Moyenne de 5 notes : 15, 12, 8, 10, 15 ?", choix: ["10","11","12","60"], bonne: 2, explication: "$(15+12+8+10+15)\\div 5=60\\div 5=12$." },
+      { enonce: "Médiane de 7 ; 7 ; 9 ; 13 ; 14 ; 16 ; 20 ?", choix: ["7","9","13","14"], bonne: 2, explication: "7 valeurs : la 4e est 13." }
+    ]
+  },
+
+  lecture_tableaux: {
+    titre: "Lire tableaux, diagrammes, graphiques",
+    categorie: "stat",
+    icone: "📈",
+    lecon: { contenu: `
+      <h3>Méthode</h3>
+      <div class="method">
+        <p>Quand on lit un tableau ou un graphique, on cherche à <strong>identifier</strong> :</p>
+        <ul>
+          <li>Le titre (sujet du document)</li>
+          <li>Les unités utilisées</li>
+          <li>Les axes (pour un graphique) : que représente l'axe horizontal ? L'axe vertical ?</li>
+          <li>La légende</li>
+        </ul>
+      </div>
+      <h3>Types de représentations</h3>
+      <div class="method">
+        <ul>
+          <li><strong>Tableau</strong> : on lit une case en croisant ligne et colonne.</li>
+          <li><strong>Diagramme en bâtons / barres</strong> : la hauteur des bâtons indique la valeur.</li>
+          <li><strong>Diagramme circulaire</strong> : chaque secteur représente une part d'un total (souvent en %).</li>
+          <li><strong>Graphique de courbes</strong> : on suit l'évolution dans le temps.</li>
+        </ul>
+      </div>
+      <div class="tip">💡 Lire <strong>attentivement</strong> l'énoncé et les axes avant de répondre.</div>
+    ` },
+    questions: [
+      { enonce: "Dans un diagramme en bâtons, la hauteur représente :", choix: ["Le temps","L'effectif ou la fréquence","La probabilité","Rien"], bonne: 1, explication: "La hauteur indique la valeur (effectif ou fréquence)." },
+      { enonce: "Un diagramme circulaire représente :", choix: ["Une évolution","La répartition d'un tout","Une moyenne","Une médiane"], bonne: 1, explication: "Il montre la répartition (parts d'un total)." },
+      { enonce: "Sur un graphique courbe, l'axe horizontal représente souvent :", choix: ["Le temps","La probabilité","Une fréquence","Une moyenne"], bonne: 0, explication: "Souvent le temps." },
+      { enonce: "Si la somme des fréquences en % d'un diagramme circulaire est 100, c'est :", choix: ["Anormal","Normal","Une erreur","Trop"], bonne: 1, explication: "Le total doit faire 100% (tout le disque)." },
+      { enonce: "Pour lire une case dans un tableau à double entrée, on croise :", choix: ["Deux lignes","Deux colonnes","Une ligne et une colonne","Deux titres"], bonne: 2, explication: "On regarde le croisement ligne / colonne." },
+      { enonce: "Un secteur représentant 25% d'un disque correspond à un angle de :", choix: ["25°","90°","180°","360°"], bonne: 1, explication: "$25\\% \\times 360° = 90°$." },
+      { enonce: "Un secteur représentant 50% d'un disque correspond à un angle de :", choix: ["50°","90°","180°","360°"], bonne: 2, explication: "$50\\% \\times 360° = 180°$." },
+      { enonce: "Sur un graphique, si la courbe monte, la grandeur représentée :", choix: ["Diminue","Reste constante","Augmente","Devient nulle"], bonne: 2, explication: "Une courbe qui monte = augmentation." },
+      { enonce: "Pour comparer deux séries de données, on peut utiliser :", choix: ["Un diagramme en bâtons","Une moyenne","Les deux","Rien"], bonne: 2, explication: "Les deux outils sont utiles." }
+    ]
+  }
+
+});
+
+// ========================================================================
+//  PROPORTIONNALITÉ ET FONCTIONS
+// ========================================================================
+Object.assign(THEMES, {
+
+  proportionnalite: {
+    titre: "Reconnaître la proportionnalité",
+    categorie: "prop",
+    icone: "⚖️",
+    lecon: { contenu: `
+      <h3>Méthode</h3>
+      <div class="method">
+        <p>Deux grandeurs sont <strong>proportionnelles</strong> si on passe de l'une à l'autre en multipliant toujours par le même nombre (le <strong>coefficient de proportionnalité</strong>).</p>
+        <p>Dans un tableau, on vérifie que tous les rapports $\\dfrac{\\text{ligne 2}}{\\text{ligne 1}}$ sont égaux.</p>
+      </div>
+      <h3>Procédures usuelles</h3>
+      <div class="method">
+        <ul>
+          <li><strong>Coefficient de proportionnalité</strong> : on cherche le nombre $k$ tel qu'on passe de l'un à l'autre.</li>
+          <li><strong>Retour à l'unité</strong> : on cherche la valeur correspondante pour "1".</li>
+          <li><strong>Produit en croix</strong> : $\\dfrac{a}{b}=\\dfrac{c}{d}$ équivaut à $a\\times d = b\\times c$.</li>
+          <li><strong>Linéarité</strong> : doubler / tripler / ajouter (si proportionnel).</li>
+        </ul>
+      </div>
+      <h3>Exemples</h3>
+      <div class="example">
+        2 stylos coûtent 3 €. Combien coûtent 10 stylos ? Retour à l'unité : 1 stylo = 1,50 € ; 10 stylos = 15 €.
+      </div>
+      <div class="example">
+        $\\dfrac{x}{12}=\\dfrac{5}{4}$ → $x = \\dfrac{5\\times 12}{4}=15$.
+      </div>
+    ` },
+    questions: [
+      { enonce: "Si 3 kg de pommes coûtent 6 €, combien coûte 1 kg ?", choix: ["1 €","2 €","3 €","6 €"], bonne: 1, explication: "$6\\div 3=2$ € par kg." },
+      { enonce: "Si 5 stylos coûtent 4 €, combien coûtent 15 stylos ?", choix: ["8 €","10 €","12 €","20 €"], bonne: 2, explication: "15 = 3 × 5, donc prix = $3\\times 4=12$ €." },
+      { enonce: "Un coureur fait 6 km en 30 min. À la même allure, combien fera-t-il en 1 h ?", choix: ["6 km","9 km","12 km","36 km"], bonne: 2, explication: "1 h = 2 × 30 min, donc $2\\times 6=12$ km." },
+      { enonce: "Tableau : 2 → 6 ; 4 → 12 ; 5 → ? Si proportionnel, ? vaut :", choix: ["13","15","18","20"], bonne: 1, explication: "Coefficient = 3, donc $5\\times 3=15$." },
+      { enonce: "Si $\\dfrac{x}{8}=\\dfrac{3}{4}$, alors $x$ vaut :", choix: ["3","4","6","12"], bonne: 2, explication: "$x=\\dfrac{3\\times 8}{4}=6$ (produit en croix)." },
+      { enonce: "Une recette pour 4 personnes utilise 200 g de farine. Pour 6 personnes :", choix: ["100 g","250 g","300 g","400 g"], bonne: 2, explication: "Pour 1 personne : $200\\div 4=50$ g. Pour 6 : $50\\times 6=300$ g." },
+      { enonce: "10 L d'essence coûtent 18 €. Combien coûtent 25 L ?", choix: ["28 €","36 €","45 €","50 €"], bonne: 2, explication: "1 L = $1{,}80$ €, donc $25\\times 1{,}80=45$ €." },
+      { enonce: "Un train fait 240 km en 2 h. Sa vitesse :", choix: ["80 km/h","100 km/h","120 km/h","240 km/h"], bonne: 2, explication: "$240\\div 2=120$ km/h." },
+      { enonce: "Un tissu coûte 8 € le mètre. Prix de 3,5 m ?", choix: ["24 €","28 €","30 €","32 €"], bonne: 1, explication: "$3{,}5\\times 8=28$ €." },
+      { enonce: "Si $\\dfrac{a}{15}=\\dfrac{4}{5}$, $a$ vaut :", choix: ["3","8","12","60"], bonne: 2, explication: "$a=\\dfrac{4\\times 15}{5}=12$." },
+      { enonce: "Si dans un tableau, on passe de 2 → 8 puis de 5 → 25, est-ce proportionnel ?", choix: ["Oui","Non","On ne peut pas savoir","Cela dépend"], bonne: 1, explication: "$\\dfrac{8}{2}=4$ mais $\\dfrac{25}{5}=5$ : pas le même coefficient." },
+      { enonce: "Un plan est à l'échelle 1/100. Si une longueur réelle est de 5 m, sur le plan elle vaut :", choix: ["5 cm","50 cm","5 mm","500 cm"], bonne: 0, explication: "Échelle 1/100 : on divise par 100. $5\\,\\text{m}=500\\,\\text{cm}$ et $500\\div 100=5\\,\\text{cm}$." },
+      { enonce: "Sur une carte à l'échelle 1/50 000, 2 cm représentent une distance réelle de :", choix: ["1 km","100 m","10 km","100 km"], bonne: 0, explication: "$2\\,\\text{cm}\\times 50\\,000=100\\,000\\,\\text{cm}=1\\,000\\,\\text{m}=1\\,\\text{km}$." },
+      { enonce: "Quatrième proportionnelle : si $\\dfrac{4}{10}=\\dfrac{x}{25}$, alors $x$ vaut :", choix: ["8","10","12","16"], bonne: 1, explication: "Produit en croix : $x=\\dfrac{4\\times 25}{10}=10$." },
+      { enonce: "5 cahiers coûtent 7,50 €. Combien coûtent 8 cahiers ?", choix: ["10 €","12 €","12,50 €","15 €"], bonne: 1, explication: "1 cahier coûte $7{,}50\\div 5=1{,}50$ €, donc 8 cahiers : $8\\times 1{,}50=12$ €." }
+    ]
+  },
+
+  pourcentages_evolution: {
+    titre: "Pourcentages d'augmentation et de diminution",
+    categorie: "prop",
+    icone: "📈",
+    lecon: { contenu: `
+      <h3>Augmenter d'un pourcentage</h3>
+      <div class="method">
+        <p>Pour augmenter un nombre de $p\\%$, on peut :</p>
+        <ul>
+          <li>Calculer $p\\%$ du nombre, puis l'ajouter.</li>
+          <li>Ou multiplier par $\\left(1+\\dfrac{p}{100}\\right)$.</li>
+        </ul>
+      </div>
+      <div class="example">
+        Un prix de 80 € augmente de 25 %.
+        Méthode 1 : $25\\%$ de $80=20$ ; nouveau prix $=80+20=100$ €.
+        Méthode 2 : $80\\times 1{,}25=100$ €.
+      </div>
+      <h3>Diminuer d'un pourcentage</h3>
+      <div class="method">
+        <p>Pour diminuer de $p\\%$ : on multiplie par $\\left(1-\\dfrac{p}{100}\\right)$.</p>
+      </div>
+      <div class="example">
+        Un prix de 200 € baisse de 15 %.
+        Méthode : $200\\times(1-0{,}15)=200\\times 0{,}85=170$ €.
+      </div>
+      <h3>Coefficients usuels</h3>
+      <div class="tip">💡 +10% → ×1,10 ; +20% → ×1,20 ; -10% → ×0,90 ; -25% → ×0,75 ; -50% → ×0,50.</div>
+    ` },
+    questions: [
+      { enonce: "Augmenter 200 € de 10 % :", choix: ["210 €","220 €","250 €","100 €"], bonne: 1, explication: "$10\\%$ de 200 = 20 ; $200+20=220$ €." },
+      { enonce: "Diminuer 80 € de 25 % :", choix: ["55 €","60 €","65 €","75 €"], bonne: 1, explication: "$25\\%$ de 80 = 20 ; $80-20=60$ €." },
+      { enonce: "Augmenter de 20 % revient à multiplier par :", choix: ["1,02","1,2","0,8","2"], bonne: 1, explication: "$1+\\dfrac{20}{100}=1{,}20$." },
+      { enonce: "Diminuer de 15 % revient à multiplier par :", choix: ["0,15","0,85","1,15","0,5"], bonne: 1, explication: "$1-0{,}15=0{,}85$." },
+      { enonce: "Un article de 50 € est soldé à -30 %. Nouveau prix ?", choix: ["20 €","30 €","35 €","45 €"], bonne: 2, explication: "$50\\times 0{,}70=35$ €." },
+      { enonce: "Un salaire de 1 500 € augmente de 5 %. Nouveau montant ?", choix: ["1 050 €","1 505 €","1 575 €","1 750 €"], bonne: 2, explication: "$1\\,500\\times 1{,}05=1\\,575$ €." },
+      { enonce: "Augmenter de 100 % revient à :", choix: ["Ne rien changer","Doubler","Tripler","Diviser par 2"], bonne: 1, explication: "$\\times(1+1)=\\times 2$." },
+      { enonce: "Diminuer de 50 % revient à :", choix: ["Diviser par 2","Multiplier par 2","Ne rien changer","Réduire à 0"], bonne: 0, explication: "$\\times 0{,}5$ = diviser par 2." },
+      { enonce: "Le prix d'un livre passe de 20 € à 24 €. Quel est le pourcentage d'augmentation ?", choix: ["4 %","10 %","20 %","24 %"], bonne: 2, explication: "Augmentation $=4$ € sur 20 € : $\\dfrac{4}{20}=0{,}2=20\\%$." },
+      { enonce: "Le prix passe de 100 € à 80 €. Pourcentage de diminution ?", choix: ["10 %","20 %","25 %","80 %"], bonne: 1, explication: "Baisse 20 € sur 100 : $\\dfrac{20}{100}=20\\%$." },
+      { enonce: "Augmenter 250 de 8 % :", choix: ["258","260","270","275"], bonne: 2, explication: "$250\\times 1{,}08=270$." },
+      { enonce: "Un commerçant baisse ses prix de 20 %. Quel sera le prix à payer pour un article étiqueté 175 € ?", choix: ["125 €","140 €","150 €","155 €"], bonne: 1, explication: "$175\\times 0{,}80=140$ €." },
+      { enonce: "Karim gagne 2 400 € par mois. Il est augmenté de 2 %. Son nouveau salaire est :", choix: ["2 402 €","2 408 €","2 448 €","2 480 €"], bonne: 2, explication: "$2\\,400\\times 1{,}02=2\\,448$ €." },
+      { enonce: "Un article augmente de 10 % puis baisse de 10 %. Que devient son prix ?", choix: ["Il revient au prix initial","Il a baissé de 1 %","Il a augmenté de 1 %","Il a augmenté de 20 %"], bonne: 1, explication: "$1{,}10\\times 0{,}90=0{,}99$ : le prix final vaut 99 % du prix initial, donc baisse de 1 %." }
+    ]
+  },
+
+  graphiques: {
+    titre: "Lire et exploiter un graphique",
+    categorie: "prop",
+    icone: "📉",
+    lecon: { contenu: `
+      <h3>Méthode</h3>
+      <div class="method">
+        <p>Un graphique relie deux grandeurs ($x$ et $y$, par exemple temps et distance).</p>
+        <p>Pour lire une valeur de $y$ pour un $x$ donné :</p>
+        <ul>
+          <li>On repère $x$ sur l'axe horizontal.</li>
+          <li>On monte (ou descend) jusqu'à la courbe.</li>
+          <li>On lit la valeur de $y$ correspondante sur l'axe vertical.</li>
+        </ul>
+        <p>Réciproquement, pour trouver $x$ connaissant $y$, on fait l'inverse.</p>
+      </div>
+      <h3>Proportionnalité graphique</h3>
+      <div class="method">
+        <p>Si deux grandeurs sont proportionnelles, le graphique est une <strong>droite passant par l'origine</strong> (0;0).</p>
+      </div>
+      <div class="tip">💡 Lire un graphique demande de <strong>bien observer les unités</strong> et les graduations.</div>
+    ` },
+    questions: [
+      { enonce: "Sur un graphique, pour lire $y$ connaissant $x$, on :", choix: ["Calcule la moyenne","Suit verticalement jusqu'à la courbe puis lit $y$","Inverse les axes","Cela dépend"], bonne: 1, explication: "On part de $x$, on monte/descend à la courbe, on lit $y$." },
+      { enonce: "Si une grandeur est proportionnelle à une autre, le graphique est :", choix: ["Une courbe","Une droite quelconque","Une droite passant par l'origine","Un cercle"], bonne: 2, explication: "Droite passant par (0;0)." },
+      { enonce: "Sur un graphique, si la courbe est croissante, $y$ :", choix: ["Diminue","Augmente avec $x$","Est constant","Devient négatif"], bonne: 1, explication: "Courbe croissante : $y$ augmente quand $x$ augmente." },
+      { enonce: "Si $y=2x$, quand $x=5$, $y$ vaut :", choix: ["2","5","7","10"], bonne: 3, explication: "$y=2\\times 5=10$." },
+      { enonce: "Une droite passe par (0;0) et (2;6). Coefficient de proportionnalité :", choix: ["2","3","6","8"], bonne: 1, explication: "$y/x=6/2=3$." },
+      { enonce: "Sur un graphique distance/temps, si la courbe est horizontale, l'objet :", choix: ["Avance","Recule","Est immobile","Accélère"], bonne: 2, explication: "Distance constante = pas de déplacement." },
+      { enonce: "L'axe horizontal s'appelle :", choix: ["Axe des ordonnées","Axe des abscisses","Axe des $y$","Origine"], bonne: 1, explication: "L'axe horizontal est l'axe des abscisses." },
+      { enonce: "L'axe vertical s'appelle :", choix: ["Axe des abscisses","Axe des ordonnées","Axe des $x$","Origine"], bonne: 1, explication: "L'axe vertical est l'axe des ordonnées." },
+      { enonce: "Une grandeur passe de 10 à 30 entre $t=0$ et $t=4$. Le coefficient directeur (pente) vaut :", choix: ["2","5","20","30"], bonne: 1, explication: "$\\dfrac{30-10}{4-0}=5$." }
+    ]
+  }
+
+});
+
+// ========================================================================
+//  ALGORITHMIQUE
+// ========================================================================
+Object.assign(THEMES, {
+
+  programme_calcul: {
+    titre: "Programmes de calcul",
+    categorie: "algo",
+    icone: "🤖",
+    lecon: { contenu: `
+      <h3>Méthode</h3>
+      <div class="method">
+        <p>Un programme de calcul est une <strong>suite d'instructions</strong> appliquée à un nombre de départ.</p>
+        <p>On exécute les instructions dans l'ordre, en faisant attention aux priorités opératoires.</p>
+      </div>
+      <h3>Exemple</h3>
+      <div class="example">
+        <p>Programme : "Choisir un nombre. Multiplier par 3. Ajouter 5."</p>
+        <p>Pour le nombre 4 : $4 \\to 4\\times 3=12 \\to 12+5=17$.</p>
+        <p>Pour le nombre $x$ : on obtient $3x+5$.</p>
+      </div>
+      <h3>Expressions algébriques</h3>
+      <div class="method">
+        <p>En appelant le nombre de départ $x$, on peut écrire le programme comme une expression :</p>
+        <p>"Doubler puis ajouter 7" → $2x+7$.</p>
+        <p>"Ajouter 4 puis multiplier par 3" → $3(x+4)=3x+12$.</p>
+      </div>
+      <div class="tip">💡 L'ordre des opérations compte ! "$\\times 2$ puis $+3$" donne $2x+3$ alors que "$+3$ puis $\\times 2$" donne $2(x+3)=2x+6$.</div>
+    ` },
+    questions: [
+      { enonce: "Programme : « Choisir un nombre, le multiplier par 4, ajouter 7. » Avec 3, on obtient :", choix: ["12","15","19","22"], bonne: 2, explication: "$3\\times 4=12$, puis $12+7=19$." },
+      { enonce: "Programme : « Ajouter 5, multiplier par 2. » Avec 6 :", choix: ["11","17","22","30"], bonne: 2, explication: "$6+5=11$, puis $11\\times 2=22$." },
+      { enonce: "Programme : « Multiplier par 3, ajouter 2. » Expression pour $x$ :", choix: ["$3x+2$","$3(x+2)$","$x+5$","$5x$"], bonne: 0, explication: "Multiplier par 3 puis ajouter 2 : $3x+2$." },
+      { enonce: "Programme : « Ajouter 4, multiplier par 5. » Expression pour $x$ :", choix: ["$5x+4$","$5(x+4)$","$x+20$","$9x$"], bonne: 1, explication: "On parenthèse l'ajout : $5(x+4)$." },
+      { enonce: "« Multiplier par 2, retrancher 6. » Avec 8 :", choix: ["10","16","22","2"], bonne: 0, explication: "$8\\times 2=16$, puis $16-6=10$." },
+      { enonce: "« Soustraire 3, puis multiplier par 4. » Avec 10 :", choix: ["28","31","37","40"], bonne: 0, explication: "$10-3=7$, puis $7\\times 4=28$." },
+      { enonce: "« Prendre le carré, ajouter 1. » Avec 5 :", choix: ["11","26","30","36"], bonne: 1, explication: "$5^2=25$, puis $25+1=26$." },
+      { enonce: "Programme : « Doubler puis ajouter 3. » Pour quel nombre obtient-on 11 ?", choix: ["3","4","5","8"], bonne: 1, explication: "$2x+3=11 \\Rightarrow 2x=8 \\Rightarrow x=4$." },
+      { enonce: "Quelle expression pour : « Diviser par 2, ajouter 5 » ?", choix: ["$\\dfrac{x}{2}+5$","$\\dfrac{x+5}{2}$","$2x+5$","$\\dfrac{x}{7}$"], bonne: 0, explication: "Divisé d'abord, puis ajouté." },
+      { enonce: "Programme : « Ajouter 3, élever au carré. » Pour $x=2$ :", choix: ["7","13","25","11"], bonne: 2, explication: "$2+3=5$, puis $5^2=25$." }
+    ]
+  }
+
+});
+
+// ========================================================================
+//  FIN DES DONNÉES
+// ========================================================================
+</script>
+
+<script>
+// ==========================================================================
+//   MOTEUR : VUES, NAVIGATION, QUIZ
+// ==========================================================================
+const app = document.getElementById('app');
+const menuBtns = document.querySelectorAll('nav.menu button');
+
+const CATEGORIES = {
+  "nc":   { nom: "Nombres et calculs",        cls: "cat-nc" },
+  "geo":  { nom: "Espace et géométrie",       cls: "cat-geo" },
+  "stat": { nom: "Données et probabilités",   cls: "cat-stat" },
+  "prop": { nom: "Proportionnalité & fonctions", cls: "cat-prop" },
+  "algo": { nom: "Algorithmique",             cls: "cat-algo" }
+};
+
+let state = {
+  view: 'home',
+  currentTheme: null,
+  questions: [],
+  qIndex: 0,
+  score: 0,
+  answered: false
+};
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function pickQuestions(theme, n = 10) {
+  const all = theme.questions || [];
+  return shuffle(all).slice(0, Math.min(n, all.length));
+}
+
+function renderMath() {
+  if (window.renderMathInElement) {
+    renderMathInElement(app, {
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '$',  right: '$',  display: false }
+      ],
+      throwOnError: false
+    });
+  }
+}
+
+function setView(view, themeKey = null, mode = null) {
+  state.view = view;
+  state.currentTheme = themeKey;
+  menuBtns.forEach(b => b.classList.toggle('active', b.dataset.view === view));
+  if (view === 'home') renderHome();
+  else if (view === 'quiz' && !themeKey) renderThemePicker('quiz');
+  else if (view === 'quiz' && themeKey) startQuiz(themeKey);
+  else if (view === 'lessons' && !themeKey) renderThemePicker('lessons');
+  else if (view === 'lessons' && themeKey) renderLesson(themeKey);
+  else if (view === 'random') startRandomQuiz();
+  window.scrollTo(0, 0);
+  renderMath();
+}
+
+menuBtns.forEach(b => {
+  b.addEventListener('click', () => setView(b.dataset.view));
+});
+
+function groupByCategory() {
+  const grouped = {};
+  Object.entries(THEMES).forEach(([key, t]) => {
+    if (!grouped[t.categorie]) grouped[t.categorie] = [];
+    grouped[t.categorie].push([key, t]);
+  });
+  return grouped;
+}
+
+// -------------- VUE : ACCUEIL --------------
+function renderHome() {
+  const nbThemes = Object.keys(THEMES).length;
+  const nbQuestions = Object.values(THEMES).reduce((s, t) => s + (t.questions ? t.questions.length : 0), 0);
+  app.innerHTML = `
+    <div class="hero">
+      <h2>Bienvenue !</h2>
+      <p>Ce site rassemble tous les <strong>automatismes</strong> au programme du DNB pour les classes de 3<sup>e</sup>.</p>
+      <p>Pour chaque thème, tu trouveras :</p>
+      <ul>
+        <li>📘 Une <strong>leçon</strong> claire avec la méthode et des exemples corrigés</li>
+        <li>🎯 Un <strong>quiz</strong> tiré au hasard dans une banque de questions, avec correction détaillée</li>
+        <li>🎲 Un <strong>quiz surprise</strong> qui mélange tous les thèmes pour réviser</li>
+      </ul>
+      <div class="actions">
+        <button class="btn btn-primary" onclick="setView('quiz')">🎯 Choisir un quiz</button>
+        <button class="btn btn-accent" onclick="setView('lessons')">📘 Voir les leçons</button>
+        <button class="btn btn-success" onclick="setView('random')">🎲 Quiz surprise</button>
+      </div>
+      <p style="margin-top:18px;font-size:13px;color:#92400e;">
+        ${nbThemes} thèmes · ${nbQuestions} questions disponibles
+      </p>
+    </div>
+    ${renderCategoriesOverview()}
+  `;
+}
+
+function renderCategoriesOverview() {
+  const grouped = groupByCategory();
+  return Object.entries(grouped).map(([catKey, items]) => {
+    const cat = CATEGORIES[catKey];
+    if (!cat) return '';
+    return `
+      <div class="cat-section">
+        <div class="cat-title ${cat.cls}">${cat.nom}</div>
+        <div class="theme-grid">
+          ${items.map(([key, t]) => `
+            <div class="theme-card">
+              <div class="icon">${t.icone || '✏️'}</div>
+              <div class="name">${t.titre}</div>
+              <div class="nb">${t.questions ? t.questions.length : 0} questions dans la banque</div>
+              <div class="actions">
+                <button class="btn-quiz" onclick="setView('quiz','${key}')">🎯 Quiz</button>
+                <button class="btn-lesson" onclick="setView('lessons','${key}')">📘 Leçon</button>
+              </div>
+            </div>`).join('')}
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// -------------- VUE : SÉLECTION D'UN THÈME --------------
+function renderThemePicker(mode) {
+  const grouped = groupByCategory();
+  const action = mode === 'quiz' ? 'quiz' : 'lessons';
+  const txt = mode === 'quiz' ? 'Choisis un thème pour le quiz' : 'Choisis une leçon';
+  app.innerHTML = `
+    <div class="card">
+      <h2 style="margin-top:0">${txt}</h2>
+      ${Object.entries(grouped).map(([catKey, items]) => {
+        const cat = CATEGORIES[catKey];
+        if (!cat) return '';
+        return `
+          <div class="cat-section">
+            <div class="cat-title ${cat.cls}">${cat.nom}</div>
+            <div class="theme-grid">
+              ${items.map(([key, t]) => `
+                <div class="theme-card" onclick="setView('${action}','${key}')">
+                  <div class="icon">${t.icone || '✏️'}</div>
+                  <div class="name">${t.titre}</div>
+                  <div class="nb">${mode === 'quiz' ? (t.questions ? t.questions.length : 0) + ' questions' : 'Méthode et exemples'}</div>
+                </div>`).join('')}
+            </div>
+          </div>`;
+      }).join('')}
+    </div>
+  `;
+}
+
+// -------------- VUE : LEÇON --------------
+function renderLesson(themeKey) {
+  const t = THEMES[themeKey];
+  if (!t) { app.innerHTML = '<div class="card">Thème introuvable.</div>'; return; }
+  const lecon = t.lecon || { contenu: '<p>Leçon en cours de rédaction.</p>' };
+  app.innerHTML = `
+    <button class="back-btn" onclick="setView('lessons')">← Retour à la liste des leçons</button>
+    <div class="card lesson">
+      <h2>${t.icone || '📘'} ${t.titre}</h2>
+      <div>${lecon.contenu || ''}</div>
+      <div style="margin-top:24px;text-align:center">
+        <button class="btn btn-primary" onclick="setView('quiz','${themeKey}')">🎯 S'entraîner avec un quiz</button>
+      </div>
+    </div>
+  `;
+}
+
+// -------------- VUE : QUIZ --------------
+function startQuiz(themeKey, nbQuestions = 10) {
+  const t = THEMES[themeKey];
+  if (!t) { app.innerHTML = '<div class="card">Thème introuvable.</div>'; return; }
+  state.currentTheme = themeKey;
+  state.questions = pickQuestions(t, nbQuestions);
+  state.qIndex = 0;
+  state.score = 0;
+  state.answered = false;
+  if (state.questions.length === 0) {
+    app.innerHTML = `<div class="card"><p>Pas encore de questions disponibles pour ce thème.</p>
+      <button class="btn btn-ghost" onclick="setView('quiz')">← Choisir un autre thème</button></div>`;
+    return;
+  }
+  renderQuestion();
+}
+
+function startRandomQuiz(nbQuestions = 15) {
+  // mélange : tire des questions de tous les thèmes
+  const pool = [];
+  Object.entries(THEMES).forEach(([key, t]) => {
+    (t.questions || []).forEach(q => pool.push({ ...q, _theme: t.titre, _themeKey: key }));
+  });
+  state.currentTheme = '__random__';
+  state.questions = shuffle(pool).slice(0, Math.min(nbQuestions, pool.length));
+  state.qIndex = 0;
+  state.score = 0;
+  state.answered = false;
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const total = state.questions.length;
+  if (state.qIndex >= total) { renderResult(); return; }
+  const q = state.questions[state.qIndex];
+  const themeName = state.currentTheme === '__random__'
+    ? `🎲 Quiz surprise — ${q._theme}`
+    : `🎯 ${THEMES[state.currentTheme].titre}`;
+  const progressPct = Math.round((state.qIndex / total) * 100);
+  app.innerHTML = `
+    <button class="back-btn" onclick="setView('quiz')">← Quitter le quiz</button>
+    <div class="card">
+      <div class="quiz-header">
+        <div style="font-weight:700">${themeName}</div>
+        <div class="quiz-score">Score : ${state.score} / ${total}</div>
+      </div>
+      <div class="quiz-progress"><div style="width:${progressPct}%"></div></div>
+      <div style="margin-top:18px" class="question-num">Question ${state.qIndex + 1} / ${total}</div>
+      <div class="question-text">${q.enonce}</div>
+      ${q.fig ? `<div class="fig-wrap">${q.fig}</div>` : ''}
+      <div class="choices">
+        ${q.choix.map((c, i) => `<button class="choice" data-i="${i}" onclick="answer(${i})">${c}</button>`).join('')}
+      </div>
+      <div id="feedback-zone"></div>
+    </div>
+  `;
+  renderMath();
+}
+
+window.answer = function(i) {
+  if (state.answered) return;
+  state.answered = true;
+  const q = state.questions[state.qIndex];
+  const isOk = (i === q.bonne);
+  if (isOk) state.score++;
+  // disable & color all
+  document.querySelectorAll('.choice').forEach((btn, idx) => {
+    btn.disabled = true;
+    if (idx === q.bonne) btn.classList.add('correct');
+    if (idx === i && !isOk) btn.classList.add('wrong');
+  });
+  const fb = document.getElementById('feedback-zone');
+  fb.innerHTML = `
+    <div class="feedback ${isOk ? 'ok' : 'ko'}">
+      <span class="badge">${isOk ? '✓ Bonne réponse' : '✗ Mauvaise réponse'}</span>
+      <div style="margin-top:10px"><strong>Correction :</strong> ${q.explication || ('La bonne réponse est ' + q.choix[q.bonne])}</div>
+    </div>
+    <button class="next-btn" onclick="nextQuestion()">
+      ${state.qIndex + 1 >= state.questions.length ? '🏁 Voir le résultat' : '➡️ Question suivante'}
+    </button>
+  `;
+  renderMath();
+};
+
+window.nextQuestion = function() {
+  state.qIndex++;
+  state.answered = false;
+  renderQuestion();
+};
+
+function renderResult() {
+  const total = state.questions.length;
+  const pct = Math.round((state.score / total) * 100);
+  let medal = '🎯', msg = '';
+  if (pct === 100) { medal = '🏆'; msg = 'Parfait ! Tu maîtrises ce thème.'; }
+  else if (pct >= 80) { medal = '🥇'; msg = 'Excellent travail !'; }
+  else if (pct >= 60) { medal = '🥈'; msg = 'Bien joué, continue à t\'entraîner !'; }
+  else if (pct >= 40) { medal = '🥉'; msg = 'Pas mal, mais il faut continuer.'; }
+  else                { medal = '💪'; msg = 'Reviens sur la leçon et réessaie !'; }
+
+  const themeName = state.currentTheme === '__random__'
+    ? 'Quiz surprise'
+    : THEMES[state.currentTheme].titre;
+  const retryAction = state.currentTheme === '__random__'
+    ? `startRandomQuiz()`
+    : `startQuiz('${state.currentTheme}')`;
+
+  app.innerHTML = `
+    <div class="card result">
+      <div class="medal">${medal}</div>
+      <h2 style="margin:0">${themeName} — Résultat</h2>
+      <div class="score-big">${state.score} / ${total}</div>
+      <div style="font-size:18px;color:var(--c-muted);margin-bottom:8px">${pct}%</div>
+      <div class="msg">${msg}</div>
+      <div class="actions">
+        <button class="btn btn-primary" onclick="${retryAction}">🔁 Recommencer</button>
+        <button class="btn btn-ghost" onclick="setView('quiz')">📚 Autre thème</button>
+        ${state.currentTheme !== '__random__' ? `<button class="btn btn-accent" onclick="setView('lessons','${state.currentTheme}')">📘 Revoir la leçon</button>` : ''}
+        <button class="btn btn-success" onclick="setView('home')">🏠 Accueil</button>
+      </div>
+    </div>
+  `;
+}
+
+// ---- Lancement ----
+window.setView = setView;
+setView('home');
+</script>
+
+</body>
+</html>

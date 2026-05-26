@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LABOMATH — Lycée Voltaire de Wingles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Bowlby+One&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --maths: #6366f1;
+  --maths-light: #eef2ff;
+  --maths-dark: #4338ca;
+  --pc: #10b981;
+  --pc-light: #ecfdf5;
+  --pc-dark: #047857;
+  --accent: #f59e0b;
+  --accent-light: #fef3c7;
+  --voltaire-yellow: #d4a017;
+  --voltaire-red: #b91c1c;
+  --voltaire-teal: #3a6764;
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --text: #1e293b;
+  --text-light: #64748b;
+  --border: #e2e8f0;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-hover: 0 10px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.05);
+  --radius: 16px;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ========== HEADER ========== */
+header {
+  background: linear-gradient(135deg, #fff8e1 0%, #fff 60%, #fff5f5 100%);
+  padding: 32px 24px 24px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+.logo-labomath {
+  width: 100%;
+  max-width: 460px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+.school-name {
+  margin-top: 14px;
+  font-size: clamp(14px, 2vw, 17px);
+  color: var(--text-light);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.tagline {
+  margin-top: 6px;
+  font-size: clamp(12px, 1.4vw, 14px);
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+/* ========== NAV ========== */
+nav.menu {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  background: white;
+  padding: 12px 16px;
+  border-bottom: 2px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  flex-wrap: wrap;
+}
+nav.menu a {
+  background: var(--bg);
+  border: 2px solid transparent;
+  padding: 10px 20px;
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--text);
+  text-decoration: none;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+nav.menu a:hover {
+  background: var(--maths-light);
+  border-color: var(--maths);
+  color: var(--maths-dark);
+}
+
+/* ========== MAIN ========== */
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 36px 20px 60px;
+  width: 100%;
+  flex: 1;
+}
+
+.intro {
+  text-align: center;
+  margin-bottom: 36px;
+}
+.intro h2 {
+  font-size: clamp(22px, 4vw, 30px);
+  margin: 0 0 10px;
+}
+.intro p {
+  color: var(--text-light);
+  max-width: 620px;
+  margin: 0 auto;
+  font-size: 16px;
+}
+
+/* ========== SECTIONS ========== */
+.section {
+  margin-bottom: 44px;
+  scroll-margin-top: 80px;
+}
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.section-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  flex-shrink: 0;
+}
+.icon-jeux { background: linear-gradient(135deg, #f59e0b, #f97316); color: white; }
+.icon-videos { background: linear-gradient(135deg, #ef4444, #ec4899); color: white; }
+.icon-auto { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; }
+
+.section-title {
+  font-size: clamp(20px, 3vw, 26px);
+  font-weight: 800;
+  margin: 0;
+}
+.section-sub {
+  color: var(--text-light);
+  font-size: 14px;
+  margin-top: 2px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+.card {
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+}
+.card::after {
+  content: "→";
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  font-size: 22px;
+  color: var(--text-light);
+  transition: transform 0.2s;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--maths);
+}
+.card:hover::after {
+  transform: translateX(4px);
+  color: var(--maths);
+}
+.card .badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  align-self: flex-start;
+}
+.badge-maths { background: var(--maths-light); color: var(--maths-dark); }
+.badge-pc { background: var(--pc-light); color: var(--pc-dark); }
+.badge-mixed {
+  background: linear-gradient(90deg, var(--maths-light) 0 50%, var(--pc-light) 50% 100%);
+  color: var(--text);
+}
+.card-emoji {
+  font-size: 36px;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.card h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+}
+.card p {
+  margin: 0;
+  color: var(--text-light);
+  font-size: 14px;
+  line-height: 1.45;
+}
+.card .level {
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--maths-dark);
+  letter-spacing: 0.5px;
+}
+
+.card-soon {
+  opacity: 0.55;
+  cursor: not-allowed;
+  border-style: dashed;
+}
+.card-soon:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: var(--border);
+}
+.card-soon::after { content: "⏳"; }
+.card-soon:hover::after { transform: none; color: var(--text-light); }
+
+/* ========== FOOTER ========== */
+footer {
+  background: #1e293b;
+  color: #cbd5e1;
+  padding: 28px 20px 24px;
+  text-align: center;
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.logo-voltaire {
+  max-width: 320px;
+  width: 100%;
+  height: auto;
+  filter: brightness(0) invert(1) opacity(0.95);
+}
+footer .footer-info {
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 600px) {
+  header { padding: 24px 14px 18px; }
+  main { padding: 26px 14px 50px; }
+  .section { margin-bottom: 34px; }
+  .section-header { gap: 10px; }
+  .section-icon { width: 42px; height: 42px; font-size: 22px; border-radius: 12px; }
+  .cards { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .card { padding: 16px 14px; }
+  .card-emoji { font-size: 28px; }
+  .card h3 { font-size: 15px; }
+  .card p { font-size: 12.5px; }
+  .card::after { top: 14px; right: 14px; font-size: 18px; }
+  nav.menu a { padding: 8px 14px; font-size: 13px; }
+}
+@media (max-width: 380px) {
+  .cards { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <!-- Logo LABOMATH (Lycée √oltaire + LABOMATH) -->
+  <svg class="logo-labomath" viewBox="0 0 600 260" xmlns="http://www.w3.org/2000/svg" aria-label="LABOMATH — Lycée Voltaire">
+    <!-- "Lycée" -->
+    <text x="105" y="95" font-family="Caveat, cursive" font-size="68" font-weight="700" fill="#d4a017">Lycée</text>
+    <!-- Symbole racine carrée à la place du V de Voltaire -->
+    <path d="M 256 80 L 270 105 L 290 35 L 488 35"
+          stroke="#b91c1c" stroke-width="9" fill="none"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.95"/>
+    <!-- "oltaire" -->
+    <text x="292" y="105" font-family="Caveat, cursive" font-size="68" font-weight="700" fill="#d4a017">oltaire</text>
+    <!-- LABOMATH -->
+    <text x="60" y="225" font-family="'Bowlby One', 'Arial Black', sans-serif" font-size="120" font-weight="900" letter-spacing="-1">
+      <tspan fill="#d4a017">LABO</tspan><tspan fill="#b91c1c">MATH</tspan>
+    </text>
+  </svg>
+  <div class="school-name">Lycée Voltaire de Wingles</div>
+  <div class="tagline">Mathématiques · Physique-Chimie · Lycée professionnel</div>
+</header>
+
+<nav class="menu" aria-label="Menu principal">
+  <a href="#jeux">🎮 Jeux</a>
+  <a href="#videos">🎬 Vidéos</a>
+  <a href="#automatismes">⚡ Automatismes</a>
+</nav>
+
+<main>
+
+  <section class="intro">
+    <h2>Bienvenue sur LABOMATH 👋</h2>
+    <p>Le portail de ressources en mathématiques et physique-chimie du lycée Voltaire de Wingles. Choisis une rubrique ci-dessous pour t'entraîner, réviser ou jouer.</p>
+  </section>
+
+  <!-- ============ JEUX ============ -->
+  <section class="section" id="jeux">
+    <div class="section-header">
+      <div class="section-icon icon-jeux">🎮</div>
+      <div>
+        <h2 class="section-title">Jeux</h2>
+        <div class="section-sub">Apprendre en s'amusant</div>
+      </div>
+    </div>
+    <div class="cards">
+      <a class="card" href="coordinate_quest_ui_final.html">
+        <span class="badge badge-maths">Maths</span>
+        <div class="card-emoji">🎯</div>
+        <h3>Coordinate Quest</h3>
+        <p>Place des points dans un repère, lis des coordonnées et progresse de niveau en niveau.</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============ VIDÉOS ============ -->
+  <section class="section" id="videos">
+    <div class="section-header">
+      <div class="section-icon icon-videos">🎬</div>
+      <div>
+        <h2 class="section-title">Vidéos</h2>
+        <div class="section-sub">Vidéos de cours et de révisions</div>
+      </div>
+    </div>
+    <div class="cards">
+      <a class="card" href="videos-revisions.html">
+        <span class="badge badge-mixed">Maths · PC</span>
+        <div class="card-emoji">📺</div>
+        <h3>Classe de 3<sup>e</sup></h3>
+        <p>Toutes les vidéos de révisions de l'année de 3<sup>e</sup>, par thème.</p>
+        <div class="level">Niveau 3e</div>
+      </a>
+      <div class="card card-soon" aria-disabled="true">
+        <span class="badge badge-mixed">Maths · PC</span>
+        <div class="card-emoji">📺</div>
+        <h3>2<sup>nde</sup> pro</h3>
+        <p>Vidéos pour la classe de seconde professionnelle.</p>
+        <div class="level">Bientôt disponible</div>
+      </div>
+      <div class="card card-soon" aria-disabled="true">
+        <span class="badge badge-mixed">Maths · PC</span>
+        <div class="card-emoji">📺</div>
+        <h3>1<sup>re</sup> pro</h3>
+        <p>Vidéos pour la classe de première professionnelle.</p>
+        <div class="level">Bientôt disponible</div>
+      </div>
+      <div class="card card-soon" aria-disabled="true">
+        <span class="badge badge-mixed">Maths · PC</span>
+        <div class="card-emoji">📺</div>
+        <h3>T<sup>le</sup> pro</h3>
+        <p>Vidéos pour la classe de terminale professionnelle.</p>
+        <div class="level">Bientôt disponible</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ AUTOMATISMES ============ -->
+  <section class="section" id="automatismes">
+    <div class="section-header">
+      <div class="section-icon icon-auto">⚡</div>
+      <div>
+        <h2 class="section-title">Automatismes</h2>
+        <div class="section-sub">Quiz et leçons pour les automatismes</div>
+      </div>
+    </div>
+    <div class="cards">
+      <a class="card" href="automatismes-3e.html">
+        <span class="badge badge-maths">Maths</span>
+        <div class="card-emoji">📐</div>
+        <h3>Classe de 3<sup>e</sup></h3>
+        <p>Tous les automatismes du DNB : quiz par thème, leçons illustrées, quiz surprise.</p>
+        <div class="level">Niveau 3e</div>
+      </a>
+      <div class="card card-soon" aria-disabled="true">
+        <span class="badge badge-maths">Maths</span>
+        <div class="card-emoji">📐</div>
+        <h3>2<sup>nde</sup> pro</h3>
+        <p>Automatismes pour la seconde professionnelle.</p>
+        <div class="level">Bientôt disponible</div>
+      </div>
+      <div class="card card-soon" aria-disabled="true">
+        <span class="badge badge-maths">Maths</span>
+        <div class="card-emoji">📐</div>
+        <h3>1<sup>re</sup> pro</h3>
+        <p>Automatismes pour la première professionnelle.</p>
+        <div class="level">Bientôt disponible</div>
+      </div>
+      <div class="card card-soon" aria-disabled="true">
+        <span class="badge badge-maths">Maths</span>
+        <div class="card-emoji">📐</div>
+        <h3>T<sup>le</sup> pro</h3>
+        <p>Automatismes pour la terminale professionnelle.</p>
+        <div class="level">Bientôt disponible</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <!-- Logo Lycée Voltaire -->
+  <svg class="logo-voltaire" viewBox="0 0 600 160" xmlns="http://www.w3.org/2000/svg" aria-label="Lycée Voltaire">
+    <!-- Trait vertical / drapeau du V -->
+    <path d="M 28 18 Q 22 22 22 28 L 22 145 Q 22 152 30 150 L 60 145 L 60 30 Q 60 18 50 18 Z"
+          fill="#3a6764"/>
+    <!-- "oltaire" cursive -->
+    <text x="60" y="120" font-family="Caveat, cursive" font-size="90" font-weight="500" fill="#3a6764" font-style="italic">oltaire</text>
+    <!-- Tagline -->
+    <g font-family="Inter, sans-serif" fill="#6b7280">
+      <text x="300" y="48" font-size="20" font-weight="400">Bien plus que des études,</text>
+      <text x="300" y="92" font-size="20" font-weight="400">un <tspan font-size="44" font-weight="700" fill="#1f2937">passeport</tspan></text>
+      <text x="300" y="140" font-size="20" font-weight="400">pour votre <tspan font-size="44" font-weight="700" fill="#1f2937">avenir</tspan></text>
+    </g>
+  </svg>
+  <div class="footer-info">© LABOMATH — Lycée Voltaire de Wingles · Maths & Physique-Chimie</div>
+</footer>
+
+<script>
+const links = document.querySelectorAll('nav.menu a');
+const sections = ['jeux','videos','automatismes'].map(id => document.getElementById(id));
+
+function setActive() {
+  const scrollY = window.scrollY + 120;
+  let current = null;
+  for (const s of sections) {
+    if (s && s.offsetTop <= scrollY) current = s.id;
+  }
+  links.forEach(a => {
+    const href = a.getAttribute('href');
+    if (href === '#' + current) {
+      a.style.background = 'var(--maths)';
+      a.style.color = 'white';
+      a.style.borderColor = 'var(--maths-dark)';
+    } else {
+      a.style.background = '';
+      a.style.color = '';
+      a.style.borderColor = '';
+    }
+  });
+}
+window.addEventListener('scroll', setActive, { passive: true });
+setActive();
+
+links.forEach(a => {
+  a.addEventListener('click', e => {
+    const href = a.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      e.preventDefault();
+      const el = document.querySelector(href);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+
+</body>
+</html>

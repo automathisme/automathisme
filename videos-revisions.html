@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mes vidéos de révisions — Maths & Physique-Chimie</title>
+<style>
+  /* ============ RESET & BASE ============ */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --maths: #6366f1;
+    --maths-light: #eef2ff;
+    --maths-dark: #4338ca;
+    --pc: #10b981;
+    --pc-light: #ecfdf5;
+    --pc-dark: #047857;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #1e293b;
+    --text-light: #64748b;
+    --border: #e2e8f0;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-hover: 0 10px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.05);
+    --radius: 14px;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  /* ============ HEADER ============ */
+  header {
+    background: linear-gradient(135deg, #6366f1 0%, #10b981 100%);
+    color: white;
+    padding: 2.5rem 1.5rem 2rem;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+
+  header h1 {
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.4rem;
+  }
+
+  header p {
+    font-size: clamp(0.95rem, 2vw, 1.1rem);
+    opacity: 0.95;
+    font-weight: 500;
+  }
+
+  /* ============ CONTAINER ============ */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem 1.5rem 4rem;
+  }
+
+  /* ============ SEARCH ============ */
+  .search-bar {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 0.5rem;
+    margin-top: -1.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border);
+    position: relative;
+    z-index: 5;
+  }
+
+  .search-bar svg {
+    color: var(--text-light);
+    margin: 0 0.5rem 0 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .search-bar input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 0.85rem 0.5rem;
+    font-size: 1rem;
+    background: transparent;
+    color: var(--text);
+  }
+
+  .search-bar input::placeholder {
+    color: var(--text-light);
+  }
+
+  .clear-btn {
+    background: var(--bg);
+    border: none;
+    color: var(--text-light);
+    padding: 0.5rem 0.9rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-right: 0.25rem;
+    transition: background 0.15s;
+  }
+  .clear-btn:hover { background: var(--border); }
+  .clear-btn.hidden { display: none; }
+
+  /* ============ TABS ============ */
+  .tabs {
+    display: flex;
+    gap: 0.6rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .tab {
+    flex: 1;
+    min-width: 150px;
+    padding: 0.9rem 1.2rem;
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-light);
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .tab:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+
+  .tab.active.tab-pc {
+    background: var(--pc);
+    color: white;
+    border-color: var(--pc);
+  }
+  .tab.active.tab-maths {
+    background: var(--maths);
+    color: white;
+    border-color: var(--maths);
+  }
+  .tab.active.tab-all {
+    background: var(--text);
+    color: white;
+    border-color: var(--text);
+  }
+
+  .tab-emoji { font-size: 1.3rem; }
+
+  /* ============ STATS ============ */
+  .stats {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    padding-left: 0.25rem;
+  }
+
+  /* ============ TOPIC SECTION ============ */
+  .topic {
+    background: var(--card);
+    border-radius: var(--radius);
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .topic-header {
+    padding: 1.1rem 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+    gap: 1rem;
+  }
+
+  .topic-header:hover { background: var(--bg); }
+
+  .topic-title {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .topic-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+
+  .topic.pc .topic-icon { background: var(--pc-light); }
+  .topic.maths .topic-icon { background: var(--maths-light); }
+
+  .topic-text { min-width: 0; }
+
+  .topic-name {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--text);
+  }
+
+  .topic-meta {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-top: 2px;
+  }
+
+  .topic-badge {
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-right: 0.5rem;
+  }
+
+  .topic.pc .topic-badge {
+    background: var(--pc-light);
+    color: var(--pc-dark);
+  }
+  .topic.maths .topic-badge {
+    background: var(--maths-light);
+    color: var(--maths-dark);
+  }
+
+  .chevron {
+    transition: transform 0.25s;
+    color: var(--text-light);
+    flex-shrink: 0;
+  }
+
+  .topic.open .chevron { transform: rotate(180deg); }
+
+  /* ============ VIDEO GRID ============ */
+  .video-grid {
+    display: none;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+    padding: 0 1.4rem 1.4rem;
+  }
+
+  .topic.open .video-grid { display: grid; }
+
+  .video-card {
+    background: var(--bg);
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .video-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .video-thumb {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #1e293b;
+    overflow: hidden;
+  }
+
+  .video-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s;
+  }
+
+  .video-card:hover .video-thumb img { transform: scale(1.05); }
+
+  .play-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.25);
+    transition: background 0.2s;
+  }
+
+  .video-card:hover .play-overlay { background: rgba(0,0,0,0.4); }
+
+  .play-button {
+    width: 54px;
+    height: 54px;
+    background: rgba(255,255,255,0.95);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transition: transform 0.2s;
+  }
+
+  .video-card:hover .play-button { transform: scale(1.1); }
+
+  .play-button svg { color: #ef4444; margin-left: 3px; }
+
+  .video-info {
+    padding: 0.85rem 1rem 1rem;
+  }
+
+  .video-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text);
+    line-height: 1.35;
+  }
+
+  /* ============ NO RESULTS ============ */
+  .no-results {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-light);
+    background: var(--card);
+    border-radius: var(--radius);
+    border: 1px dashed var(--border);
+  }
+
+  .no-results h3 {
+    color: var(--text);
+    margin-bottom: 0.4rem;
+  }
+
+  /* ============ HIGHLIGHT (search) ============ */
+  mark {
+    background: #fde68a;
+    color: var(--text);
+    padding: 0 2px;
+    border-radius: 3px;
+  }
+
+  /* ============ FOOTER ============ */
+  footer {
+    text-align: center;
+    color: var(--text-light);
+    font-size: 0.85rem;
+    padding: 1.5rem 1rem;
+    border-top: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+
+  /* ============ RESPONSIVE ============ */
+
+  /* Tablette : 2-3 vidéos par ligne */
+  @media (max-width: 900px) {
+    .video-grid {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.85rem;
+    }
+  }
+
+  /* Mobile large (480-700px) : 2 vidéos par ligne */
+  @media (max-width: 700px) {
+    header { padding: 2rem 1rem 1.5rem; }
+    .container { padding: 1rem 1rem 3rem; }
+    .video-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      padding: 0 1rem 1.1rem;
+    }
+    .topic-header { padding: 0.95rem 1rem; gap: 0.6rem; }
+    .topic-icon { width: 40px; height: 40px; font-size: 1.2rem; }
+    .topic-name { font-size: 1rem; }
+    .topic-meta { font-size: 0.8rem; }
+    .topic-badge { padding: 2px 8px; font-size: 0.7rem; }
+    .video-info { padding: 0.65rem 0.75rem 0.85rem; }
+    .video-title { font-size: 0.85rem; }
+    .play-button { width: 46px; height: 46px; }
+    .play-button svg { width: 18px; height: 18px; }
+    .tab { padding: 0.75rem 0.6rem; font-size: 0.88rem; min-width: 0; gap: 0.35rem; }
+    .tab-emoji { font-size: 1.1rem; }
+    .search-bar input { padding: 0.75rem 0.4rem; font-size: 0.95rem; }
+    .clear-btn { padding: 0.45rem 0.7rem; font-size: 0.8rem; }
+  }
+
+  /* Mobile petit (≤ 480px) : 1 vidéo par ligne, plus aéré */
+  @media (max-width: 480px) {
+    header { padding: 1.75rem 1rem 1.4rem; }
+    header h1 { font-size: 1.4rem; line-height: 1.2; }
+    header p { font-size: 0.9rem; }
+    .container { padding: 0.85rem 0.85rem 2.5rem; }
+    .tabs { gap: 0.45rem; }
+    .tab {
+      padding: 0.7rem 0.4rem;
+      font-size: 0.82rem;
+      flex: 1 1 30%;
+    }
+    .tab-emoji { font-size: 1rem; }
+    .video-grid {
+      grid-template-columns: 1fr;
+      gap: 0.85rem;
+      padding: 0 0.85rem 1rem;
+    }
+    .topic-header { padding: 0.85rem 0.9rem; }
+    .topic-icon { width: 36px; height: 36px; font-size: 1.1rem; }
+    .video-card { display: flex; flex-direction: row; align-items: stretch; }
+    .video-thumb { width: 42%; aspect-ratio: 16/9; flex-shrink: 0; }
+    .video-info { flex: 1; padding: 0.7rem 0.85rem; display: flex; align-items: center; }
+    .video-title { font-size: 0.9rem; }
+    .play-button { width: 38px; height: 38px; }
+    .play-button svg { width: 14px; height: 14px; }
+  }
+
+  /* Très petit (≤ 360px) : ajustements ultimes */
+  @media (max-width: 360px) {
+    header h1 { font-size: 1.25rem; }
+    .tab { font-size: 0.78rem; padding: 0.65rem 0.3rem; }
+    .topic-name { font-size: 0.95rem; }
+    .video-title { font-size: 0.85rem; }
+  }
+
+  /* Accessibilité : focus visible */
+  .video-card:focus-visible,
+  .topic-header:focus-visible,
+  .tab:focus-visible,
+  .clear-btn:focus-visible,
+  .search-bar input:focus-visible {
+    outline: 3px solid var(--maths);
+    outline-offset: 2px;
+  }
+
+  /* Réduction des animations si l'utilisateur le préfère */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* ========== Barre LABOMATH (commune) ========== */
+  .lm-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 18px;
+    background: #1e293b;
+    color: white;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 14px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  .lm-home {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    font-weight: 900;
+    font-size: 19px;
+    letter-spacing: 0.5px;
+    font-family: 'Arial Black', sans-serif;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: background 0.15s;
+  }
+  .lm-home:hover { background: rgba(255,255,255,0.08); }
+  .lm-home .lm-labo { color: #f59e0b; }
+  .lm-home .lm-math { color: #ef4444; }
+  .lm-home .lm-house { font-size: 18px; }
+  .lm-topbar nav {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .lm-topbar nav a {
+    color: white;
+    text-decoration: none;
+    padding: 7px 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background 0.15s;
+    white-space: nowrap;
+  }
+  .lm-topbar nav a:hover { background: rgba(255,255,255,0.12); }
+  .lm-topbar nav a.lm-active {
+    background: rgba(255,255,255,0.18);
+    font-weight: 700;
+  }
+  @media (max-width: 520px) {
+    .lm-topbar { padding: 8px 12px; gap: 6px; }
+    .lm-home { font-size: 16px; }
+    .lm-topbar nav a { padding: 6px 10px; font-size: 12.5px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ====== Barre LABOMATH ====== -->
+<div class="lm-topbar">
+  <a href="index.html" class="lm-home" title="Retour à l'accueil">
+    <span class="lm-house">🏠</span><span class="lm-labo">LABO</span><span class="lm-math">MATH</span>
+  </a>
+  <nav>
+    <a href="coordinate_quest_ui_final.html">🎮 Jeux</a>
+    <a href="videos-revisions.html" class="lm-active">🎬 Vidéos</a>
+    <a href="automatismes-3e.html">⚡ Automatismes</a>
+  </nav>
+</div>
+
+<header>
+  <h1>📚 Mes vidéos de révisions</h1>
+  <p>Mathématiques & Physique-Chimie — Clique sur une vidéo pour l'apprendre !</p>
+</header>
+
+<div class="container">
+
+  <!-- SEARCH -->
+  <div class="search-bar">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"></circle>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+    <input type="text" id="search" placeholder="Rechercher une vidéo... (ex: Pythagore, atome, vitesse)">
+    <button class="clear-btn hidden" id="clearBtn">Effacer</button>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab tab-all active" data-filter="all">
+      <span class="tab-emoji">🎯</span> Tout afficher
+    </button>
+    <button class="tab tab-pc" data-filter="pc">
+      <span class="tab-emoji">🧪</span> Physique-Chimie
+    </button>
+    <button class="tab tab-maths" data-filter="maths">
+      <span class="tab-emoji">📐</span> Mathématiques
+    </button>
+  </div>
+
+  <div class="stats" id="stats"></div>
+
+  <div id="content"></div>
+
+  <div class="no-results" id="noResults" style="display:none;">
+    <h3>Aucune vidéo trouvée 🔍</h3>
+    <p>Essaie un autre mot-clé ou change de matière.</p>
+  </div>
+
+</div>
+
+<footer>
+  Bonne révision ! 💪 — Toutes les vidéos sont hébergées sur YouTube
+</footer>
+
+<script>
+  // ========= DATA =========
+  const data = [
+    {
+      subject: "pc",
+      icon: "🏃",
+      topic: "Mouvement",
+      videos: [
+        { title: "Décrire un mouvement (1)", id: "vKSVEBY4O5k" },
+        { title: "Décrire un mouvement (2)", id: "Zzt6HpCXvnM" },
+        { title: "Chronophotographie", id: "owXbeO4y8hw" },
+        { title: "Calculer une distance", id: "SuEUgtGVcfE" },
+        { title: "Calculer une vitesse", id: "Qv0kB3Nnp8M" },
+        { title: "Calculer une durée", id: "EcrTQ2LsptA" },
+        { title: "Calculer la durée du trajet entre deux villes", id: "8IOwpoJxInc" }
+      ]
+    },
+    {
+      subject: "pc",
+      icon: "⚡",
+      topic: "Puissances et Énergies",
+      videos: [
+        { title: "Puissance et énergie", id: "9fWprNGCLnQ" },
+        { title: "L'intensité du courant", id: "1Z0ffvKHdMo" },
+        { title: "Puissance électrique", id: "88JSFDvhX94" },
+        { title: "Tension électrique", id: "mxpImDpH5FY" }
+      ]
+    },
+    {
+      subject: "pc",
+      icon: "⚛️",
+      topic: "Structure de la matière",
+      videos: [
+        { title: "C'est quoi un atome ?", id: "UQ-cVXzBnPY" },
+        { title: "La composition d'un atome", id: "J8Q24Q2x9d8" },
+        { title: "Comment se forme un ion", id: "bTD1ggRG1Lg" },
+        { title: "Qu'est-ce qu'un ion ?", id: "Ot-_jkH5o_Y" },
+        { title: "Identifier des ions", id: "qFKY5THbaUo" }
+      ]
+    },
+    {
+      subject: "pc",
+      icon: "🔊",
+      topic: "Caractéristiques d'un son",
+      videos: [
+        { title: "Qu'est-ce qu'un son ?", id: "Oj5ijPR8uCI" }
+      ]
+    },
+    {
+      subject: "pc",
+      icon: "🧊",
+      topic: "Changement d'état",
+      videos: [
+        { title: "Le changement d'état", id: "PresIFG0-vQ" },
+        { title: "Mélange ou corps pur", id: "SxTUGTOVlR0" }
+      ]
+    },
+    {
+      subject: "pc",
+      icon: "🧪",
+      topic: "Acidité et pH",
+      videos: [
+        { title: "Qu'est-ce que le pH ?", id: "hJ4y2B8ueUo" },
+        { title: "Acide, base et neutre", id: "j534R6hD_aM" },
+        { title: "Mesurer un pH", id: "9_2Jh7zAKco" }
+      ]
+    },
+    {
+      subject: "pc",
+      icon: "⚗️",
+      topic: "Équation chimique",
+      videos: [
+        { title: "C'est quoi une équation chimique ?", id: "oWK4PByUrT4" },
+        { title: "Équilibrer une équation chimique (1)", id: "ekZpNwiKFS4" },
+        { title: "Équilibrer une équation chimique (2)", id: "KRimPPjL9xg" },
+        { title: "Équilibrer une réaction chimique", id: "jsFR99DA-Hg" },
+        { title: "Transformation chimique", id: "8x64Z5JKHF0" }
+      ]
+    },
+    {
+      subject: "pc",
+      icon: "🔥",
+      topic: "Combustion",
+      videos: [
+        { title: "Les combustions", id: "XDrQC3pcPYM" },
+        { title: "Combustion de l'éthane dans le dioxygène", id: "4qBUh0YgbDk" },
+        { title: "Combustion du butane dans le dioxygène", id: "sU5530meyaM" }
+      ]
+    },
+    {
+      subject: "pc",
+      icon: "💪",
+      topic: "Interaction et force",
+      videos: [
+        { title: "Qu'est-ce qu'une force ?", id: "Yd_9E7CSEvw" },
+        { title: "Représenter une force", id: "rt3BUJFQRCs" },
+        { title: "Le poids et la masse", id: "cXgSrJ6ZbKA" }
+      ]
+    },
+    {
+      subject: "pc",
+      icon: "🔌",
+      topic: "Énergie électrique",
+      videos: [
+        { title: "L'énergie électrique (1)", id: "88JSFDvhX94" },
+        { title: "L'énergie électrique (2)", id: "whcfTtK7SWM" },
+        { title: "Comment calculer une énergie électrique", id: "tqzH6tfhmHs" },
+        { title: "Calculer une durée de fonctionnement", id: "sNCHiolEvv0" },
+        { title: "L'énergie cinétique", id: "zlyIYtWWCkg" },
+        { title: "L'énergie potentielle de pesanteur", id: "jrgvgeOgmt8" }
+      ]
+    },
+    {
+      subject: "pc",
+      icon: "🔋",
+      topic: "Transfert et conversion d'énergies",
+      videos: [
+        { title: "Les 7 formes d'énergie", id: "IqXAeWoCv5A" },
+        { title: "Conversion d'énergies", id: "rFZ6XCpj6OY" },
+        { title: "Chaîne de production d'énergies", id: "D1LTOeakFP0" }
+      ]
+    },
+    {
+      subject: "maths",
+      icon: "📐",
+      topic: "Théorème de Pythagore",
+      videos: [
+        { title: "Calculer l'hypoténuse d'un triangle rectangle", id: "M9sceJ8gzNc" },
+        { title: "Calculer une longueur (autre que l'hypoténuse)", id: "9CIh6GGVu_w" },
+        { title: "Résoudre un problème avec Pythagore", id: "gBuzFW_GlGc" }
+      ]
+    },
+    {
+      subject: "maths",
+      icon: "⚖️",
+      topic: "Proportionnalité",
+      videos: [
+        { title: "Qu'est-ce que la proportionnalité ?", id: "YQx6EFCRnqI" },
+        { title: "Résoudre un problème de proportionnalité", id: "Qd6FDygCqDI" }
+      ]
+    },
+    {
+      subject: "maths",
+      icon: "📈",
+      topic: "Notion de fonction",
+      videos: [
+        { title: "Utiliser une fonction pour résoudre un problème", id: "02mDFbESIbk" },
+        { title: "Compléter un tableau de valeurs", id: "BHrBGehewi0" },
+        { title: "Déterminer l'image et l'antécédent (1)", id: "EOS5bSPTZjg" },
+        { title: "Déterminer l'image et l'antécédent (2)", id: "FjqPwHS7vE8" },
+        { title: "Déterminer l'image et l'antécédent (3)", id: "0NakIDu5dQU" },
+        { title: "Représenter graphiquement une fonction", id: "xHJNdrhzY4Q" }
+      ]
+    },
+    {
+      subject: "maths",
+      icon: "📏",
+      topic: "Théorème de Thalès",
+      videos: [
+        { title: "Appliquer le théorème de Thalès (1)", id: "GwGQD2BdZ3s" },
+        { title: "Appliquer le théorème de Thalès (2)", id: "cq3wBbXYB4A" },
+        { title: "Appliquer la réciproque du théorème de Thalès", id: "uaPicwUSQz0" },
+        { title: "Résoudre un problème avec Thalès", id: "hmJQNkpi0gI" }
+      ]
+    },
+    {
+      subject: "maths",
+      icon: "🟰",
+      topic: "Résolution d'équations",
+      videos: [
+        { title: "Mettre un problème en équation (1)", id: "Xn8rUSZPO34" },
+        { title: "Mettre un problème en équation (2)", id: "flObKE_CyHw" },
+        { title: "Résoudre une équation (1)", id: "quzC5C3a9jM" },
+        { title: "Résoudre une équation (2)", id: "_dD1OpeaSiE" },
+        { title: "Résoudre une équation (3)", id: "l4NEpMsA2jc" },
+        { title: "Résoudre une équation (4)", id: "APj1WPPNUgo" }
+      ]
+    },
+    {
+      subject: "maths",
+      icon: "📐",
+      topic: "Trigonométrie",
+      videos: [
+        { title: "Les formules de trigonométrie", id: "XGnTdigL8fg" },
+        { title: "Calculer un angle avec la trigonométrie (1)", id: "md7hgVVKVI0" },
+        { title: "Calculer un angle avec la trigonométrie (2)", id: "Cm9R1l0CSLo" },
+        { title: "Calculer une longueur avec la trigonométrie (1)", id: "BscM5Iti3zI" },
+        { title: "Calculer une longueur avec la trigonométrie (2)", id: "FczJ1GvpD3w" }
+      ]
+    },
+    {
+      subject: "maths",
+      icon: "📊",
+      topic: "Indicateurs statistiques",
+      videos: [
+        { title: "Calculer une étendue", id: "JicN3egTNPg" },
+        { title: "Calculer une moyenne, une médiane et une étendue (1)", id: "aO3pb-FEsbk" },
+        { title: "Calculer une moyenne, une médiane et une étendue (2)", id: "AcSxB_wedkU" },
+        { title: "Déterminer une médiane", id: "lv9ZJ8dGn54" },
+        { title: "Déterminer une médiane dans un diagramme", id: "msDPkgW2nhw" },
+        { title: "Afficher les indicateurs statistiques avec la calculatrice", id: "OebO5ml7NJ8" }
+      ]
+    },
+    {
+      subject: "maths",
+      icon: "📉",
+      topic: "Représentations statistiques",
+      videos: [
+        { title: "Construire un histogramme", id: "BJMLHFmTMcE" },
+        { title: "Maîtriser les diagrammes", id: "jIjklZrVDto" },
+        { title: "Calculer des fréquences", id: "GWDDay-mdVA" }
+      ]
+    }
+  ];
+
+  const subjectLabel = { pc: "Physique-Chimie", maths: "Mathématiques" };
+
+  // ========= STATE =========
+  let currentFilter = "all";
+  let searchQuery = "";
+
+  // ========= UTILITIES =========
+  function normalize(str) {
+    return str.toLowerCase()
+      .normalize("NFD").replace(/[̀-ͯ]/g, ""); // strip accents
+  }
+
+  function highlight(text, query) {
+    if (!query) return text;
+    const normText = normalize(text);
+    const normQuery = normalize(query);
+    const idx = normText.indexOf(normQuery);
+    if (idx === -1) return text;
+    return text.slice(0, idx) + "<mark>" + text.slice(idx, idx + query.length) + "</mark>" + text.slice(idx + query.length);
+  }
+
+  function matches(text, query) {
+    if (!query) return true;
+    return normalize(text).includes(normalize(query));
+  }
+
+  // ========= RENDER =========
+  function render() {
+    const content = document.getElementById("content");
+    const noResults = document.getElementById("noResults");
+    const stats = document.getElementById("stats");
+
+    let html = "";
+    let totalVideos = 0;
+    let totalTopics = 0;
+
+    data.forEach((topicData, topicIdx) => {
+      // Filter by subject
+      if (currentFilter !== "all" && topicData.subject !== currentFilter) return;
+
+      // Filter videos by search
+      const filteredVideos = topicData.videos.filter(v =>
+        matches(v.title, searchQuery) || matches(topicData.topic, searchQuery)
+      );
+
+      if (filteredVideos.length === 0) return;
+
+      totalTopics++;
+      totalVideos += filteredVideos.length;
+
+      // Auto-open if searching
+      const isOpen = !!searchQuery;
+
+      html += `
+        <div class="topic ${topicData.subject} ${isOpen ? "open" : ""}" data-topic-idx="${topicIdx}">
+          <div class="topic-header">
+            <div class="topic-title">
+              <div class="topic-icon">${topicData.icon}</div>
+              <div class="topic-text">
+                <div class="topic-name">${highlight(topicData.topic, searchQuery)}</div>
+                <div class="topic-meta">
+                  <span class="topic-badge">${subjectLabel[topicData.subject]}</span>
+                  ${filteredVideos.length} vidéo${filteredVideos.length > 1 ? "s" : ""}
+                </div>
+              </div>
+            </div>
+            <svg class="chevron" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+          <div class="video-grid">
+            ${filteredVideos.map(v => `
+              <a class="video-card"
+                 href="https://www.youtube.com/watch?v=${v.id}"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 title="Ouvrir sur YouTube : ${v.title.replace(/"/g, "&quot;")}">
+                <div class="video-thumb">
+                  <img src="https://img.youtube.com/vi/${v.id}/hqdefault.jpg"
+                       alt="${v.title}"
+                       loading="lazy"
+                       onerror="this.src='https://img.youtube.com/vi/${v.id}/0.jpg'">
+                  <div class="play-overlay">
+                    <div class="play-button">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z"></path>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div class="video-info">
+                  <div class="video-title">${highlight(v.title, searchQuery)}</div>
+                </div>
+              </a>
+            `).join("")}
+          </div>
+        </div>
+      `;
+    });
+
+    if (totalVideos === 0) {
+      content.innerHTML = "";
+      noResults.style.display = "block";
+      stats.textContent = "";
+    } else {
+      content.innerHTML = html;
+      noResults.style.display = "none";
+      stats.textContent = `${totalVideos} vidéo${totalVideos > 1 ? "s" : ""} dans ${totalTopics} chapitre${totalTopics > 1 ? "s" : ""}`;
+      attachTopicHandlers();
+    }
+  }
+
+  // ========= HANDLERS =========
+  function attachTopicHandlers() {
+    document.querySelectorAll(".topic-header").forEach(header => {
+      header.addEventListener("click", () => {
+        header.parentElement.classList.toggle("open");
+      });
+      // Accessibilité : toggle au clavier
+      header.setAttribute("tabindex", "0");
+      header.setAttribute("role", "button");
+      header.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          header.parentElement.classList.toggle("open");
+        }
+      });
+    });
+  }
+
+  // Tabs
+  document.querySelectorAll(".tab").forEach(tab => {
+    tab.addEventListener("click", () => {
+      document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
+      currentFilter = tab.dataset.filter;
+      render();
+    });
+  });
+
+  // Search
+  const searchInput = document.getElementById("search");
+  const clearBtn = document.getElementById("clearBtn");
+  searchInput.addEventListener("input", (e) => {
+    searchQuery = e.target.value.trim();
+    clearBtn.classList.toggle("hidden", !searchQuery);
+    render();
+  });
+  clearBtn.addEventListener("click", () => {
+    searchInput.value = "";
+    searchQuery = "";
+    clearBtn.classList.add("hidden");
+    render();
+    searchInput.focus();
+  });
+
+  // Initial render
+  render();
+</script>
+</body>
+</html>
