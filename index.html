@@ -3,10 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LABOMATH — Lycée Voltaire de Wingles</title>
+<title>AUTOMATHISME — Lycée Voltaire de Wingles</title>
+<link rel="icon" type="image/svg+xml" href="logo-am.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Bowlby+One&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -19,9 +20,8 @@
   --pc-dark: #047857;
   --accent: #f59e0b;
   --accent-light: #fef3c7;
-  --voltaire-yellow: #d4a017;
-  --voltaire-red: #b91c1c;
-  --voltaire-teal: #3a6764;
+  --brand-yellow: #d9af00;
+  --brand-red: #bc0600;
   --bg: #f8fafc;
   --card: #ffffff;
   --text: #1e293b;
@@ -45,32 +45,32 @@ body {
 /* ========== HEADER ========== */
 header {
   background: linear-gradient(135deg, #fff8e1 0%, #fff 60%, #fff5f5 100%);
-  padding: 32px 24px 24px;
+  padding: 36px 24px 24px;
   text-align: center;
   border-bottom: 1px solid var(--border);
 }
-.logo-labomath {
+.logo-main {
   width: 100%;
-  max-width: 460px;
+  max-width: 440px;
   height: auto;
   display: block;
   margin: 0 auto;
 }
 .school-name {
-  margin-top: 14px;
-  font-size: clamp(14px, 2vw, 17px);
-  color: var(--text-light);
-  font-weight: 600;
-  letter-spacing: 0.5px;
+  margin-top: 4px;
+  font-size: clamp(15px, 2vw, 18px);
+  color: var(--text);
+  font-weight: 700;
+  letter-spacing: 0.3px;
 }
 .tagline {
   margin-top: 6px;
-  font-size: clamp(12px, 1.4vw, 14px);
+  font-size: clamp(13px, 1.4vw, 15px);
   color: var(--text-light);
   font-weight: 500;
 }
 
-/* ========== NAV ========== */
+/* ========== NAV ANCRES ========== */
 nav.menu {
   display: flex;
   justify-content: center;
@@ -150,7 +150,7 @@ main {
 }
 .icon-jeux { background: linear-gradient(135deg, #f59e0b, #f97316); color: white; }
 .icon-videos { background: linear-gradient(135deg, #ef4444, #ec4899); color: white; }
-.icon-auto { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; }
+.icon-auto { background: linear-gradient(135deg, var(--brand-yellow), var(--brand-red)); color: white; }
 
 .section-title {
   font-size: clamp(20px, 3vw, 26px);
@@ -194,11 +194,11 @@ main {
 .card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-hover);
-  border-color: var(--maths);
+  border-color: var(--brand-red);
 }
 .card:hover::after {
   transform: translateX(4px);
-  color: var(--maths);
+  color: var(--brand-red);
 }
 .card .badge {
   display: inline-block;
@@ -236,7 +236,7 @@ main {
   margin-top: 6px;
   font-size: 12px;
   font-weight: 700;
-  color: var(--maths-dark);
+  color: var(--brand-red);
   letter-spacing: 0.5px;
 }
 
@@ -257,20 +257,21 @@ main {
 footer {
   background: #1e293b;
   color: #cbd5e1;
-  padding: 28px 20px 24px;
+  padding: 24px 20px;
   text-align: center;
   font-size: 13px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
 }
-.logo-voltaire {
-  max-width: 320px;
-  width: 100%;
-  height: auto;
-  filter: brightness(0) invert(1) opacity(0.95);
+footer .footer-brand {
+  font-weight: 800;
+  color: white;
+  letter-spacing: 1px;
 }
+footer .footer-brand .y { color: var(--brand-yellow); }
+footer .footer-brand .r { color: var(--brand-red); }
 footer .footer-info {
   font-size: 12px;
   opacity: 0.75;
@@ -299,22 +300,8 @@ footer .footer-info {
 <body>
 
 <header>
-  <!-- Logo LABOMATH (Lycée √oltaire + LABOMATH) -->
-  <svg class="logo-labomath" viewBox="0 0 600 260" xmlns="http://www.w3.org/2000/svg" aria-label="LABOMATH — Lycée Voltaire">
-    <!-- "Lycée" -->
-    <text x="105" y="95" font-family="Caveat, cursive" font-size="68" font-weight="700" fill="#d4a017">Lycée</text>
-    <!-- Symbole racine carrée à la place du V de Voltaire -->
-    <path d="M 256 80 L 270 105 L 290 35 L 488 35"
-          stroke="#b91c1c" stroke-width="9" fill="none"
-          stroke-linecap="round" stroke-linejoin="round"
-          opacity="0.95"/>
-    <!-- "oltaire" -->
-    <text x="292" y="105" font-family="Caveat, cursive" font-size="68" font-weight="700" fill="#d4a017">oltaire</text>
-    <!-- LABOMATH -->
-    <text x="60" y="225" font-family="'Bowlby One', 'Arial Black', sans-serif" font-size="120" font-weight="900" letter-spacing="-1">
-      <tspan fill="#d4a017">LABO</tspan><tspan fill="#b91c1c">MATH</tspan>
-    </text>
-  </svg>
+  <!-- Logo AUTOMATHISME (Lycée Voltaire + AUTOMATHISME) -->
+  <img class="logo-main" src="logo-automathisme.svg" alt="AUTOMATHISME — Lycée Voltaire">
   <div class="school-name">Lycée Voltaire de Wingles</div>
   <div class="tagline">Mathématiques · Physique-Chimie · Lycée professionnel</div>
 </header>
@@ -328,7 +315,7 @@ footer .footer-info {
 <main>
 
   <section class="intro">
-    <h2>Bienvenue sur LABOMATH 👋</h2>
+    <h2>Bienvenue sur AUTOMATHISME 👋</h2>
     <p>Le portail de ressources en mathématiques et physique-chimie du lycée Voltaire de Wingles. Choisis une rubrique ci-dessous pour t'entraîner, réviser ou jouer.</p>
   </section>
 
@@ -436,21 +423,8 @@ footer .footer-info {
 </main>
 
 <footer>
-  <!-- Logo Lycée Voltaire -->
-  <svg class="logo-voltaire" viewBox="0 0 600 160" xmlns="http://www.w3.org/2000/svg" aria-label="Lycée Voltaire">
-    <!-- Trait vertical / drapeau du V -->
-    <path d="M 28 18 Q 22 22 22 28 L 22 145 Q 22 152 30 150 L 60 145 L 60 30 Q 60 18 50 18 Z"
-          fill="#3a6764"/>
-    <!-- "oltaire" cursive -->
-    <text x="60" y="120" font-family="Caveat, cursive" font-size="90" font-weight="500" fill="#3a6764" font-style="italic">oltaire</text>
-    <!-- Tagline -->
-    <g font-family="Inter, sans-serif" fill="#6b7280">
-      <text x="300" y="48" font-size="20" font-weight="400">Bien plus que des études,</text>
-      <text x="300" y="92" font-size="20" font-weight="400">un <tspan font-size="44" font-weight="700" fill="#1f2937">passeport</tspan></text>
-      <text x="300" y="140" font-size="20" font-weight="400">pour votre <tspan font-size="44" font-weight="700" fill="#1f2937">avenir</tspan></text>
-    </g>
-  </svg>
-  <div class="footer-info">© LABOMATH — Lycée Voltaire de Wingles · Maths & Physique-Chimie</div>
+  <div class="footer-brand"><span class="y">AUTOMATH</span><span class="r">ISME</span></div>
+  <div class="footer-info">Lycée Voltaire de Wingles · Maths & Physique-Chimie</div>
 </footer>
 
 <script>
@@ -466,9 +440,9 @@ function setActive() {
   links.forEach(a => {
     const href = a.getAttribute('href');
     if (href === '#' + current) {
-      a.style.background = 'var(--maths)';
+      a.style.background = 'var(--brand-red)';
       a.style.color = 'white';
-      a.style.borderColor = 'var(--maths-dark)';
+      a.style.borderColor = 'var(--brand-yellow)';
     } else {
       a.style.background = '';
       a.style.color = '';
