@@ -268,6 +268,32 @@ canvas{
 #vbtn:hover{background:#3451d1;box-shadow:0 5px 16px rgba(67,97,238,.4);}
 #vbtn:active{transform:scale(.97);}
 
+/* AIDE SAISIE MOBILE (boutons ± / ⌫) */
+#math-helpers{
+  display:none;
+  gap:6px;justify-content:center;flex-wrap:wrap;
+  margin-top:-4px;
+}
+.mhb{
+  font-family:var(--mono);font-size:18px;font-weight:700;
+  min-width:46px;min-height:42px;
+  padding:6px 12px;
+  border-radius:var(--radius-sm);
+  border:1.5px solid var(--border);
+  background:var(--card);color:var(--accent);
+  cursor:pointer;
+  transition:all .15s;
+  box-shadow:var(--shadow);
+  user-select:none;-webkit-user-select:none;
+  -webkit-tap-highlight-color:transparent;
+}
+.mhb:hover{background:var(--bg);border-color:var(--accent);}
+.mhb:active{transform:scale(.95);background:rgba(67,97,238,0.08);}
+.mhb[data-act="sign"]{color:var(--red);}
+.mhb[data-act="slash"]{color:var(--accent2);}
+.mhb[data-act="del"]{color:var(--muted);font-size:16px;}
+.mhb[data-act="clear"]{color:var(--muted);font-size:14px;}
+
 /* GUESS ROW (trésor) */
 #guess-row{
   display:none;
@@ -435,6 +461,15 @@ canvas{
         <input class="coord-input" id="iY" type="text" inputmode="decimal" autocomplete="off">
       </div>
       <button id="vbtn" onclick="handleVbtn()">Valider</button>
+    </div>
+
+    <!-- Aide à la saisie : caractères manquants sur le clavier mobile -->
+    <div id="math-helpers" aria-label="Touches d'aide pour la saisie">
+      <button type="button" class="mhb" data-act="sign" title="Inverse le signe">±</button>
+      <button type="button" class="mhb" data-act="slash" title="Insère / (fractions)">/</button>
+      <button type="button" class="mhb" data-act="dot" title="Insère un point décimal">,</button>
+      <button type="button" class="mhb" data-act="del" title="Efface le dernier caractère">⌫</button>
+      <button type="button" class="mhb" data-act="clear" title="Vide les deux champs">C</button>
     </div>
 
     <div id="guess-row">
@@ -839,6 +874,59 @@ function startTimer(ms){
 
 function changeLevel(){level=parseInt(document.getElementById("lvlSel").value);score=0;streak=0;generateTargets();}
 generateTargets();
+
+// ── AIDE SAISIE MOBILE : boutons ± / , ⌫ C ──
+(function(){
+  const mh=document.getElementById("math-helpers");
+  const irow=document.getElementById("irow");
+  const grow=document.getElementById("guess-row");
+  const iX=document.getElementById("iX"),iY=document.getElementById("iY");
+  const gX=document.getElementById("gX"),gY=document.getElementById("gY");
+  let lastInp=iX;
+  // Mémorise le dernier input touché
+  [iX,iY,gX,gY].forEach(inp=>{
+    inp.addEventListener("focus",()=>lastInp=inp);
+  });
+  // Synchronise la visibilité des helpers avec l'affichage du formulaire
+  function syncHelpers(){
+    const irShown=irow&&getComputedStyle(irow).display!=="none";
+    const grShown=grow&&getComputedStyle(grow).display!=="none";
+    mh.style.display=(irShown||grShown)?"flex":"none";
+  }
+  // Observe les changements de style sur irow et guess-row
+  const obs=new MutationObserver(syncHelpers);
+  if(irow)obs.observe(irow,{attributes:true,attributeFilter:["style"]});
+  if(grow)obs.observe(grow,{attributes:true,attributeFilter:["style"]});
+  syncHelpers();
+  // Empêche la perte de focus + gère les actions
+  mh.querySelectorAll(".mhb").forEach(btn=>{
+    btn.addEventListener("mousedown",e=>e.preventDefault());
+    btn.addEventListener("touchstart",e=>{e.preventDefault();},{passive:false});
+    btn.addEventListener("click",e=>{
+      e.preventDefault();
+      // Si le dernier input ciblé est masqué, replier sur iX
+      if(!lastInp||lastInp.offsetParent===null){
+        lastInp=(getComputedStyle(irow).display!=="none")?iX:gX;
+      }
+      const inp=lastInp;
+      const act=btn.dataset.act;
+      if(act==="sign"){
+        if(inp.value.startsWith("-"))inp.value=inp.value.slice(1);
+        else inp.value="-"+inp.value;
+      }else if(act==="slash"){
+        inp.value+="/";
+      }else if(act==="dot"){
+        // virgule = point décimal (parseFrac convertit déjà , en .)
+        if(!inp.value.includes(",")&&!inp.value.includes("."))inp.value+=",";
+      }else if(act==="del"){
+        inp.value=inp.value.slice(0,-1);
+      }else if(act==="clear"){
+        iX.value="";iY.value="";gX.value="";gY.value="";
+      }
+      inp.focus();
+    });
+  });
+})();
 
 // ── SUPPORT TACTILE (touch → click équivalent pour mobiles/tablettes) ──
 (function(){
